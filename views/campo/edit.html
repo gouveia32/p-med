@@ -1,0 +1,84 @@
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <!-- cabeçalho do formulário -->
+                <div class="box-header with-border">
+                    <div class="btn-group col-sm-2 col-md-4">
+                        <a class="btn flat btn-sm btn-default BackButton">
+                            <i class="fa fa-arrow-left"></i>
+                            Retornar
+                        </a>
+                    </div>
+                    <div class="col-sm-4 col-md-6">
+                        <h4><strong>Alterar Modelo</strong></h4>
+                    </div>
+                </div>
+                <!-- Formato -->
+                <form id="dataForm" class="form-horizontal dataForm" action="/admin/campo/update" method="post"
+                    enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="{{.data.Id}}">
+
+                    <table width="75%">
+                        <tr>
+                            <td style="width: 30%">
+                                <label class="label-micro">NOME</label>
+                                <input type="text" name="nome" id="nome"  autocomplete="off" placeholder="nome" class="layui-input form-control field-text" value="{{.data.Nome}}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%">
+                                <label class="label-micro">DESCRIÇÃO</label>
+                                <input type="text" name="descricao" id="descricao"  autocomplete="off" placeholder="descricao" class="layui-input form-control field-text" value="{{.data.Descricao}}">
+                            </td>
+                            <td style="width: 3%"></td>
+                            <td style="width: 40%">
+                                <label class="label-micro">RESPOSTA</label>
+                                <input type="text" name="resposta" id="resposta"  autocomplete="off" placeholder="resposta" class="layui-input form-control field-text" value="{{.data.Resposta}}">
+                            </td>
+                        </tr>
+                    </table>
+                    <br>
+                    <br>                      
+
+                    <!-- parte inferior do formulário -->
+                    <div class="box-footer">
+                        <div class="col-sm-10 col-md-4">
+                            <div class="btn-group">
+                                <button type="submit" class="btn flat btn-info dataFormSubmit">
+                                    Gravar
+                                </button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="reset" class="btn flat btn-default dataFormReset">
+                                    Restaurar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    /** validação de formulário **/
+    $('#dataForm').validate({
+        rules: {
+            'nome': {
+                required: true,
+            },
+        },
+        messages: {
+
+            'nome': {
+                required: "O nome de usuário não pode estar vazio",
+            },
+        }
+        
+    });
+    //
+    
+</script>

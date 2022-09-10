@@ -1,0 +1,628 @@
+
+<div class="layui-row no-pad">
+    <div class="callout callout-info">
+        <a class="btn flat btn-sm btn-default BackButton" style="background-color:rgb(255, 255, 255); color: black;">
+            <i class="fa fa-arrow-left"></i>
+            Retornar
+        </a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        PACIENTE: Nome: <strong>{{.paciente.Nome}}</strong>
+            {{if .paciente.Telefone}}Telefone: <strong>{{.paciente.Telefone}}</strong>{{end}}
+            Sexo: <strong>{{.paciente.Sexo}}</strong>
+            {{if .paciente.Peso}}Peso: <strong>{{.paciente.Peso}}</strong>{{end}}
+            {{if .paciente.Altura}}Altura: <strong>{{.paciente.Altura}}</strong>{{end}}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
+        <a class="layui-btn layui-btn-normal layui-btn-xm toolTop"
+            title="Alterar Paciente"
+            lay-event="editP"><i class="fa fa-pencil">Alterar Paciente</i>
+        </a>
+    </div>
+
+    <table vertical-align="top" class="table table-bordered" style="width: 100%;">
+        <tr>
+            <td id="td_conteudo" style="width: 90%;">
+                <div class="layui-layout layui-layout-admin" style="padding-left: 10px;margin-top: 1px;">
+                    <form id="form" name="form" class="form-horizontal dataForm" action="/admin/campo/update" method="post"
+                        enctype="multipart/form-data">
+                        <div style="border-bottom: 1px dashed #210c81; height: 25px;" >
+                            <button class="btn btn-sm btn-primary" lay-submit="" lay-filter="add"><i class="fa fa-file-o"></i> Novo</button>
+                            <button class="btn btn-sm btn-success" lay-submit="" lay-filter="edit"><i class="fa fa-floppy-o"></i> Gravar</button>
+                            <a class="btn btn-danger btn-sm" href="javascript:;" id="del" lay-submit=""><i class="fa fa-trash"></i> Excluir</a>
+                            <button class="btn btn-sm btn-warning" lay-submit="" lay-filter="modelo" ><i class="fa fa-file-text-o"></i> Modelo</button>
+                            <button class="btn btn-sm btn-info" lay-submit="" lay-filter="print" ><i class="fa fa-print"></i> Imprimir</button>
+                            <!--<button class="btn btn-sm btn-info" lay-submit="" lay-filter="template" ><i class="fa fa-print"></i> Template</button>-->
+                        </div>
+                        
+                        <table>
+                            <td style="width: 45%;">
+                                <div class="layui-input-inline">
+                                    <label for="nome" name="labelIdent" class="control-label">NOVO ATENDIMENTO:</label>
+                                    <input type="text" name="nome" id="nome"  autocomplete="off" placeholder="digite um identificador" class="layui-input form-control field-text" value="{{.data.Nome}}">
+                                </div>
+                            </td>
+                            <td  style="width: 2%;"></td>
+                            <td  style="width: 15%;">
+                                <div class="layui-input-inline">
+                                    <label class="label-micro"> Cor:</label>
+                                    <div class="layui-input-inline">
+                                        <select name="cor_id" id="cor_id" lay-verify="required" onchange="corSelectChange(this)" >
+                                            <option value="-1">Selecione uma cor</option>
+                                            {{range $index,$elem := .corlists}}
+                                            <option name="n1n2n3" value="{{$elem.Id}}">{{$elem.Nome}} ({{$elem.Cor}})</option>
+                                            {{end}}
+                                        </select>
+                                    </div>
+                                </div>  
+                            </td>
+                        </table>
+        
+                        <!-- Barra de ferramentas -->
+                        <div quill-editor-toolbar id="toolbar">
+                    
+                            <span title="Fonte" class="ql-formats">
+                                <select class="ql-font">
+                                    <option selected></option>
+                                    <option value="serif"></option>
+                                    <option value="monospace"></option>
+                                </select>
+                            </span>
+                    
+                            <span title="Alinhamento" class="ql-formats">
+                                <select class="ql-align">
+                                    <option value="" selected></option>
+                                    <option value="center"></option>
+                                    <option value="justify"></option>
+                                    <option value="right"></option>
+                                </select>
+                                
+                                <span title="Limpar" class="ql-format-group">
+                                    <button class="ql-clean" value="clean">Limpar</button>
+                                </span>
+                            </span>
+        
+                            <span class="ql-format-group">
+                                <button title="Negrito" class="ql-bold"></button>
+                                <button title="Itálico" class="ql-italic"></button>
+                                <button title="Sublinhado" class="ql-underline"></button>
+                            </span>
+                            <span class="ql-format-group">
+                                <button title="Subescrito" class="ql-script" value="sub"></button>
+                                <button title="Superescrito" class="ql-script" value="super"></button>
+                            </span>
+                    
+                            <span class="ql-format-group">
+                                <select class="ql-color"></select>
+                                <select class="ql-background"></select>
+                            </span>
+                                
+                            <span class="ql-format-group">
+                                <button title="Lista numerada" class="ql-list" value="ordered"></button>
+                                <button title="Lista simples" class="ql-list" value="bullet"></button>
+                            </span>
+                            
+                            <span class="ql-format-group">
+                                <select title="Tam Texto" class="ql-size">
+                                    <option value="small">Pequeno</option>
+                                    <!-- Note a missing, thus falsy value, is used to reset to default -->
+                                    <option selected>Normal</option>
+                                    <option value="large">Grande</option>
+                                    <option value="huge">Super</option>
+                                </select>    
+                            </span>
+        
+                        </div>
+                        <!-- Conteudo -->
+                        <div name="div_conteudo" style="background-color: #d2e3e9">
+                            <div id="editor" style="width: 100%; height: auto"></div>                            
+                        </div>
+
+                        <input type="hidden" name="paciente_id" autocomplete="off" id="paciente_id" class="layui-input" value="{{.paciente.Id}}">
+                        <input type="hidden" name="id" autocomplete="off" class="layui-input" id="id" value="0">
+                        <input type="hidden" name="AtendId" autocomplete="off" id="AtendId" class="layui-input" readonly value="{{.atendimento.AtendId}}">                             
+                        <input type="hidden" name="NotaId" autocomplete="off" id="NotaId" class="layui-input" readonly value="{{.atendimento.NotaId}}">
+                        <input type="hidden" name="cor" autocomplete="off" id="cor" class="layui-input" readonly value="{{.atendimento.Cor}}">
+                        <input type="hidden" name="id_atual" autocomplete="off" class="layui-input" id="id_atual" value="{{.paciente.NoSelecionado}}">
+                        <input type="hidden" name="conteudo" autocomplete="off" id="conteudo" class="layui-input" value="{{.atendimento.Conteudo}}">
+        
+                    </form>
+                </div>
+                            
+            </td>
+            <td width="10%" bgcolor="#d1dbb6" class="layui-col-md5">
+                <ul id="treeDemo" class="ztree" style="vertical-align: top; margin-left: 2px; height:600px; margin-right: 2px;">
+                </ul>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    //Trata o conteudo
+    var quill = new Quill('#editor', {
+        modules: {
+            toolbar: "#toolbar"
+        },
+        theme: 'snow'
+    });
+    quill.root.innerHTML = document.getElementById("conteudo").value;
+    document.documentElement.style.cursor = 'default';
+
+    //Muda a cor na nota
+    function corSelectChange(selectCor) {
+        var str = "";
+        $( "select option:selected" ).each(function() {
+            str += $( this ).text() + " ";
+        });
+
+        var i = str.indexOf('(') + 1;               //localiza o inicio da string da cor
+        var cor = str.toString().substring(i,i+6);  //extrai a cor do text
+
+        //console.log(cor);
+        $("form[name=form]").find("div[name=div_conteudo]").css('background-color', '#' + cor);
+    }
+
+</script>
+
+<script>
+    var $,form;
+    layui.config({
+                base : "js/"
+        }).use(['form','element','layer','jquery'],function(){
+            document.documentElement.style.cursor = 'default';
+          form = layui.form; //Somente após esta etapa ser realizada, alguns elementos do formulário serão decorados automaticamente com sucesso
+          $ = layui.jquery;
+          form.on("submit",function(data) {
+                var sub_type = data.elem.getAttribute("lay-filter")
+
+                switch(sub_type) {
+                    case 'add':
+
+                        if ($("#id").val() == 0) {
+                            $("form[name=form]").find("label[name=labelIdent]").text('NOVO ATENDIMENTO');
+                        } else {
+                            $("form[name=form]").find("label[name=labelIdent]").text('NOVA NOTA');
+                        }                        
+                        
+                        $("#id").val(0);
+                        //$("#AtendId").val(0);
+                       
+                        $("#nome").val('');
+                        $("#conteudo").val('');
+                        quill.root.innerHTML = '';
+                        $("form[name=form]").find("div[name=div_conteudo]").css('background-color', '#d2e3e9');
+
+                        return false;
+                        break;
+
+                    case 'modelo':
+                        var pacienteId = $("#paciente_id").val();
+                        var modId = layer.open({
+                            title: 'Selecione um Modelo',
+                            closeBtn: false,
+                            type: 1,
+                            btn: ["Usar","Fechar"],
+                            content: '<div style="width: 250px; padding-left: 20px"> ' +
+                                       '<label for="nome_modelo"> Modelo: </label>' +
+                                       '<select name="nome_modelo" id="nome_modelo" lay-verify="required" >' +
+                                         '<option value="-1">Selecione um modelo</option>' +
+                                           '{{range $index,$elem := .modelolists}}' +
+                                              '<option name="n1n2n3" value="{{$elem.Id}}"> {{$elem.Nome}}</option>' +
+                                           '{{end}}' +
+                                        '</select>' +
+                                     '</div>',
+                            yes: function(index, layero){
+                                var modeloId = layero.find('select')[0].value;
+                                var modeloNome = layero.find('select')[0].options[layero.find('select')[0].selectedIndex].text;
+                                //console.log(modeloId);
+                                if (modeloId > 0){
+                                    var adjustPage = layer.open({
+                                        type: 2,
+                                        shade: [0.4, '#a0d06c'],
+                                        shadeClose: false,         //yes: fecha ao clicar fora da janela
+                                        id: 1,
+                                        skin: 'layui-layer-molv',
+                                        anim: 1,
+                                        title: "Importação de modelo",
+                                        content: '/admin/import/receita?pacienteId='+pacienteId+'&modeloId='+modeloId,
+                                         btn: ['<i class="layui-icon layui-icon-yes"/> Importar', '<i class="layui-icon layui-icon-close"/> Fechar'],
+                                        yes: function(adjustPage, layero){
+                                            $("form[name=form]").find("input[name=nome]").val(modeloNome);
+                                            //console.log(modeloNome);
+                                            if (modeloNome != 'Consulta'){ 
+                                                var json_data = $(layero).find("iframe")[0].contentWindow;
+                                                
+                                                $("form[name=form]").find("input[name=conteudo]").val(json_data.quill.container.innerHTML);
+                                                quill.root.innerHTML = json_data.quill.root.innerHTML;
+                                            } else {
+                                                var json_data = $(layero).find("iframe").contents().find("section")[0];
+
+                                                $("form[name=form]").find("input[name=conteudo]").val(json_data.innerHTML);
+                                                quill.root.innerHTML = json_data.innerHTML;
+                                                
+                                                //alert(json_data.innerHTML);
+
+                                                var form_data = $("form").serialize();
+                                                console.log(form_data);
+                                                $.post('{{urlfor "AtendimentoController.AjusteConteudo"}}', form_data, function (out) {
+                                                    if (out.code > 0) {
+                                                        document.documentElement.style.cursor = 'default';
+                                                        //alert("gravado");
+                                    
+                                                        layer.msg("Gravado com sucesso!",{icon: 1},function () {
+                                                            window.location.reload();
+                                                        });
+                                                    } else {
+                                                        layer.msg(out.message)
+                                                    }
+                                                }, "json");
+
+                                            }
+                                            //quill.root.innerHTML = "TESTE";
+
+                                            layer.close(adjustPage);
+            
+                                        }, 
+                                        area: ['72%','80%'],   
+                                    });
+                                }
+                                layer.close(index);
+                            }
+
+                          });     
+                        return false;
+                        break;
+                    case 'print':
+                        var pacienteId = $("#paciente_id").val();
+                        var AtendId = $("#AtendId").val();
+                        var NotaId = $("#NotaId").val();
+                        var rel = "";
+                        if (NotaId != "0") {
+                            rel = "nota";
+                        } else {
+                            rel = "atendimento";
+                        }
+                        var adjustPage = layer.open({
+                            type: 2,
+                            shade: [0.4, '#a0d06c'],
+                            shadeClose: false,         //yes: fecha ao clicar fora da janela
+                            id: 1,
+                            skin: 'layui-layer-molv',
+                            anim: 1,
+                            title: "Preparação da Impressão: ("+rel+")",
+                            content: '/admin/print/'+rel+'?pacienteId='+pacienteId+'&AtendId='+$("#AtendId").val()+'&NotaId='+$("#NotaId").val(),
+
+                            area: ['70%','80%'],   
+                        });
+                        return false;
+                        break;
+                    case 'edit':
+                        var cont = quill.root.innerHTML;
+                        $("#conteudo").val(cont);
+                        var NotaId = $("#NotaId").val();
+                        var AtendId = $("#AtendId").val();
+                        var id = $("#id").val();
+
+                        $("form[name=form]").find("input[name=id_atual]").val($("#id").val());
+
+                        if (id == 0) {  //Novo
+                            if (AtendId == 0) {
+                                //alert("Novo atend")
+                                var urlfor = '{{urlfor "AtendimentoController.Create"}}';
+                            } else {
+                                //alert("Nova nota")
+                                var urlfor = '{{urlfor "NotaController.Create"}}';
+                            }
+                        } else {
+                            if (NotaId != 0) {
+                                var urlfor = '{{urlfor "NotaController.Update"}}';
+                            } else {
+                                var urlfor = '{{urlfor "AtendimentoController.Update"}}';
+                            }
+                        }
+
+                       // alert(urlfor);
+                        var form_data = $("form").serialize();
+                        //alert("AquAtendi");
+                        $.post(urlfor, form_data, function (out) {
+                            //console.log(out);   
+                            
+                            if (out.code > 0) {
+                                document.documentElement.style.cursor = 'default';
+                                //alert("gravado");
+              
+                                layer.msg("Gravado com sucesso!",{icon: 1},function () {
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(out.message)
+                            }
+                        }, "json");
+
+                        return false;
+                        break;
+
+                }
+            });
+
+
+            $( "select" ).change(function () {
+                var str = "";
+                $( "select option:selected" ).each(function() {
+                    str += $( this ).text() + " ";
+                });
+                
+                var cor = str.toString().substring(1,8);  //extrai a cor do text
+                //console.info(cor);
+
+                $("form[name=form]").find("div[name=div_conteudo]").css('background-color', cor);
+                
+            }).change();
+
+            
+            form.render();
+            //No entanto, se seu HTML for gerado dinamicamente, a renderização automática falhará
+            //Portanto, você precisa executar os seguintes métodos para renderizar manualmente nos locais correspondentes, semelhante a este element.init();
+        }); 
+    </script>
+
+
+<script type="text/javascript">
+    var zNodes = [{ id:1, pId:0, name:"erro de dados"}]; 
+    $(document).ready(function(){ 
+        var setting = {
+            view: {
+                dblClickExpand: false,
+                showLine: true,
+                selectedMulti: false
+            },
+            //edit: {
+            //  enable: true
+            //},
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "pId",
+                }
+            },
+            callback: {
+                beforeDrag: beforeDrag,
+                onClick: editOnClick
+            }
+        };
+
+        function editOnClick(e, treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo")
+
+            //document.documentElement.style.cursor = 'wait';
+            //alert("Estou aqui.")
+
+            nodes = zTree.getSelectedNodes();
+
+            if(nodes[0].parentTId){
+                var parentInfo = zTree.getNodeByTId(nodes[0].parentTId);
+                pid     = parentInfo.id;
+                pname   = parentInfo.name;
+            }
+            
+            var id = nodes[0].id;
+            var AtendId = nodes[0].AtendId;
+            var NotaId = nodes[0].NotaId;
+            //alert(NotaId);
+
+            if(id==1){  //Atendimentos
+                $("form[name=form]").find("input[name=id]").val("0");
+                $("form[name=form]").find("input[name=AtendId]").val("0");
+                $("form[name=form]").find("input[name=NotaId]").val('0');
+                $("form[name=form]").find("input[name=nome]").val("");
+                $("form[name=form]").find("input[name=cor]").val("#F0F0E0");
+                quill.root.innerHTML = '';
+
+                form.render();
+            } else {
+                $("#id").val(id);
+            }
+
+            var pId = $("#paciente_id").val();
+            $.ajax({
+                type: "POST",
+                url: "/admin/atendimento/getnode",
+                data: {
+                    id:   id,
+                    AtendId: AtendId,
+                    NotaId: NotaId,
+                    pacienteId: pId 
+                },
+                dataType: 'json',
+                success: function(data) {
+
+                    //console.log(data);
+                    
+                    if(data.id > 0){
+                        $("form[name=form]").find("input[name=AtendId]").val(data.AtendId);
+                        $("form[name=form]").find("input[name=NotaId]").val(data.NotaId);
+                        $("form[name=form]").find("input[name=nome]").val(data.Nome);
+                        $("form[name=form]").find("input[name=cor]").val(data.Cor);
+                        $("form[name=form]").find("input[name=conteudo]").val(data.Conteudo);
+                        quill.root.innerHTML = data.Conteudo;
+
+                        //console.log(data);
+
+                        if (data.NotaId == 0) {
+                            $("form[name=form]").find("label[name=labelIdent]").text('IDENTIFICAÇÃO DO ATENDIMENTO');
+                        } else {
+                            $("form[name=form]").find("label[name=labelIdent]").text('IDENTIFICAÇÃO DA NOTA');
+                        }
+                        
+
+                        $("form[name=form]").find("div[name=div_conteudo]").css('background-color', data.Cor);
+                        $("form[name=form]").find("select[name=cor_id]").val(data.CorId);
+            
+                        form.render();
+                      
+                    }
+                    document.documentElement.style.cursor = 'default';
+                }
+            }); 
+        }
+
+        function beforeDrag(treeId, treeNodes) {
+            //document.documentElement.style.cursor = 'default';
+            return false;
+        }
+        
+        function setEdit() {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        }
+        // //adicionar nó
+        var newCount = 1;
+        var maxId = 0;
+        function add(e) {
+            var maxId = $('#max_id').val();
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+            isParent = e.data.isParent,
+            nodes = zTree.getSelectedNodes(),
+            treeNode = nodes[0];
+
+            if (treeNode) {
+                treeNode = zTree.addNodes(treeNode, {id:(maxId -(-newCount)), pId:treeNode.id, isParent:isParent, name:"new node" + treeNode.id + (newCount++)});
+            } else {
+                treeNode = zTree.addNodes(null, {id:(maxId -(-newCount)), pId:0, isParent:isParent, name:"novo nó" + (newCount++)});
+            }
+
+            if (treeNode) {
+                zTree.editName(treeNode[0]);
+            } else {
+                alert("O nó folha está bloqueado e não pode adicionar nós filhos");
+            }
+        };
+        function showCode(str) {
+            var code = $("#code");
+            code.empty();
+            for (var i=0, l=str.length; i<l; i++) {
+                code.append("<li>"+str[i]+"</li>");
+            }
+        }    
+        //carregar árvore
+        
+        refresh_tree();
+
+        function refresh_tree()
+        { 
+            var id = $("#id").val();
+            var AtendId = $("#AtendId").val();
+            var NotaId = $("#NotaId").val();
+            var pId = $("#paciente_id").val();
+            var time   = Date.parse(new Date());
+            //alert("Aqui...");
+            
+            //document.documentElement.style.cursor = 'wait';
+
+            $.ajax({
+                type: "post",
+                url: "/admin/atendimento/getnodes?paciente_id=" + pId,
+                data: {time:time},
+                dataType: "json",
+                success: function(data) {
+                    //console.log(data);
+                    if(data.length>0){
+                        zNodes = data;
+                        //console.log(zNodes);
+                        var treeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+
+                        treeObj.expandAll(true);
+
+                        var id_atual = $("#id_atual").val();
+                        
+                        if (id_atual == 0) {
+                            id_atual = 1
+                        }
+
+                        node = treeObj.getNodeByParam('id', id_atual); 
+
+                        //console.log(data);
+                        //Select the first child node
+                        treeObj.selectNode(node);
+
+                        editOnClick(null, null, node);
+
+                        $("form[name=form]").find("input[name=nome]").val(node.name);                 
+                        document.documentElement.style.cursor = 'default';
+                    }
+                }
+            });
+
+        }
+
+/*         $(".nodes").click(function () {
+            refresh_tree();            
+        }); */
+
+        $(".toolTop").click(function () {
+            document.documentElement.style.cursor = 'wait';
+            var pacienteId = $("#paciente_id").val();
+            layer.open({
+                type: 2,
+                shade: [0.4, '#a0d06c'],
+                shadeClose: true,
+                id: 1,
+                skin: 'layui-layer-lan',
+                anim: 1,
+                title: "Alterando Paciente",
+                content: '/admin/atendimento/editpaciente?paciente_id='+pacienteId,
+                //btn: ['<i class="layui-icon layui-icon-ok" lay-submit="" lay-filter="sub"> Gravar</i>', '<i class="layui-icon layui-icon-close"/> Fechar'],
+                area: ['800px','480px'],
+                page: {
+                    html: '<\div style="width:460px; height:280px; background-color:#81BA25; color:#fff;"><\div style="padding:20px;">里面传入任何html元素<\/div><\/div>' 
+                }
+            });
+        });
+
+        //Excluir
+        $('#del').on('click',function(){
+            var id = $("#id").val();
+            var PacienteId = $("#paciente_id").val();
+            var AtendId = $("#AtendId").val();
+            var NotaId = $("#NotaId").val();
+            var urlfor = '';
+
+            if (NotaId == 0) {
+                urlfor = '{{urlfor "AtendimentoController.Del"}}'
+            } else {
+                urlfor = '{{urlfor "NotaController.Del"}}'
+            }
+
+            if (id==0) {
+                layer.msg('Selecione um nó na árvore de permissões à esquerda');
+                return false;
+            }
+            layer.confirm('Tem certeza de que deseja excluir?', {icon: 3, title:'Confirme',btn: ["Sim","Não"]}, function(index){
+                $.post(urlfor, {paciente_Id:PacienteId, a_Id:AtendId, n_Id:NotaId}, function (out) {
+                    if (out.code > 0) {
+                        layer.msg("Excluído com sucesso!",{icon: 1},function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("Erro ao tentar excluir. " + out.message,{icon: 2})
+                    }
+                }, "json");
+            });
+            return false;
+        });
+
+        function beforeClick(treeId, treeNode) {
+            var check = (treeNode && !treeNode.isParent);
+            if (!check) alert("não pode escolher");
+            return check;
+        }
+        
+        function onBodyDown(event) {
+            if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+                hideMenu();
+            }
+        }
+
+    });
+    
+</script>

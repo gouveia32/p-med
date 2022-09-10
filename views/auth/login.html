@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>{{if eq .admin.title ""}}
+        login-se{{else}}{{.admin.title}}{{end}}| {{if eq .admin.name ""}}Admin{{else}}{{.admin.name}}{{end}}</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="_xsrf" content="{{.xsrf_token}}" />
+    {{assets_css "/static/admin/plugins/bootstrap/css/bootstrap.min.css"}}
+    {{assets_css "/static/admin/plugins/font-awesome/css/font-awesome.min.css"}}
+    {{assets_css "/static/admin/css/AdminLTE.min.css"}}
+    {{assets_css "/static/admin/css/admin.css"}}
+
+    <!-- Se houver um plano de fundo de login -->
+    {{if ne .login_config.Background ""}}
+    <style>
+        .login-page{
+            background-color: #ececec;
+            background-image: url({{.login_config.Background}});
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: 50% 50%;
+        }
+    </style>
+    {{end}}
+
+    <script>
+        var adminDebug = {{.debug}};
+    </script>
+
+    {{assets_js "/static/admin/plugins/jquery/jquery.min.js"}}
+    {{assets_js "/static/admin/plugins/bootstrap/js/bootstrap.min.js"}}
+    {{assets_js "/static/admin/plugins/jquery-validation/jquery.validate.min.js"}}
+    {{assets_js "/static/admin/plugins/jquery-validation/localization/messages_zh.min.js"}}
+    {{assets_js "/static/admin/plugins/layer/layer.js"}}
+    {{assets_js "/static/admin/js/admin.js"}}
+
+    <!--[if lt IE 9]>
+    {{assets_js "https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"}}
+    {{assets_js "https://oss.maxcdn.com/respond/1.4.2/respond.min.js"}}
+    <![endif]-->
+
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a>{{.admin.name}}</a>
+    </div>
+    <div class="login-box-body">
+        <p class="login-box-msg">login</p>
+        <form class="dataForm" id="dataForm" action="{{urlfor "AuthController.CheckLogin"}}" method="post">
+            {{ .xsrfdata }}
+            <div class="form-group has-feedback">
+                <input name="username" id="username" autocomplete="off" type="text" class="form-control" value="marcela" placeholder="usuário">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input name="password" id="password" autocomplete="off" type="password" class="form-control" value="" placeholder="senha">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+
+            {{if eq .login_config.Captcha "1"}}
+                {{template "auth/captcha.html" .}}
+            {{end}}
+
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox">
+                        <label>
+                            <input id="remember" name="remember" value="1" type="checkbox"> lembrar
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <button type="submit" id="loginButton" class="btn btn-primary btn-block btn-flat">login</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="browser_warning" style="display: none">
+    <div class=" margin text-center">
+        <p class="text-red ">Por favor, use um navegador moderno (Google Chrome, velocidade 360 ou outro modo de velocidade do navegador doméstico) para operar este plano de fundo!</p>
+        <a class="btn btn-success" target="_blank" href="https://www.google.cn/chrome/" data-toggle="tooltip"
+           title="Clique para baixar o Google Chrome">Google Chrome</a>
+        <a class="btn btn-success" target="_blank" href="https://browser.360.cn/ee/index.html" data-toggle="tooltip"
+           title="Clique para baixar 360 Speed Browser > 360 Speed Browser">
+        <a class="btn btn-success" target="_blank" href="https://browser.qq.com/" title="Clique para baixar o navegador QQ"
+           data-toggle="tooltip">Navegador QQ</a>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#dataForm").validate({
+            rules: {
+                username: {
+                    required: true,
+                    minlength: 2
+                },
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+            },
+            messages: {
+                username: {
+                    required: "por favor, digite o nome de usuário",
+                    minlength: "O comprimento do nome de usuário não pode ser menor que 2"
+                },
+                password: {
+                    required: "Por favor, digite a senha",
+                    minlength: "O comprimento da senha não pode ser inferior a 6"
+                },
+            }
+        });
+        $('#username').focus();
+    });
+
+
+    checkBrowser();
+
+    /*检查浏览器*/
+    function checkBrowser() {
+        if (isIE()) {
+            if(adminDebug){
+                console.log('navegador antigo');
+            }
+            layer.open({
+                type: 1,
+                content: $('#browser_warning').html(),
+                icon: 5,
+                title: 'avisar',
+                area: ['500px', '300px'],
+                closeBtn: 0,
+                moveType: 1,
+                resize: false
+            });
+        } else {
+            if(adminDebug){
+                console.log('navegador moderno');
+            }
+        }
+    }
+
+    function isIE() {
+        return !!window.ActiveXObject || "ActiveXObject" in window;
+    }
+
+</script>
+</body>
+</html>

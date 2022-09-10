@@ -1,0 +1,198 @@
+<!--Página da lista de dados-->
+<section class="content">
+
+    <!--filtro de pesquisa principal-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <form class="form-inline searchForm" id="searchForm" action="/admin/modelo/index" method="GET">
+
+                        <div class="form-group">
+                            <strong>{{.admin.title}} </strong> | Filtrar:
+                        </div>
+
+                        <div class="form-group">
+                            <input value="{{._keywords}}"
+                                   name="_keywords" id="_keywords" class="form-control input-sm"
+                                   placeholder="Nome">
+                        </div>
+
+                        <div class="form-group">
+                            <select name="_order" id="_order" class="form-control input-sm index-order">
+                                <option value="">Ordem p/</option>
+                                <option value="id" {{if compare ._order "id"}}selected {{end}}>ID</option>
+                                <option value="nome" {{if compare ._order "nome"}}selected {{end}}>Nome</option>
+                                <option value="contato_nome" {{if compare ._order "contato_nome"}}selected {{end}}>Contato</option>
+                                <option value="estado" {{if compare ._order "estado"}}selected {{end}}>Estado
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <select name="_by" id="_by" class="form-control input-sm index-order">
+                                <option value="">ordem</option>
+                                <option value="asc" {{if compare ._by "asc"}}selected {{end}}>crescente</option>
+                                <option value="desc" {{if compare ._by "desc"}}selected {{end}}>decrescente</option>
+                            </select>
+                        </div>
+                        <script>
+                            $('#_order').select2();
+                            $('#_by').select2();
+                        </script>
+
+                        <div class="form-group">
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-search"></i> Investigar
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <button onclick="exportData('/admin/modelo/export')" class="btn btn-sm btn-warning exportData" type="button"><i
+                                    class="fa fa-search"></i> exportar
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <button onclick="clearSearchForm()" class="btn btn-sm btn-default" type="button"><i
+                                    class="fa  fa-eraser"></i> limpar filtro
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+
+                <!--topo da lista de dados-->
+                <div class="box-header">
+                    <div>
+                        <a title="Adicionar" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/modelo/add">
+                            <i class="fa fa-plus"></i> Adicionar
+                        </a>
+                        <a class="btn btn-danger btn-sm AjaxButton" 
+                           data-toggle="tooltip" 
+                           title="excluir registros selecionados"
+                           data-confirm-title="Confirmação de registros selecionados" 
+                           data-confirm-content="Tem certeza de que deseja excluir os registros selecionados?"
+                           data-confirm-ok-label="Sim"
+                           data-confirm-button-cancel="Não"
+                           data-id="checked"
+                           data-url="/admin/modelo/del">
+                            <i class="fa fa-trash"></i> excluir
+                        </a>
+                        <a class="btn btn-success btn-sm AjaxButton" 
+                           data-toggle="tooltip" title="Ativar registros selecionados"
+                           data-confirm-title="Ativar" 
+                           data-confirm-content="Tem certeza de que deseja ativar os dados selecionados?" 
+                           data-confirm-button="Sim"
+                           data-id="checked"
+                           data-url="/admin/modelo/enable">
+                            <i class="fa fa-circle"></i> Ativar
+                        </a>
+
+                        <a class="btn btn-warning btn-sm AjaxButton" data-toggle="tooltip" title="Desativar registros selecionados"
+                           data-confirm-title="Desativar" data-confirm-content="Tem certeza de que deseja desativar os registros selecionados?" data-id="checked"
+                           data-url="/admin/modelo/disable">
+                            <i class="fa fa-circle"></i> Desativar
+                        </a>
+
+                        <a class="btn btn-success btn-sm ReloadButton" data-toggle="tooltip" title="atualizar">
+                            <i class="fa fa-refresh"></i> atualizar
+                        </a>
+                    </div>
+                </div>
+
+                <div class="box-body table-responsive">
+                    <table class="table table-hover table-bordered datatable" width="100%">
+                        <thead>
+                        <tr>
+                            <th>
+                                <input id="dataCheckAll" type="checkbox" onclick="checkAll(this)" class="checkbox"
+                                       placeholder="Selecionar/Cancelar">
+                            </th>
+                            <th>Id</th>
+                            <th>Nome</th>
+
+                            <th>Estado</th>
+
+                            <th>Ação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{range $key,$item := .data}}
+                        <tr>
+                            <td>
+                                <input type="checkbox" onclick="checkThis(this)" name="data-checkbox"
+                                       data-id="{{$item.Id}}" class="checkbox data-list-check" value="{{$item.Id}}"
+                                       placeholder="escolher/Cancelar">
+                            </td>
+                            <td>{{$item.Id}}</td>
+                            <td>{{$item.Nome}}</td>
+
+                            <td>{{if eq 1 $item.Estado}} <span class="label label-success">Ativo</span> {{else}} <span class="label label-warning">Inativo</span> {{end}}</td>
+
+                            <td class="td-do">
+                                <a href="/admin/modelo/edit?id={{$item.Id}}"
+                                   class="btn btn-primary btn-xs" title="Alterar" data-toggle="tooltip">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <a class="btn btn-danger btn-xs AjaxButton" data-toggle="tooltip" title="excluir"
+                                   data-id="{{$item.Id}}" 
+                                   data-confirm-title="Confirmação de Exclusão++"
+                                   data-confirm-button-ok="Sim"
+                                   data-confirm-content='Tem certeza de que deseja excluir o modeloe:<br><span class="text-red">{{$item.Nome}}</span>??'
+                                   data-url="/admin/modelo/del">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                                {{if eq 1 $item.Estado}}
+                                <a class="btn btn-warning btn-xs AjaxButton" data-toggle="tooltip" title="Desativar"
+                                   data-id="{{$item.Id}}" data-confirm-title="Confirmar"
+                                   data-confirm-content='Confirma a desativação de: <br> <span class="text-red">{{$item.Nome}}</span> ?'
+                                   data-url="/admin/modelo/disable">
+                                    <i class="fa fa-circle"></i>
+                                </a>
+                                {{else}}
+                                <a class="btn btn-success btn-xs AjaxButton" data-toggle="tooltip" title="Ativar"
+                                   data-id="{{$item.Id}}" data-confirm-title="Confirmar"
+                                   data-confirm-content='Confirma a Ativação de: <br> <span class="text-red">{{$item.Nome}}</span> ?'
+                                   data-url="/admin/modelo/enable">
+                                    <i class="fa fa-circle"></i>
+                                </a>
+                                {{end}}
+
+                            </td>
+                        </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- parte inferior da lista de dados -->
+                {{if ne "" .paginate.BootStrapRenderLink}}
+                <div class="box-footer">
+                    {{ str2html .paginate.BootStrapRenderLink}}
+                    <label class="control-label pull-right" style="margin-right: 10px; font-weight: 100;">
+                        <small>{{.paginate.Total}} linhas</small>&nbsp;
+                        <small>lin/pág</small>
+                        &nbsp;
+                        <select class="input-sm" onchange="changePerPage(this)">
+                            {{range $index, $val := $.admin.per_page_config}}
+                            <option value="{{$val}}" {{if eq $val $.admin.per_page}} selected {{end}}>{{$val}}</option>
+                            {{end}}
+                        </select>
+                        &nbsp;
+                        <small> Páginas</small>
+                    </label>
+                </div>
+                {{end}}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
