@@ -1,0 +1,154 @@
+<style>
+    .nav-title{
+        display: none;
+    }
+</style>
+<div style="margin:10px auto;width: 750px;">
+<form class="layui-form" action="" method="post">
+    <table width="95%">
+        <tr>
+            <td style="width: 50%">
+                <label class="label-micro">NOME</label>
+                <input type="text" name="nome" id="nome"  autocomplete="off" placeholder="nome" class="layui-input form-control field-text" value="{{.paciente.nome}}">
+            </td>
+            <td style="width: 3%"> </td>
+            <td style="width: 25%">
+                <div class="cell">Sexo:</div>
+                <div class="cell">
+                    <label for="sexo_f">
+                        Feminino: <input type="radio" name="sexo" value="F" id="sexo_f" {{ if eq .paciente.sexo "F" }}checked{{ end }} />
+                    </label>
+                    <label for="sexo_m">
+                        Masculino: <input type="radio" name="sexo" value="M" id="sexo_m" {{ if eq .paciente.sexo "M" }}checked{{ end }} />
+                    </label>
+                </div>
+            </td>
+
+            <td style="width: 5%"> </td>
+            <td>
+                <label for="estado" class="col-sm-1 control-label">Ativo</label>
+                <div class="col-sm-2 col-md-2">
+                    <input class="input-switch" id="estado" name="estado" value="1" {{if eq .paciente.estado 1}}checked
+                        {{end}}type="checkbox" />
+                    <input class="switestadoch field-switch" value="{{.paciente.estado }}" hidden />
+                </div>
+                <script>
+                    $('#estado').bootstrapSwitch({
+                        onText: "Sim",
+                        offText: "Não",
+                        onColor: "success",
+                        offColor: "danger",
+                        onSwitchChange: function (event, state) {
+                            $(event.target).closest('.bootstrap-switch').next().val(state ? '1' : '0').change();
+                        }
+                    });
+                </script>            
+            </td>
+        </tr>
+    </table>
+
+    <table width="95%">
+        <tr>
+            <td style="width: 4%">
+                <label class="label-micro">NASCIMENTO</label>
+                <input type="date" name="nascimento" id="nascimento" class="layui-input form-control field-date" value="{{.paciente.nascimento}}" />
+
+                <label class="label-micro">ALTURA</label>
+                <input type="text" name="altura" id="altura" class="layui-input form-control field-number" value="{{.paciente.altura}}" />
+
+                <label class="label-micro">PESO</label>
+                <input type="text" name="peso" id="peso" class="layui-input form-control field-number" value="{{.paciente.peso}}" />
+                <td style="width: 3%"></td>
+                <td style="width: 50%">
+                    <label class="label-micro">EMAIL</label>
+                    <input type="text" name="email" id="email" class="layui-input form-control field-text" value="{{.paciente.email}}" />
+                    <label class="label-micro">TELEFONE</label>
+                    <input type="text" name="telefone" id="telefone" class="layui-input form-control field-text" value="{{.paciente.telefone}}" />
+                </td>
+            </td>
+<!--                 <td style="width: 3%"></td>
+
+            <td style="width: 40%">
+                <label id="upload_img">
+
+                    <img width="200"
+                            height="200" 
+                            src="{{.paciente.imagem}}"
+                            id="paciente-img"
+                            class="layui-upload-img">
+                
+                </label>
+                <input type="text" name="urlImagem" id="urlImagem" autocomplete="off" value="{{.paciente.imagem}}"  class="label-micro">
+            </td> -->
+        </tr>
+    </table>
+
+    <table width="95%">
+        <tr>
+            <td style="width: 40%">
+                <label class="label-micro">LOGRADORO</label>
+                <input type="text" name="logradoro" id="logradoro" class="layui-input form-control field-text" value="{{.paciente.logradoro}}" />
+            </td>
+            <td style="width: 10%">
+                <label class="label-micro">NÚMERO</label>
+                <input type="text" name="numero" id="numero" class="layui-input form-control field-text" value="{{.paciente.numero}}" />
+            </td>
+            <td style="width: 1%"></td>
+            <td style="width: 15%">
+                <label class="label-micro">MUNICÍPIO</label>
+                <input type="text" name="municipio" id="municipio" class="layui-input form-control field-text" value="{{.paciente.municipio}}" />
+            </td>
+            <td style="width: 0.2%"></td>                <td style="width: 1%"></td>
+            <td style="width: 10%">
+                <label class="label-micro">CEP</label>
+                <input type="text" name="cep" id="cep" class="layui-input form-control field-text" value="{{.paciente.cep}}" />
+            </td>
+            <td style="width: 1%"></td> 
+            <td style="width: 7%">
+                <label class="label-micro">UF</label>
+                <select name="uf" id="uf" value="{{.paciente.uf}}">
+                    {{range $key,$item := .uf}}
+                        <option value="{{$item}}" {{if compare $.paciente.uf $item}}selected{{end}}>{{$item}}
+                    {{end}}
+                </select>
+            </td>
+        </tr>
+    </table>
+
+    <input type="hidden" id="id" name="id" value="{{.paciente.id}}">
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="sub">Gravar</button>
+            <button type="reset" class="layui-btn layui-btn-warm">Desfazer</button>
+        </div>
+    </div>
+    </form>
+</div>
+<script>
+var $;
+    layui.config({
+            base : "js/"
+    }).use(['form','element','layer','jquery'],function(){
+        var form = layui.form; 
+        var $ = layui.jquery;
+    
+        form.on('submit(sub)', function(data){
+            var form_data = data.field;
+            $.post('{{urlfor "PacienteController.AjaxSave"}}', form_data, function (out) {
+                if (out.status == 0) {
+                    layer.msg("Operação bem-sucedida",{icon: 1},function () {
+                        window.parent.layer.closeAll();
+                        window.parent.location.reload();
+                    })
+                } else {
+                    layer.msg(out.message)
+                }
+            }, "json");
+            return false;
+        });
+      
+      
+      form.render();
+}); 
+</script>
