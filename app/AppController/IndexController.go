@@ -1,0 +1,18 @@
+package AppController
+
+type IndexController struct {
+	AppBaseController
+}
+
+func (c *IndexController) Index() {
+	c.TplName = "index.html"
+}
+
+func (c *IndexController) Layout() {
+	c.TplName = "app/layout.html"
+}
+
+func (c *IndexController) Main() {
+	c.Display("index")
+	//c.Ctx.WriteString("Este é o conteúdo principal da visita")
+}

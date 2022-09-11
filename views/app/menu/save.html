@@ -1,0 +1,254 @@
+<div class="layui-fluid" lay-title="Combinação de formulários">
+    <div class="layui-card">
+        <div class="layui-card-body" style="padding: 15px;">
+            <form class="layui-form" action="" method="post" lay-filter="form-group">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Barra superior</label>
+                    <div class="layui-input-block">
+                        <label>
+                            <select name="parent_id" lay-verify="required">
+                                [^if .option|len ^]
+                                [^ .option|str2html ^]
+                                [^else^]
+                                <option value="0" selected>Menu de primeiro nível</option>
+                                [^end^]
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <input type="hidden" name="id"
+                       value="[^ .data.Id ^]"
+                >
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Nome do menu</label>
+                    <div class="layui-input-block">
+                        <label>
+                            <input type="text" name="name" lay-verify="required|max30" placeholder="Insira o nome do menu"
+                                   autocomplete="off" value="[^ .data.Name ^]"
+                                   class="layui-input">
+                        </label>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Controlador</label>
+                    <div class="layui-input-block">
+                        <label>
+                            <input type="text" name="controller" lay-verify="required|max30" placeholder="Insira o nome do controlador"
+                                   autocomplete="off" value="[^ .data.Controller ^]"
+                                   class="layui-input">
+                        </label>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">método</label>
+                    <div class="layui-input-block">
+                        <label>
+                            <input type="text" name="action" lay-verify="required|max30" placeholder="Insira o nome do método"
+                                   autocomplete="off" value="[^ .data.Action ^]"
+                                   class="layui-input">
+                        </label>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">parâmetro</label>
+                    <div class="layui-input-block">
+                        <label>
+                            <input type="text" name="param" placeholder="Por favor, insira os parâmetros" lay-verify="max30"
+                                   autocomplete="off" value="[^ .data.Param ^]"
+                                   class="layui-input">
+                        </label>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">ícone</label>
+                    <div class="layui-input-block">
+                        <label>
+                            <input type="text" name="icon" placeholder="Por favor, insira" lay-verify="max50"
+                                   autocomplete="off" value="[^ .data.Icon ^]"
+                                   class="layui-input">
+                        </label>
+                        <div class="layui-inline">
+                            <div class="layui-form-mid layui-word-aux">
+                                <button class="layui-btn layui-btn-sm layui-btn-primary" lay-popup="/sys/icon">
+                                    escolher
+                                </button>
+                                Selecione um ícone
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">Observação</label>
+                    <div class="layui-input-block">
+                        <label>
+                            <textarea name="remark" placeholder="Por favor, insira o conteúdo" lay-verify="max250"
+                                      class="layui-textarea">[^ .data.Remark ^]</textarea>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Estado aberto</label>
+                    <div class="layui-input-block">
+                        <label>
+                            <select name="status">
+                                [^ if .isEdit ^]
+                                [^ if eq .data.Status 0 ^]
+                                <option value="1">Mostrar no menu esquerdo</option>
+                                <option value="0" selected>Esconder no menu esquerdo</option>
+                                [^ else ^]
+                                <option value="1" selected>Mostrar no menu esquerdo</option>
+                                <option value="0">Esconder no menu esquerdo</option>
+                                [^ end ^]
+                                [^ else ^]
+                                <option value="1" selected>Mostrar no menu esquerdo</option>
+                                <option value="0">Esconder no menu esquerdo</option>
+                                [^ end ^]
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">modelo</label>
+                    <div class="layui-input-block">
+                        <label>
+                            <select name="type">
+                                [^ if .isEdit ^]
+                                <option value="1"
+                                        [^ if eq .data.Type 1 ^]
+                                        selected
+                                        [^ end ^]
+                                >Existe uma interface para acessar o menu
+                                </option>
+                                <option value="0"
+                                        [^ if eq .data.Type 2 ^]
+                                        selected
+                                        [^ end ^]
+                                >Nenhum menu de interface acessível
+                                </option>
+                                <option value="0"
+                                        [^ if eq .data.Type 0 ^]
+                                        selected
+                                        [^ end ^]
+                                >Apenas como um menu
+                                </option>
+                                [^ else ^]
+                                <option value="1" selected>Existe uma interface para acessar o menu</option>
+                                <option value="2">Nenhum menu de interface acessível</option>
+                                <option value="0">Apenas como um menu</option>
+                                [^ end ^]
+
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">O módulo ao qual o menu pertence</label>
+                    <div class="layui-input-block">
+                        <label>
+                            <select name="module_belong">
+                                <option value="1"
+                                        [^ if eq .data.ModuleBelong 1 ^]
+                                        selected
+                                        [^ end ^]
+                                >padrão
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Ordenação</label>
+                    <div class="layui-input-block">
+                        <label>
+                            <input type="text" name="list_order" placeholder="Por favor, digite a classificação" autocomplete="off"
+                                   class="layui-input" lay-verify="NonNegativeInteger"
+                                   [^ if .data.ListOrder ^]
+                                   value="[^ .data.ListOrder ^]"
+                                   [^ else ^]
+                                   value="100"
+                                   [^ end ^]>
+                        </label>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="form-group-submit">
+                            <i style="display: none"
+                               class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                                Envie agora
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary">Redefinir</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'form'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , element = layui.element
+            , layer = layui.layer
+            , form = layui.form;
+        form.render(null, 'form-group');
+        var layUrl = $(this)[0].view.containerBody.find(".nepadmin-tabs-item").attr("lay-url")
+        var loading = $(this).find('.layui-icon');
+        if (loading.is(":visible")) return;
+        //Campo de validação
+        form.verify({
+            max30: function (value, item) {
+                if (value.length > 30) {
+                    return "Até 30 caracteres"
+                }
+            },
+            max50: function (value, item) {
+                if (value.length > 50) {
+                    return "Até 50 caracteres"
+                }
+            },
+            max250: function (value, item) {
+                if (value.length > 250) {
+                    return "Até 250 caracteres"
+                }
+            },
+            NonNegativeInteger: [
+                /^\d+$/
+                , 'Deve ser um número inteiro positivo não negativo'
+            ],
+        });
+        loading.show();
+        form.on('submit(form-group-submit)', function (data) {
+            //Quero enviar uma solicitação em segundo plano para fazer login
+            admin.post({
+                api: 'addMenu',
+                type: "post",
+                data: data.field,
+                success: function (res) {
+                    layer.msg(res.msg, {
+                        icon: 1,
+                        time: 800 //2 segundos desligado (se não configurado, o padrão é 3 segundos)
+                    }, function () {
+                        admin.submitToJump(layUrl, res.url)
+                    });
+                },
+                error: function (res) {
+                    layer.msg(res.msg, {
+                        icon: 2,
+                        time: 800 //2 segundos desligado (se não configurado, o padrão é 3 segundos)
+                    }, function () {
+                        loading.hide();
+                    });
+
+                },
+                complete: function () {
+                    //loading.hide();
+                }
+            });
+            return false;
+        });
+    });
+</script>

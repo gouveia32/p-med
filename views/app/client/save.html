@@ -1,0 +1,173 @@
+<div class="layui-fluid" lay-title="Alterando Cliente">
+    <div class="layui-card">
+        <div class="layui-card-body" style="padding: 15px;">
+            <form class="layui-form" action="" method="post" lay-filter="form-group">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Nome</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="nome" lay-verify="required|max120" placeholder="nome"
+                            autocomplete="off" style="width: 75%;" value="[^ .data.Nome ^]"
+                            class="layui-input">
+                    </div>
+                    
+                    <label class="layui-form-label">Razão Social</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="razao_social" lay-verify="max120" placeholder="razão social"
+                            autocomplete="off" style="width: 75%;" value="[^ .data.RazaoSocial ^]"
+                            class="layui-input">
+                    </div>
+                    
+                    <label class="layui-form-label">CNPJ</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="cgc_cpf" lay-verify="max40" placeholder="cnpj"
+                            autocomplete="off" style="width: 25%;" value="[^ .data.CgcCpf ^]"
+                            class="layui-input">
+                    </div>
+                    
+                    <label class="layui-form-label">Inscr.Estadual</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="inscr_estadual" lay-verify="max40" placeholder="inscrição estadual"
+                            autocomplete="off" style="width: 25%;" value="[^ .data.InscrEstadual ^]"
+                            class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Contato</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="contato_funcao" lay-verify="max15" placeholder="função"
+                            autocomplete="off" style="width: 15%;" value="[^ .data.ContatoFuncao ^]"
+                            class="layui-input">
+                        <input type="text" name="contato_nome" lay-verify="max40" placeholder="nome do contato"
+                            autocomplete="off" style="width: 60%;" value="[^ .data.ContatoNome ^]"
+                            class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Telefones</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="telefone1" lay-verify="max20" placeholder="senha"
+                            autocomplete="off" style="width: 20%;" value="[^ .data.Telefone1 ^]"
+                            class="layui-input">
+                        <input type="text" name="telefone2" lay-verify="max20" placeholder="telefone"
+                            autocomplete="off" style="width: 20%;" value="[^ .data.Telefone2 ^]"
+                            class="layui-input">
+                        <input type="text" name="telefone3" lay-verify="max20" placeholder="telefone"
+                            autocomplete="off" style="width: 20%;" value="[^ .data.Telefone3 ^]"
+                            class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Endereço</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="endereco" lay-verify="max20" placeholder="endereço"
+                            autocomplete="off" style="width: 20%;" value="[^ .data.Endereco ^]"
+                            class="layui-input">
+                        <input type="text" name="cidade" lay-verify="max20" placeholder="cidade"
+                            autocomplete="off" style="width: 10%;" value="[^ .data.Cidade ^]"
+                            class="layui-input">
+                        <input type="text" name="uf" lay-verify="max20" placeholder="UF"
+                            autocomplete="off" style="width: 20%;" value="[^ .data.Uf ^]"
+                            class="layui-input">
+                        <input type="text" name="cep" lay-verify="max20" placeholder="cep"
+                            autocomplete="off" style="width: 10%;" value="[^ .data.Cep ^]"
+                            class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <div class="layui-input-block">
+                        <textarea id="L_obs" name="obs" placeholder=" digite aqui ... " class="layui-textarea fly-editor"
+                                  style="height: 100px; width: 200px;">[^ .data.Obs ^]</textarea>
+                    </div>
+                    <label for="L_obs" class="layui-form-label" style="top: -2px;">Observação </label>
+                </div>
+
+            <br>
+
+                <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="form-group-submit">
+                                <i style="display: none"
+                                class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                                Enviar
+                            </button>
+                            <button type="reset" class="layui-btn layui-btn-primary">Restaurar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'form'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , element = layui.element
+            , layer = layui.layer
+            , form = layui.form;
+        form.render(null, 'form-group');
+        var layUrl = $(this)[0].view.containerBody.find(".nepadmin-tabs-item").attr("lay-url")
+        var loading = $(this).find('.layui-icon');
+        if (loading.is(":visible")) return;
+        //Campo de validação
+        form.verify({
+            max15: function (value, item) {
+                if (value.length > 15) {
+                    return "Até 15 caracteres"
+                }
+            },
+            max30: function (value, item) {
+                if (value.length > 30) {
+                    return "Até 30 caracteres"
+                }
+            },
+            max50: function (value, item) {
+                if (value.length > 50) {
+                    return "Até 50 caracteres"
+                }
+            },
+            max250: function (value, item) {
+                if (value.length > 250) {
+                    return "Até 250 caracteres"
+                }
+            },
+            NonNegativeInteger: [
+                /^\d+$/
+                , 'Deve ser um número inteiro positivo não negativo'
+            ],
+        });
+        loading.show();
+        form.on('submit(form-group-submit)', function (data) {
+            //Quero enviar uma solicitação em segundo plano para fazer login
+            admin.post({
+                api: 'addClient',
+                type: "post",
+                data: data.field,
+                success: function (res) {
+                    layer.msg(res.msg, {
+                        icon: 1,
+                        time: 800 //2 segundos desligado (se não estiver configurado, o padrão é 3 segundos)
+                    }, function () {
+                        admin.submitToJump(layUrl, res.url)
+                    });
+                },
+                error: function (res) {
+                    layer.msg(res.msg, {
+                        icon: 2,
+                        time: 800 //2 segundos desligado (se não estiver configurado, o padrão é 3 segundos)
+                    }, function () {
+                        loading.hide();
+                    });
+                },
+                complete: function () {
+                    loading.hide();
+                }
+            });
+            return false;
+        });
+    });
+</script>

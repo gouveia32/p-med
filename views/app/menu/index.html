@@ -1,0 +1,167 @@
+<div class="layui-fluid" id="VIEW-list-table" lay-title="Lista de menu">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body nepadmin-table-full">
+                    <div class="layui-btn-container nepadmin-pad-t10 nepadmin-pad-l10">
+                        <div class="layui-btn layui-btn-sm layui-btn-primary table-action layui-btn-xstree"
+                             onclick="openAll();">Expandir ou recolher tudo
+                        </div>
+                    </div>
+                </div>
+                <div class="dBody">
+                    <table class="layui-hide" id="treeTable" lay-filter="treeTable"></table>
+                </div>
+            </div>
+            <table class="layui-table layui-form" id="tree-table" lay-size="sm"></table>
+        </div>
+    </div>
+</div>
+<script>
+    var editObj = null, ptable = null, treeGrid = null, tableId = 'treeTable', layer = null;
+    layui.use(['jquery', 'treeGrid', 'layer', 'admin'], function () {
+        var $ = layui.jquery;
+        treeGrid = layui.treeGrid;//Muito importante
+        layer = layui.layer;
+        admin = layui.admin;
+        //Atualize a página atual
+        layui.view.tab.refresh()
+        ptable = treeGrid.render({
+            id: tableId
+            , elem: '#' + tableId
+            , url: 'menu/lists'
+            , cellMinWidth: 100
+            , idField: 'mid'//Campo obrigatório
+            , treeId: 'mid'//Nome do campo de id da árvore
+            , treeUpId: 'parent_id'//Nome do campo de id pai da árvore
+            , treeShowName: 'title'//Campos exibidos em forma de árvore
+            , heightRemove: [".dHead", 10]//A altura não é calculada, a mesa está configurada com uma altura fixa, este item não tem efeito
+            , height: '100%'
+            , isFilter: false
+            , iconOpen: true//Se deve exibir o ícone [exibição por padrão]
+            , isOpenDefault: false//Se o nó é expandido ou reduzido por padrão [expandido por padrão]
+            , loading: true
+            , method: 'post'
+            , isPage: false
+            , response: {
+                statusCode: 200,
+            }
+            , cols: [[
+                {type: 'checkbox', sort: true},
+                {field: 'mid', width: 100, title: 'id',}
+                , {field: 'list_order', width: 100, title: 'Ordenação', type: "text"}
+                , {field: 'title', title: 'Nome do menu',}
+                , {
+                    field: 'status', title: 'Estado', templet: function (d) {
+                        var status = {
+                            1: {title: 'ativado', color: 'blue'},
+                            0: {title: 'Desativado', color: 'red'},
+                        }[d.status];
+                        return '<span class="layui-badge layui-bg-' + status.color + '">' + status.title + '</span>'
+                    }
+                }
+                , {
+                    width: 300, title: 'Ação', align: 'center'/*toolbar: '#barDemo'*/
+                    , templet: function (d) {
+                        var html = '';
+                        var addBtn = '<a class="layui-btn layui-btn-sm  table-action" lay-event="add">Novo</a>';
+                        if (d.lay_level >= 3) {
+                            addBtn = '<a class="layui-btn layui-btn-sm  table-action layui-btn-disabled" lay-event="add">Novo</a>'
+                        }
+                        var editBtn = '<a class="layui-btn layui-btn-sm layui-btn-primary table-action" lay-event="edit">Alterar</a>';
+                        var delBtn = '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">Excluir</a>';
+                        return addBtn + editBtn + delBtn;
+                    }
+                }
+            ]]
+        });
+
+        treeGrid.on('tool(' + tableId + ')', function (obj) {
+            switch (obj.event) {
+                case "del":
+                    del(obj);
+                    break;
+                case "edit":
+                    edit(obj);
+                    break;
+                case "add":
+                    add(obj);
+                    break;
+            }
+        });
+    });
+
+
+    function del(obj) {
+        layer.confirm("Tem certeza que deseja excluir? Se houver nós de nível inferior estes serão exluídos!",
+         {icon: 3,title: 'Confirme', btn: ["Sim","Não"]},
+            function (index) {//Sim
+                admin.post({
+                    api: "delMenu",
+                    data: {id: obj.data.mid},
+                    success: function (res) {
+                        layer.msg(res.msg, {
+                            icon: 1,
+                            time: 800 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            layui.view.tab.refresh();
+                            obj.del();
+                            layer.close(index);
+                        });
+                    },
+                    error: function (res) {
+                        layer.msg(res.msg, {
+                            icon: 2,
+                            time: 800 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            layui.view.tab.refresh();
+                        });
+                    },
+                })
+            }, function (index) {//取消回调
+                layer.close(index);
+            }
+        );
+    }
+
+    function add(obj) {
+        if (obj.data.lay_level >= 3) {
+            return false
+        }
+        //页面跳转到添加页面
+        admin.navigate("/menu/save?parent_id=" + obj.data.mid);
+    }
+    function edit(obj) {
+        //页面跳转到添加页面
+        admin.navigate("/menu/save?id=" + obj.data.mid);
+    }
+
+    function openorclose() {
+        var map = treeGrid.getDataMap(tableId);
+        var o = map['102'];
+        treeGrid.treeNodeOpen(tableId, o, !o[treeGrid.config.cols.isOpen]);
+    }
+
+
+    function openAll() {
+        var treedata = treeGrid.getDataTreeList(tableId);
+        treeGrid.treeOpenAll(tableId, !treedata[0][treeGrid.config.cols.isOpen]);
+    }
+
+    function getCheckData() {
+        var checkStatus = treeGrid.checkStatus(tableId)
+            , data = checkStatus.data;
+        layer.alert(JSON.stringify(data));
+    }
+
+    function radioStatus() {
+        var data = treeGrid.radioStatus(tableId)
+        layer.alert(JSON.stringify(data));
+    }
+
+    function getCheckLength() {
+        var checkStatus = treeGrid.checkStatus(tableId)
+            , data = checkStatus.data;
+        layer.msg('Selecionado：' + data.length + ' 个');
+    }
+</script>
