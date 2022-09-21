@@ -13,12 +13,12 @@ mysql:
   username: 'p-med'
   password: 'ebtaju'
 # mysql connect configuration  
-mysql:
-  host: 'g84t6zfpijzwx08q.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'
-  port: 3306
-  database: 'nxd6pqn7as45yx27'
-  username: 'xu43grcjibajtipx'
-  password: 'o5ukik0qf5qgu5ax'
+#mysql:
+#  host: 'g84t6zfpijzwx08q.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'
+#  port: 3306
+#  database: 'nxd6pqn7as45yx27'
+#  username: 'xu43grcjibajtipx'
+#  password: 'o5ukik0qf5qgu5ax'
 
 # other configuration
 other:
