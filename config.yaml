@@ -7,7 +7,7 @@ redis:
 
 # mysql connect gcp
 mysql:
-  host: '127.0.0.1'
+  host: '35.199.105.2'
   port: 3306
   database: 'p-med'
   username: 'p-med'
