@@ -6,12 +6,21 @@ redis:
   password: ''
 
 # mysql connect gcp
+#mysql:
+#  host: '35.199.105.2'
+#  port: 3306
+#  database: 'p-med'
+#  username: 'p-med'
+#  password: 'ebtaju'
+
 mysql:
-  host: '35.199.105.2'
+  host: 'localhost'
   port: 3306
   database: 'p-med'
-  username: 'p-med'
+  username: 'root'
   password: 'ebtaju'
+
+
 # mysql connect configuration  
 #mysql:
 #  host: 'g84t6zfpijzwx08q.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'
