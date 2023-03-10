@@ -11,6 +11,7 @@ import (
 type Nota struct {
 	Id            int    `form:"id"        		alias:"ID" `
 	Nome          string `form:"nome"      		alias:"Nome"    		valid:"Required;MaxSize(120)"`
+	Acompanhante  string  `form:"acompanhante"    		alias:"Acompanhante"  		valid:"MaxSize(120)"`
 	TipoNota      int    `form:"tipo_nota"`
 	AtendimentoId int    `form:"atendimento_id" 	validate:"min:0"`
 	Conteudo      string `form:"conteudo"   		alias:"Conteudo"`

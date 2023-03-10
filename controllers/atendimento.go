@@ -240,6 +240,7 @@ func (uc *AtendimentoController) GetNode() {
 		row["NotaId"] = nota.Id
 		row["AtendId"] = nota.AtendimentoId
 		row["Nome"] = nota.Nome
+		row["Acompanhante"] = nota.Acompanhante
 		row["Conteudo"] = nota.Conteudo
 		row["nota"] = nota
 
@@ -263,6 +264,7 @@ func (uc *AtendimentoController) GetNode() {
 		row["NotaId"] = 0
 		row["TipoNota"] = 0
 		row["Nome"] = atendimento.Nome
+		row["Acompanhante"] = atendimento.Acompanhante
 		row["Conteudo"] = atendimento.Conteudo
 		row["nota"] = atendimento
 
@@ -323,6 +325,7 @@ func (uc *AtendimentoController) EditPaciente() {
 	row := make(map[string]interface{})
 	row["id"] = paciente.Id
 	row["nome"] = paciente.Nome
+	row["acompanhamente"] = paciente.Acompanhante
 	row["sexo"] = paciente.Sexo
 	row["imagem"] = paciente.Imagem
 	row["logradoro"] = paciente.Logradoro

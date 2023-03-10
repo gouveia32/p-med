@@ -8,6 +8,7 @@ type PacienteForm struct {
 	Nome          string  `form:"nome"      		alias:"Nome"    		valid:"Required;MaxSize(120)"`
 	Sexo          string  `form:"sexo"	alias:"Sexo"	valid:"MaxSize(1)"`
 	Nascimento    string  `form:"nascimento" description:"Data de Nascimento" json:"nascimento"`
+	Acompanhante  string  `form:"acompanhante"    		alias:"Acompanhante"  		valid:"MaxSize(120)"`
 	Email         string  `form:"email"    			alias:"email"  			valid:"MaxSize(60)"`
 	Telefone      string  `form:"telefone"    		alias:"Telefone"  		valid:"MaxSize(20)"`
 	Logradoro     string  `form:"logradoro"    		alias:"logradoro"  		valid:"MaxSize(100)"`

@@ -13,6 +13,7 @@ type Paciente struct {
 	Nome       string `form:"nome"      		alias:"Nome"    		valid:"Required;MaxSize(120)"`
 	Sexo       string `form:"sexo"	alias:"Sexo"	valid:"MaxSize(1)"`
 	Nascimento string `orm:"column(nascimento);size(10);default(0)" description:"Data de Nascimento" json:"nascimento"`
+	Acompanhante     string  `form:"acompanhante"    		alias:"acompanhante"  		valid:"MaxSize(120)"`
 	//Nascimento    time.Time `orm:"type(datetime)"`
 	Email         string  `form:"email"    			alias:"email"  			valid:"MaxSize(60)"`
 	Telefone      string  `form:"telefone"    		alias:"Telefone"  		valid:"MaxSize(20)"`

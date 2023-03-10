@@ -49,6 +49,16 @@
 
     <table width="95%">
         <tr>
+            <td style="width: 80%">
+                <label class="label-micro">ACOMPANHANTE</label>
+                <input type="text" name="acompanhante" id="acompanhante"  autocomplete="off" placeholder="acompanhante" class="layui-input form-control field-text" value="{{.paciente.acompanhante}}">
+            </td>
+            <td style="width: 3%"> </td>
+        </tr>
+    </table>
+
+    <table width="95%">
+        <tr>
             <td style="width: 4%">
                 <label class="label-micro">NASCIMENTO</label>
                 <input type="date" name="nascimento" id="nascimento" class="layui-input form-control field-date" value="{{.paciente.nascimento}}" />

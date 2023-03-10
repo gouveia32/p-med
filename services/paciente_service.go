@@ -49,6 +49,7 @@ func (*PacienteService) Create(form *formvalidate.PacienteForm) int {
 
 	paciente := models.Paciente{
 		Nome: form.Nome,
+		Acompanhante: form.Acompanhante,
 
 		Sexo:       form.Sexo,
 		Logradoro:  form.Logradoro,
@@ -95,6 +96,7 @@ func (*PacienteService) Update(form *formvalidate.PacienteForm) int {
 		//
 		paciente.Nome = form.Nome
 		paciente.Sexo = form.Sexo
+		paciente.Acompanhante = form.Acompanhante
 		paciente.Logradoro = form.Logradoro
 		paciente.Municipio = form.Municipio
 		paciente.Numero = form.Numero

@@ -42,7 +42,7 @@
     function preview(oper) {
         if (oper < 10){
             bdhtml=window.document.body.innerHTML;// Get the... Of the current page html Code
-            sprnstr='<div quill';// Set print start area
+            sprnstr='<form class=';// Set print start area
             eprnstr='</form>';// Set print end area
             prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr)); // Take back... From the start code html
             prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr)+7);// Take... Forward from the end code html

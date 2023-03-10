@@ -143,6 +143,7 @@ func (*AtendimentoService) Update(form *formvalidate.AtendimentoForm) int {
 	if o.Read(&atendimento) == nil {
 		//
 		atendimento.Nome = form.Nome
+		atendimento.Acompanhante = form.Acompanhante
 		atendimento.Conteudo = form.Conteudo
 		atendimento.CorId = form.CorId
 		atendimento.PacienteId = form.PacienteId
