@@ -41,7 +41,7 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 				campo.Resposta = w3[1]
 			} else {
 				campo.Tipo = w3[0] //define multiplas respostas
-				campo.Resposta = ""
+				campo.Resposta = w3[0]
 			}
 		}
 	}

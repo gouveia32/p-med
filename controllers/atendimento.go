@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	//"fmt"
+	"fmt"
 
 	"github.com/adam-hanna/arrayOperations"
 	"github.com/gookit/validate"
@@ -229,6 +229,7 @@ func (uc *AtendimentoController) GetNode() {
 	if paciente_id > 0 {
 		pacienteService.PacienteChangeNoSelecionado(int64(paciente_id), int64(id))
 	}
+
 	// Verifica primeiro se é nota
 	n_id, _ := uc.GetInt("NotaId", 0)
 	if (n_id) != 0 {
@@ -239,6 +240,7 @@ func (uc *AtendimentoController) GetNode() {
 		row["id"] = nota.Id
 		row["TipoNota"] = nota.TipoNota
 		row["NotaId"] = nota.Id
+
 		row["AtendId"] = nota.AtendimentoId
 		row["Nome"] = nota.Nome
 		row["Conteudo"] = nota.Conteudo
@@ -278,7 +280,7 @@ func (uc *AtendimentoController) GetNode() {
 
 		row["idAtual"] = id
 	}
-	
+
 	uc.Data["json"] = row
 	uc.ServeJSON()
 }
@@ -299,10 +301,16 @@ func (uc *AtendimentoController) AjusteConteudo() {
 		response.ErrorWithMessage(v.Errors.One(), uc.Ctx)
 	}
 
+
 	row := make(map[string]interface{})
 	conteudo := uc.GetString("conteudo")
+	//fmt.Println("Conteudo")
+	fmt.Println(notaForm)
+	//> Sim <
 
-	row["conteudo"] = conteudo + "<H1>TESTE</H1>"
+	result := strings.ReplaceAll(conteudo, "id=\"febre\" onchange=\"atualiza(this.id,this,this.value)\"> Sim <", "id=\"febre\" onchange=\"atualiza(this.id,this,this.value)\"> [Sim] <")
+
+	row["conteudo"] = result
 
 	uc.Data["json"] = row
 	uc.ServeJSON()

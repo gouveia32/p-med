@@ -52,6 +52,7 @@ func (*CorService) GetCorById(id int) *models.Cor {
 	o := orm.NewOrm()
 	cor := models.Cor{Id: id}
 	err := o.Read(&cor)
+
 	if err != nil {
 		return nil
 	}

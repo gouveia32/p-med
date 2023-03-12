@@ -3,7 +3,12 @@
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet"> 
 <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
 <!--<div class="layui-inline" title=" Imprimir " onclick=preview(1) ><i class="layui-icon layui-icon-print" style="font-size: 30px; color: #1E9FFF;">&#xe621;</i></div>-->
-<button type="button" onclick=preview(1) class="layui-icon layui-icon-print"><i class="fa fa-bolt"></i> Imprimir</button>
+<form>
+    <input type="checkbox" id="cabecalho" name="cabecalho" checked >
+    <label>Incluir dados do Paciente</label>
+    <button type="button" onclick=preview(cabecalho.checked) class="layui-icon layui-icon-print"><i class="fa fa-bolt"></i> Imprimir</button>
+</form>
+
 
 <form class="layui-form" action="" method="post" >
     <div>
@@ -37,21 +42,25 @@
 
   </script>
 
-<script src="lib/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/layui/layui.js?s=36"></script>
 <script language="javascript">
+
     function preview(oper) {
-        if (oper < 10){
-            bdhtml=window.document.body.innerHTML;// Get the... Of the current page html Code
+        /* console.log (oper); */
+        
+        bdhtml=window.document.body.innerHTML;// Get the... Of the current page html Code
+        sprnstr='<div quill-editor-toolbar';// Set print start area
+        if (oper) {
             sprnstr='<form class=';// Set print start area
-            eprnstr='</form>';// Set print end area
-            prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr)); // Take back... From the start code html
-            prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr)+7);// Take... Forward from the end code html
-            window.document.body.innerHTML=prnhtml;
-            window.print();
-            window.document.body.innerHTML=bdhtml;
-        } else {
-            window.print();
         }
+
+        eprnstr='</form>';// Set print end area
+        prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr)); // Take back... From the start code html
+        prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr)+7);// Take... Forward from the end code html
+        window.document.body.innerHTML=prnhtml;
+        window.print();
+        window.document.body.innerHTML=bdhtml;
+
     }
 </script>
 

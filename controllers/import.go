@@ -3,6 +3,7 @@ package controllers
 import (
 	"p-med/models"
 	"p-med/services"
+	//"fmt"
 
 	"time"
 )
@@ -55,11 +56,13 @@ func (uc *ImportController) Receita() {
 			modeloService.Ajustes(modelo, campos)
 		}
 
+		//fmt.Println(campos)
 		uc.Data["Campos"] = campos
 		uc.Data["Modelo"] = modelo
 	}
 
 	if nomeModelo == "Consulta" {
+
 		uc.TplName = "import/consulta.tpl"
 	} else {
 		uc.TplName = "import/receita.html"

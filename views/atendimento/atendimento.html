@@ -243,15 +243,19 @@
                                                 //alert(json_data.innerHTML);
 
                                                 var form_data = $("form").serialize();
-                                                console.log(form_data);
+                                                //console.log(form_data);
                                                 $.post('{{urlfor "AtendimentoController.AjusteConteudo"}}', form_data, function (out) {
-                                                    if (out.code > 0) {
+                                                    //console.log("OUT")
+                                                    //console.log(out.conteudo);
+                                                    if (out.centeudo != "") {
                                                         document.documentElement.style.cursor = 'default';
                                                         //alert("gravado");
                                     
-                                                        layer.msg("Gravado com sucesso!",{icon: 1},function () {
+                                                        quill.root.innerHTML = out.conteudo
+                                                        
+                                                        /* layer.msg("Gravado com sucesso!",{icon: 1},function () {
                                                             window.location.reload();
-                                                        });
+                                                        }); */
                                                     } else {
                                                         layer.msg(out.message)
                                                     }

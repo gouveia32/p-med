@@ -95,7 +95,9 @@ func (*NotaService) Create(form *formvalidate.NotaForm) int {
 func (*NotaService) GetNotaById(id int) *models.Nota {
 	o := orm.NewOrm()
 	nota := models.Nota{Id: id}
+
 	err := o.Read(&nota)
+
 	if err != nil {
 		return nil
 	}

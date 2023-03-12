@@ -72,12 +72,7 @@ func (*ModeloService) Ajustes(modelo *models.Modelo, campos []*models.Campo) str
 	if err != nil {
 		panic(err)
 	}
-	// close fo on exit and check for its returned error
-	defer func() {
-		if err := fo.Close(); err != nil {
-			panic(err)
-		}
-	}()
+
 
 	//processar o arquivo
 	strOriginal := "<section class='content'>" +
@@ -122,6 +117,8 @@ func (*ModeloService) Ajustes(modelo *models.Modelo, campos []*models.Campo) str
 				cmd +
 				strOriginal[p1+len(v.Original)+4:]
 		}
+		//fmt.Println(strOriginal)
+
 	}
 	strOriginal += "	</form>" +
 		"</section>" +
@@ -150,9 +147,20 @@ func (*ModeloService) Ajustes(modelo *models.Modelo, campos []*models.Campo) str
 		"</script>"
 
 	// write a chunk
-	if _, err := fo.Write([]byte(strOriginal)); err != nil {
+
+	_, err = fo.WriteString(strOriginal)
+
+	if err != nil {
 		panic(err)
 	}
+
+	//fmt.Println(strOriginal)
+	// close fo on exit and check for its returned error
+	defer func() {
+		if err := fo.Close(); err != nil {
+			panic(err)
+		}
+	}()
 
 	return strOriginal
 }

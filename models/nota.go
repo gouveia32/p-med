@@ -9,17 +9,16 @@ import (
 )
 
 type Nota struct {
-	Id            int    `form:"id"        		alias:"ID" `
-	Nome          string `form:"nome"      		alias:"Nome"    		valid:"Required;MaxSize(120)"`
-	Acompanhante  string  `form:"acompanhante"    		alias:"Acompanhante"  		valid:"MaxSize(120)"`
-	TipoNota      int    `form:"tipo_nota"`
-	AtendimentoId int    `form:"atendimento_id" 	validate:"min:0"`
-	Conteudo      string `form:"conteudo"   		alias:"Conteudo"`
-	CorId         int    `form:"cor_id"`
-	EtiquetaId    int    `form:"etiqueta_id" 		validate:"min:0"`
-	CriadoEm      int    `form:"criado_em"`
-	AlteradoEm    int    `form:"alterado_em"`
-	Estado        int8   `form:"estado"    		alias:"Estado"`
+	Id            int    	`form:"id"        		alias:"ID" `
+	Nome          string 	`form:"nome"      		alias:"Nome"    		valid:"Required;MaxSize(120)"`
+	TipoNota      int    	`form:"tipo_nota"`
+	AtendimentoId int    	`form:"atendimento_id" 	validate:"min:0"`
+	Conteudo      string 	`form:"conteudo"   		alias:"Conteudo"`
+	CorId         int    	`form:"cor_id"`
+	EtiquetaId    int    	`form:"etiqueta_id" 	validate:"min:0"`
+	CriadoEm      int    	`form:"criado_em"`
+	AlteradoEm    int    	`form:"alterado_em"`
+	Estado        int8   	`form:"estado"    		alias:"Estado"`
 }
 
 // TableName
