@@ -6,6 +6,7 @@ import (
 	"p-med/models"
 	"p-med/utils/page"
 	"time"
+	"fmt"
 
 	"github.com/beego/beego/v2/client/orm"
 )
@@ -121,7 +122,11 @@ func (*NotaService) Update(form *formvalidate.NotaForm) int {
 
 		nota.Estado = 1
 
+
 		num, err := o.Update(&nota)
+
+		fmt.Println("nota:")
+		fmt.Println(nota.Nome)
 
 		if err == nil {
 			return int(num)

@@ -235,27 +235,23 @@
                                                 $("form[name=form]").find("input[name=conteudo]").val(json_data.quill.container.innerHTML);
                                                 quill.root.innerHTML = json_data.quill.root.innerHTML;
                                             } else {
-                                                var json_data = $(layero).find("iframe").contents().find("section")[0];
+                                                //var json_data = $(layero).find("iframe").contents().find("section")[0];
 
-                                                $("form[name=form]").find("input[name=conteudo]").val(json_data.innerHTML);
-                                                quill.root.innerHTML = json_data.innerHTML;
+                                                //console.log(json_data);
+
+                                                //$("form[name=form]").find("input[name=conteudo]").val(json_data.innerHTML);
+                                                //quill.root.innerHTML = json_data.innerHTML;
                                                 
-                                                //alert(json_data.innerHTML);
-
-                                                var form_data = $("form").serialize();
-                                                //console.log(form_data);
+                                                var form_data = $("form[name=form]").find("input[name=conteudo]").serialize();
+                                                console.log(form_data);
                                                 $.post('{{urlfor "AtendimentoController.AjusteConteudo"}}', form_data, function (out) {
                                                     //console.log("OUT")
                                                     //console.log(out.conteudo);
                                                     if (out.centeudo != "") {
                                                         document.documentElement.style.cursor = 'default';
-                                                        //alert("gravado");
-                                    
+                                                        //alert("gravado");                                    
                                                         quill.root.innerHTML = out.conteudo
                                                         
-                                                        /* layer.msg("Gravado com sucesso!",{icon: 1},function () {
-                                                            window.location.reload();
-                                                        }); */
                                                     } else {
                                                         layer.msg(out.message)
                                                     }

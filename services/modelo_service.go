@@ -78,12 +78,12 @@ func (*ModeloService) Ajustes(modelo *models.Modelo, campos []*models.Campo) str
 	strOriginal := "<section class='content'>" +
 		"<form id='form' name='form' class='form-horizontal dataForm' action='/admin/import/consulta' method='post'	enctype='multipart/form-data'>" +
 		"	<label class='label-micro'>Paciente: {{.paciente.Nome}}</label>" +
-		"	<button type='submit' class='btn flat btn-info dataFormSubmit toolTop'>" +
+/* 		"	<button type='submit' class='btn flat btn-info dataFormSubmit toolTop'>" +
 		"		Processar" +
 		"	</button>" +
 		"	<button type='reset' class='btn flat btn-default dataFormReset'>" +
 		"		Restaurar" +
-		"	</button>" +
+		"	</button>" + */
 		"	<hr>" + modelo.Detalhe
 
 	for i, v := range campos {

@@ -143,6 +143,7 @@ func (uc *NotaController) Update() {
 	var notaService services.NotaService
 	num := notaService.Update(&notaForm)
 
+	
 	if num > 0 {
 		response.Success(uc.Ctx)
 	} else {

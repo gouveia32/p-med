@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"fmt"
+	//"fmt"
 
 	"github.com/adam-hanna/arrayOperations"
 	"github.com/gookit/validate"
@@ -289,7 +289,7 @@ func (uc *AtendimentoController) GetNode() {
    AjusteConteudo
 */
 func (uc *AtendimentoController) AjusteConteudo() {
-	var notaForm formvalidate.NotaForm
+/* 	var notaForm formvalidate.NotaForm
 
 	if err := uc.ParseForm(&notaForm); err != nil {
 		response.ErrorWithMessage(err.Error(), uc.Ctx)
@@ -300,15 +300,17 @@ func (uc *AtendimentoController) AjusteConteudo() {
 	if !v.Validate() {
 		response.ErrorWithMessage(v.Errors.One(), uc.Ctx)
 	}
-
+ */
 
 	row := make(map[string]interface{})
 	conteudo := uc.GetString("conteudo")
-	//fmt.Println("Conteudo")
-	fmt.Println(notaForm)
+
+	//fmt.Println(notaForm)
 	//> Sim <
 
 	result := strings.ReplaceAll(conteudo, "id=\"febre\" onchange=\"atualiza(this.id,this,this.value)\"> Sim <", "id=\"febre\" onchange=\"atualiza(this.id,this,this.value)\"> [Sim] <")
+
+	//fmt.Println(result)
 
 	row["conteudo"] = result
 
