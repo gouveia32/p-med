@@ -67,6 +67,7 @@ func (*ModeloService) GetModeloById(id int64) *models.Modelo {
 // Ajustes
 func (*ModeloService) Ajustes(modelo *models.Modelo, campos []*models.Campo) string {
 
+	return "";
 	// open output file
 	fo, err := os.Create("views/import/consulta.tpl")
 	if err != nil {
@@ -75,16 +76,17 @@ func (*ModeloService) Ajustes(modelo *models.Modelo, campos []*models.Campo) str
 
 
 	//processar o arquivo
-	strOriginal := "<section class='content'>" +
-		"<form id='form' name='form' class='form-horizontal dataForm' action='/admin/import/consulta' method='post'	enctype='multipart/form-data'>" +
-		"	<label class='label-micro'>Paciente: {{.paciente.Nome}}</label>" +
-/* 		"	<button type='submit' class='btn flat btn-info dataFormSubmit toolTop'>" +
-		"		Processar" +
-		"	</button>" +
-		"	<button type='reset' class='btn flat btn-default dataFormReset'>" +
-		"		Restaurar" +
-		"	</button>" + */
-		"	<hr>" + modelo.Detalhe
+	strOriginal := 
+		"<section class='content'>" +
+		"	<form id='form' name='form' class='form-horizontal dataForm' action='/admin/import/consulta' method='post'	enctype='multipart/form-data'>" +
+		"		<label class='label-micro'>Paciente: {{.paciente.Nome}}</label>" +
+/* 		"		<button type='submit' class='btn flat btn-info dataFormSubmit toolTop'>" +
+		"			Processar" +
+		"		</button>" +
+		"		<button type='reset' class='btn flat btn-default dataFormReset'>" +
+		"			Restaurar" +
+		"		</button>" + */
+		"		<hr>" + modelo.Detalhe
 
 	for i, v := range campos {
 		switch v.Tipo {
@@ -97,8 +99,8 @@ func (*ModeloService) Ajustes(modelo *models.Modelo, campos []*models.Campo) str
 				cmd +
 				strOriginal[p1+len(v.Original)+4:]
 		case "texto":
-			cmd := fmt.Sprintf("<input type='text' title='%s' name='cpo%s' value='%s' ></input>",
-				v.Descricao, v.Nome, v.Resposta)
+			cmd := fmt.Sprintf("<input type='text' title='%s' name='cpo%s'></input>",
+				v.Descricao, v.Nome)
 
 			p1 := strings.Index(strOriginal, v.Original) - 2 // desconta [[
 			strOriginal = strOriginal[:p1] +
@@ -121,28 +123,25 @@ func (*ModeloService) Ajustes(modelo *models.Modelo, campos []*models.Campo) str
 
 	}
 	strOriginal += 
+		"	</form>" +
+		"</section>" +
 		"<script src='/static/layui/layui.js?s=36'></script>" +
 		"<script language='javascript'>" +
-		"var $,form;" +
+		"	var $,form;" +
 
-		"layui.config({" +
-		"base : 'js/'" +
-		"}).use(['form','element','layer','jquery'],function(){" +
-		"form = layui.form;" +
-		"$ = layui.jquery;" +
+		"	layui.config( {" +
+		"		base : 'js/'" +
+		"	}).use(['form','element','layer','jquery'],function() {" +
+		"		form = layui.form;" +
+		"		$ = layui.jquery;" +
+		"	});" +
 
-		"});" +
+		"	function atualiza(name,value) {" +
+		"		$('form[name=form]').find('input[name=' + name + ']').val(value);" +
+		"			console.log(name);" +
+		"			console.log(value);" +
+		"	}" +
 
-		"function atualiza(name,value) {" +
-		"$('form[name=form]').find('input[name=' + name + ']').val(1);" +
-
-		"	console.log(name);" +
-		"	console.log(value);" +
-
-		"}" +
-		"$('.toolTop').click(function () {" +
-		"alert('Estou aqui...');" +
-		"});" +
 		"</script>"
 
 	// write a chunk

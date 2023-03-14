@@ -243,7 +243,7 @@
                                                 //quill.root.innerHTML = json_data.innerHTML;
                                                 
                                                 var form_data = $("form[name=form]").find("input[name=conteudo]").serialize();
-                                                console.log(form_data);
+                                                //console.log(form_data);
                                                 $.post('{{urlfor "AtendimentoController.AjusteConteudo"}}', form_data, function (out) {
                                                     //console.log("OUT")
                                                     //console.log(out.conteudo);

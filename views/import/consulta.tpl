@@ -1,5 +1,13 @@
 <section class='content'>
-    <form id='form' name='form' class='form-horizontal dataForm' action='/admin/import/consulta' method='post'	enctype='multipart/form-data'>	<label class='label-micro'>Paciente: {{.paciente.Nome}}</label>	<hr><h2 class="ql-align-center"><strong><u>Consulta</u></strong></h2><p class="ql-align-center"><br></p><p><strong>Anaminese:</strong></p><ol><li>Tem <strong>Febre? </strong> 
+    <form id='form' name='form' class='form-horizontal dataForm' action='/admin/import/consulta' method='post'	enctype='multipart/form-data'>	
+    <label class='label-micro'>Paciente: {{.paciente.Nome}}</label>	
+    <button type='button' class='btn flat btn-info' onclick="tableToExcel('copyTable', 'Player_scores')">
+		Processar
+	</button>
+	<button type='reset' class='btn flat btn-default dataFormReset'>
+		Restaurar
+	</button>
+    <hr><h2 class="ql-align-center"><strong><u>Consulta</u></strong></h2><p class="ql-align-center"><br></p><p><strong>Anaminese:</strong></p><ol><li>Tem <strong>Febre? </strong> 
         <input type='radio' title='Tem Febre' name='cpo0' id='cpo00' onchange='atualiza(this.name,this.value)' > Sim </input>
         <input type='radio' title='Tem Febre' name='cpo0' id='cpo01' onchange='atualiza(this.name,this.value)' > Não </input>
         </li><li><strong>Diarréia?   </strong> 
@@ -23,13 +31,40 @@ layui.config({
         form = layui.form;
         $ = layui.jquery;
 });
+
 function atualiza(name,value) {
     $('form[name=form]').find('input[name=' + name + ']').val(1);	
-        console.log(name);	
-        console.log(value);
+    console.log(name);	
+    console.log(value);
+}
+
+var tableToExcel = (function() {
+  
+  var uri = 'data:application/vnd.ms-excel;base64,',
+    template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}<\/x:Name><x:WorksheetOptions><x:DisplayGridlines/><\/x:WorksheetOptions><\/x:ExcelWorksheet><\/x:ExcelWorksheets><\/x:ExcelWorkbook><\/xml><![endif]--><\/head><body><table>{table}<\/table><\/body><\/html>',
+    base64 = function(s) {
+      return window.btoa(unescape(encodeURIComponent(s)))
+    },
+    format = function(s, c) {
+      return s.replace(/{(\w+)}/g, function(m, p) {
+        return c[p];
+      })
     }
+  return function tableToExcel(table, name) {
     
-    $('.toolTop').click(function () {
-        alert('Estou aqui...');
-    });
+    if (!table.nodeType) {
+    table = document.getElementById(table)}
+    var cloned = $('#copyTable').clone().appendTo('.hidden_table')
+    cloned.find('input[type="radio"]:not(:checked) + span').remove();
+   
+    var ctx = {
+      worksheet: name || 'Worksheet',
+      table: cloned.html()
+    }
+    cloned.remove();
+    //window.location.href = uri + base64(format(template, ctx))
+    console.log(format(template, ctx));
+  }
+})();    
+
 </script>
