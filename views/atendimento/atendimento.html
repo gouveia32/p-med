@@ -235,11 +235,11 @@
                                                 $("form[name=form]").find("input[name=conteudo]").val(json_data.quill.container.innerHTML);
                                                 quill.root.innerHTML = json_data.quill.root.innerHTML;
                                             } else {
-                                                //var json_data = $(layero).find("iframe").contents().find("section")[0];
+                                                var json_data = $(layero).find("iframe").contents().find("section")[0];
 
                                                 //console.log(json_data);
 
-                                                //$("form[name=form]").find("input[name=conteudo]").val(json_data.innerHTML);
+                                                $("form[name=form]").find("input[name=conteudo]").val(json_data.innerHTML);
                                                 //quill.root.innerHTML = json_data.innerHTML;
                                                 
                                                 var form_data = $("form[name=form]").find("input[name=conteudo]").serialize();

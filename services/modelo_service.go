@@ -107,9 +107,9 @@ func (*ModeloService) Ajustes(modelo *models.Modelo, campos []*models.Campo) str
 		case "escolha":
 			cmd := ""
 			params := strings.Split(v.Resposta, ",")
-			for _, p := range params {
-				cmd += fmt.Sprintf("<input type='radio' title='%s' name='cpo%d' id='%s' onchange='atualiza(this.id,this,this.value)' > %s </input>",
-					v.Descricao, i, v.Nome, p)
+			for o, p := range params {
+				cmd += fmt.Sprintf("<input type='radio' title='%s' name='cpo%d' id='cpo%d%d' onchange='atualiza(this.name,this.value)' > %s </input>",
+					v.Descricao, i, i, o, p)
 			}
 
 			p1 := strings.Index(strOriginal, v.Original) - 2 // desconta [[
@@ -120,8 +120,7 @@ func (*ModeloService) Ajustes(modelo *models.Modelo, campos []*models.Campo) str
 		//fmt.Println(strOriginal)
 
 	}
-	strOriginal += "	</form>" +
-		"</section>" +
+	strOriginal += 
 		"<script src='/static/layui/layui.js?s=36'></script>" +
 		"<script language='javascript'>" +
 		"var $,form;" +
@@ -134,11 +133,11 @@ func (*ModeloService) Ajustes(modelo *models.Modelo, campos []*models.Campo) str
 
 		"});" +
 
-		"function atualiza(key,valor) {" +
-		"$('form[name=form]').find('input[name=cpo' + key + ']').val(valor);" +
+		"function atualiza(name,value) {" +
+		"$('form[name=form]').find('input[name=' + name + ']').val(1);" +
 
-		"console.log(key);" +
-		"console.log(valor);" +
+		"	console.log(name);" +
+		"	console.log(value);" +
 
 		"}" +
 		"$('.toolTop').click(function () {" +
