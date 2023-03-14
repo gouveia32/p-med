@@ -69,7 +69,7 @@ func (*ModeloService) Ajustes(modelo *models.Modelo, campos []*models.Campo) str
 
 	return "";
 	// open output file
-	fo, err := os.Create("views/import/consulta.tpl")
+	fo, err := os.Create("views/import/consulta.html")
 	if err != nil {
 		panic(err)
 	}

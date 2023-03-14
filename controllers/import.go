@@ -63,7 +63,7 @@ func (uc *ImportController) Receita() {
 
 	if nomeModelo == "Consulta" {
 
-		uc.TplName = "import/consulta.tpl"
+		uc.TplName = "import/consulta.html"
 	} else {
 		uc.TplName = "import/receita.html"
 	}
@@ -83,5 +83,5 @@ func (uc *ImportController) Template() {
 
 	}
 
-	uc.TplName = "import/consulta.tpl"
+	uc.TplName = "import/consulta.html"
 }

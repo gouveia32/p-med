@@ -19,7 +19,8 @@
         </li><li>Sintoma de <strong>Gripe?</strong> 
         <input type='radio' title='Sintoma gripal' name='cpo3' id='cpo30' onchange='atualiza(this.name,this.value)' > Sim </input>
         <input type='radio' title='Sintoma gripal' name='cpo3' id='cpo31' onchange='atualiza(this.name,this.value)' > Não </input>
-        </li><li>Idade : [[Idade ?idade:text]]</li><li><strong>Fim</strong></li></ol><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p>Aracaju,
+        </li><li> <strong>Idade : </strong>
+        <input type='text' title='Idade' name='cpo1'></input></li><li><strong>Fim</strong></li></ol><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p>Aracaju,
         <input type='text' title='Data' name='data' value='13 de 03 de 2023' ></input>
         </p>
 <script src='/static/layui/layui.js?s=36'></script>
@@ -33,7 +34,7 @@ layui.config({
 });
 
 function atualiza(name,value) {
-    $('form[name=form]').find('input[name=' + name + ']').val(1);	
+    $('form[name=form]').find('input[name=' + name + ']').val(value);	
     console.log(name);	
     console.log(value);
 }
