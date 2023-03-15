@@ -230,7 +230,7 @@
                                         yes: function(adjustPage, layero){
                                             $("form[name=form]").find("input[name=nome]").val(modeloNome);
                                             //console.log(modeloNome);
-                                            if (modeloNome != 'Consulta'){ 
+                                            if (modeloNome != 'Anaminese'){ 
                                                 var json_data = $(layero).find("iframe")[0].contentWindow;
                                                 
                                                 $("form[name=form]").find("input[name=conteudo]").val(json_data.quill.container.innerHTML);

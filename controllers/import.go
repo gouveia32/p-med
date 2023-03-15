@@ -3,7 +3,7 @@ package controllers
 import (
 	"p-med/models"
 	"p-med/services"
-	//"fmt"
+	"fmt"
 
 	"time"
 )
@@ -36,11 +36,42 @@ func (uc *ImportController) Receita() {
 		//ajusta campos automáticos como data, paciente, etc...
 		for _, v := range campos {
 			switch v.Tipo {
-			case "data":
+			case "hoje":
 				v.ValorInicial = time.Now().Format("02 de 01 de 2006")
 				break
 			case "paciente":
 				v.ValorInicial = paciente.Nome
+				break
+			case "nascimento":
+				v.ValorInicial = paciente.Nascimento
+				break				
+			case "idade":
+
+				d1, _ := time.Parse("2006-01-02", paciente.Nascimento)
+
+				//fmt.Println(d1)
+
+				// Subtrair as duas datas para obter uma duração
+				dur := time.Now().Sub(d1)
+
+				// Converter a duração em horas e dividir por 24 para obter o número de dias
+				days := dur.Hours() / 24
+
+				if (days > 730) { // dois anos
+				// Dividir o número de dias por 365 para obter o número de anos
+					years := days / 365
+					v.ValorInicial = fmt.Sprintf("%.0f anos",years)
+				} else {
+					monthes := days / 30
+					v.ValorInicial = fmt.Sprintf("%.0f meses",monthes)
+				}
+				
+				break
+			case "endereco":
+				v.ValorInicial = paciente.Logradoro + ", " + paciente.Numero
+				break
+			case "acompanhante":
+				v.ValorInicial = paciente.Acompanhante
 				break
 			case "dia":
 				v.ValorInicial = time.Now().Format("02")
@@ -52,7 +83,7 @@ func (uc *ImportController) Receita() {
 			}
 		}
 
-		if nomeModelo == "Consulta" {
+		if nomeModelo == "Anaminese" {
 			modeloService.Ajustes(modelo, campos)
 		}
 
@@ -61,7 +92,7 @@ func (uc *ImportController) Receita() {
 		uc.Data["Modelo"] = modelo
 	}
 
-	if nomeModelo == "Consulta" {
+	if nomeModelo == "Anaminese" {
 
 		uc.TplName = "import/consulta.html"
 	} else {
