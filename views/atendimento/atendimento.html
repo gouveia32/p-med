@@ -112,9 +112,10 @@
                             </span>
         
                         </div>
+                        
                         <!-- Conteudo -->
                         <div name="div_conteudo" style="background-color: #d2e3e9">
-                            <div id="editor" style="width: 100%; height: auto"></div>                            
+                            <div id="editor" style="width: 100%; height: auto; border: none"></div>                            
                         </div>
 
                         <input type="hidden" name="paciente_id" autocomplete="off" id="paciente_id" class="layui-input" value="{{.paciente.Id}}">
@@ -273,6 +274,19 @@
                         return false;
                         break;
                     case 'print':
+                        bdhtml=window.document.body.innerHTML;// Get the... Of the current page html Code
+                        sprnstr='<div id="editor"';// Set print start area
+
+                        eprnstr='</div>';// Set print end area
+                        prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr)); // Take back... From the start code html
+                        prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr)+6);// Take... Forward from the end code html
+                        window.document.body.innerHTML=prnhtml;
+                        window.print();
+                        window.document.body.innerHTML=bdhtml;
+                        window.location.reload();
+                        return true;
+                        break;
+/*                     case 'print':
                         var pacienteId = $("#paciente_id").val();
                         var AtendId = $("#AtendId").val();
                         var NotaId = $("#NotaId").val();
@@ -295,7 +309,7 @@
                             area: ['70%','80%'],   
                         });
                         return false;
-                        break;
+                        break;   */                     
                     case 'edit':
                         var cont = quill.root.innerHTML;
                         $("#conteudo").val(cont);
