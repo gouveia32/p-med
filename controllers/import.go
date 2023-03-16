@@ -35,7 +35,9 @@ func (uc *ImportController) Receita() {
 		//modelo.Campos = campos
 		//ajusta campos automáticos como data, paciente, etc...
 		for _, v := range campos {
-			switch v.Tipo {
+			//fmt.Println("Campo: ",v.Nome)
+			switch v.Nome {
+				
 			case "hoje":
 				v.ValorInicial = time.Now().Format("02 de 01 de 2006")
 				break
