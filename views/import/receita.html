@@ -16,10 +16,7 @@
 
             {{range $key,$item := .Campos}}
                 {{if $item.ValorInicial }}
-                    <label id="label{{$key}}" class="label-micro">{{$item.Nome}}</label>
-                    <input type="text" id="campo{{$key}}" onblur="esconder({{$key}},true)" onfocus="substituir({{$item}},this.value,{{$key}})" onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="layui-input form-control field-text" />
-                    <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
-                    <input type="hidden" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
+                    <img src="w3javascript.gif" onblur="substituir({{$item}},{{$item.ValorInicial}},{{$key}})" width="20" height="20">
                 {{else}}
                     <label id="label{{$key}}" class="label-micro">{{$item.Nome}}</label>
                     <input type="text" id="campo{{$key}}" onblur="esconder({{$key}},true)" onfocus="substituir({{$item}},this.value,{{$key}})" onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="layui-input form-control field-text" />
@@ -88,15 +85,15 @@
             }
         }
         console.log(valor);
-        console.log(p1);
+        //console.log(p1);
      
         if (valor != '') {
             if (p1 > 0) {
                 $("form[name=form]").find("input[name=inicio" + key + "]").val(p1);
                 //console.log(campo.Fim);
             }
-            console.log(p1);
-            console.log(p2);
+            //console.log(p1);
+            //console.log(p2);
             parte1=bdhtml.substring(0,p1); // pega a parte inicial 
             parte2=bdhtml.substring(p2,bdhtml.length); // pega a parte final
             p2 = (+p1) + valor.length;
