@@ -31,6 +31,7 @@
                         <div style="border-bottom: 1px dashed #d2e3e9; height: 25px;" >
                             <button class="btn btn-sm btn-primary" lay-submit="" lay-filter="add"><i class="fa fa-file-o"></i> Novo</button>
                             <button id="btnGravar" class="btn btn-sm btn-success" lay-submit="" lay-filter="edit" disabled><i class="fa fa-floppy-o"></i> Gravar</button>
+                            <button id="btnDesfazer" class="btn btn-sm btn-warning" lay-submit="" lay-filter="desfazer" disabled><i class="fa fa-floppy-o"></i> Desfazer</button>
                             <a class="btn btn-danger btn-sm" href="javascript:;" id="del" lay-submit=""><i class="fa fa-trash"></i> Excluir</a>
                             <button class="btn btn-sm btn-primary" lay-submit="" lay-filter="duplicar" ><i class="fa fa-copy"></i> Duplicar</button>
                             <button class="btn btn-sm btn-warning" lay-submit="" lay-filter="modelo" ><i class="fa fa-file-text-o"></i> Modelo</button>
@@ -167,8 +168,10 @@
             flagGravar = flagGravar + 1;
             if ( flagGravar > 1) {
                 document.getElementById("btnGravar").disabled = false;
+                document.getElementById("btnDesfazer").disabled = false;
             } else {
                 document.getElementById("btnGravar").disabled = true;
+                document.getElementById("btnDesfazer").disabled = true;
             }
         }
     }, 2*1000);
@@ -188,6 +191,7 @@
         //console.log(cor);
         $("form[name=form]").find("div[name=div_conteudo]").css('background-color', '#' + cor);
         document.getElementById("btnGravar").disabled = false;
+        document.getElementById("btnDesfazer").disabled = false;
         //flagGravar = 2;
     }
 
@@ -222,10 +226,11 @@
 
                 switch(sub_type) {
                     case 'add':
-                         if (flagGravar > 1) {
-                            confirma();
-                            break;
-                        }                         
+                        if (flagGravar > 1) {
+                            layer.msg("Existe alterações, Grave primeiro!",{icon: 1});
+                            return false;
+                        }   
+                        flagGravar = 0;                     
                         if ($("#id").val() == 0) {
                             $("form[name=form]").find("label[name=labelIdent]").text('NOVO ATENDIMENTO');
                         } else {
@@ -242,13 +247,17 @@
 
                         return false;
                         break;
-
+                    case 'desfazer':
+                        flagGravar = 0;
+                        return false;
+                        break;
                     case 'duplicar':
-                         if (flagGravar > 1) {
-                            confirma();
-                            break;
+                        if (flagGravar > 1) {
+                            layer.msg("Existe alterações, Grave primeiro!",{icon: 1});
+                            return false;
                         }                         
 
+                        flagGravar = 0;
                         if ($("#id").val() == 0) {
                             $("form[name=form]").find("label[name=labelIdent]").text('NOVO ATENDIMENTO');
                         } else {
@@ -256,15 +265,19 @@
                         }                        
                         
                         $("#id").val(0);
+                        //$("#AtendId").val(0);
                        
+                        $("#nome").val('');
+                        $("#conteudo").val('');
+                        quill.root.innerHTML = '';
                         $("form[name=form]").find("div[name=div_conteudo]").css('background-color', '#d2e3e9');
 
                         return false;
                         break;                        
                     case 'modelo':
-                         if (flagGravar > 1) {
-                            confirma();
-                            break;
+                        if (flagGravar > 1) {
+                            layer.msg("Existe alterações, Grave primeiro!",{icon: 1});
+                            return false;
                         } 
                         var pacienteId = $("#paciente_id").val();
                         var modId = layer.open({
@@ -333,6 +346,7 @@
                                             }
                                             //quill.root.innerHTML = "TESTE";
 
+                                            flagGravar = 2;
                                             layer.close(adjustPage);
             
                                         }, 
@@ -346,6 +360,10 @@
                         return false;
                         break;
                     case 'print':
+                        if (flagGravar > 1) {
+                            layer.msg("Existe alterações, Grave primeiro!",{icon: 1});
+                            return false;
+                        } 
                         bdhtml=window.document.body.innerHTML;// Get the... Of the current page html Code
                         sprnstr='<div id="editor"';// Set print start area
 
@@ -360,10 +378,7 @@
                         break;
                     
                     case 'edit':
-                         if (flagGravar > 1) {
-                            confirma();
-                            break;
-                        } 
+
                         var cont = quill.root.innerHTML;
                         $("#conteudo").val(cont);
                         var NotaId = $("#NotaId").val();
