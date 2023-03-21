@@ -191,6 +191,7 @@ func (uc *AtendimentoController) GetNodes() {
 		row["pId"] = 1
 		row["AtendId"] = v.Id
 		row["name"] = time.Unix(int64(v.CriadoEm), 0).Format("2006-01-02") + " " + v.Nome
+		row["data_consulta"] = time.Unix(int64(v.CriadoEm), 0).Format("2006-01-02")
 		pid = id //time.Unix(paciente.Nascimento, 0)
 
 		list = append(list, row)
@@ -202,6 +203,7 @@ func (uc *AtendimentoController) GetNodes() {
 				id++
 				row2["id"] = id
 				row2["name"] = v2.Nome
+				row2["data_consulta"] = row["data_consulta"]
 				row2["AtendId"] = v.Id
 				row2["NotaId"] = v2.Id
 
@@ -242,7 +244,12 @@ func (uc *AtendimentoController) GetNode() {
 		row["NotaId"] = nota.Id
 
 		row["AtendId"] = nota.AtendimentoId
+		if ( nota.AtendimentoId > 0) {
+			atendimento := atendimentoService.GetAtendimentoById(nota.AtendimentoId)
+			row["data_consulta"] =  time.Unix(int64(atendimento.CriadoEm), 0).Format("2006-01-02")
+		}
 		row["Nome"] = nota.Nome
+		
 		row["Conteudo"] = nota.Conteudo
 		row["nota"] = nota
 
@@ -266,6 +273,7 @@ func (uc *AtendimentoController) GetNode() {
 		row["NotaId"] = 0
 		row["TipoNota"] = 0
 		row["Nome"] = atendimento.Nome
+		row["data_consulta"] =  time.Unix(int64(atendimento.CriadoEm), 0).Format("2006-01-02")
 		row["Conteudo"] = atendimento.Conteudo
 		row["nota"] = atendimento
 

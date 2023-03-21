@@ -7,7 +7,8 @@
 <link href="//cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 
 <div class="row" style="height: auto;">
-    <form class="layui-form" name="form" action="" method="post" >
+    <!-- <form class="layui-form" name="form" action="" method="post" > -->
+    <form class="layui-form" onsubmit="return false">
         <div>
             <label class="label-micro">Paciente: {{.paciente.Nome}}</label>
             <label class="label-micro">Modelo: {{.Modelo.Nome}}</label>
@@ -15,12 +16,7 @@
             <hr>
 
             {{range $key,$item := .Campos}}
-                {{if $item.ValorInicial }}
-                    <label id="label{{$key}}" class="label-micro">{{$item.Nome}}</label>
-                    <input type="text" id="campo{{$key}}" onblur="esconder({{$key}},true)" onfocus="substituir({{$item}},this.value,{{$key}})" onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="layui-input form-control field-text" />
-                    <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
-                    <input type="hidden" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
-                {{else}}
+                {{if not $item.ValorInicial }}
                     <label id="label{{$key}}" class="label-micro">{{$item.Nome}}</label>
                     <input type="text" id="campo{{$key}}" onblur="esconder({{$key}},true)" onfocus="substituir({{$item}},this.value,{{$key}})" onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="layui-input form-control field-text" />
                     <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">

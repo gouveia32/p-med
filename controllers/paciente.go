@@ -148,6 +148,7 @@ func (uc *PacienteController) Update() {
 
 	if num > 0 {
 		response.Success(uc.Ctx)
+		//response.SuccessWithMessageAndUrl("Atualizado!", global.URL_RELOAD, uc.Ctx)
 	} else {
 		response.Error(uc.Ctx)
 	}

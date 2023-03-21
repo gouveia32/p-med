@@ -3,6 +3,7 @@ package controllers
 import (
 	"p-med/models"
 	"p-med/services"
+	"strings"
 	"fmt"
 
 	"time"
@@ -18,6 +19,8 @@ func (uc *ImportController) Receita() {
 	nomeModelo := ""
 	paciente_id, _ := uc.GetInt64("pacienteId", 0)
 	paciente := new(models.Paciente)
+	data_consulta := uc.GetString("dataConsulta")
+	//fmt.Println(data_consulta)
 	if (paciente_id) != 0 {
 		var pacienteService services.PacienteService
 		paciente = pacienteService.GetPacienteById(paciente_id)
@@ -41,6 +44,9 @@ func (uc *ImportController) Receita() {
 			case "hoje":
 				v.ValorInicial = time.Now().Format("02 de 01 de 2006")
 				break
+			case "data_consulta":
+				v.ValorInicial = data_consulta
+				break				
 			case "paciente":
 				v.ValorInicial = paciente.Nome
 				break
@@ -83,6 +89,16 @@ func (uc *ImportController) Receita() {
 			case "escolha":
 				break
 			}
+			if (v.ValorInicial != "") {
+				modelo.Detalhe = strings.ReplaceAll(modelo.Detalhe, "[[" + v.Original + "]]", v.ValorInicial)
+			}
+
+
+
+
+/* 			if (v.ValorInicial != "") {
+				modelo.Detalhe += v.ValorInicial 
+			} */
 		}
 
 		if nomeModelo == "Anaminese" {

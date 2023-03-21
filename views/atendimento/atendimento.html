@@ -1,3 +1,6 @@
+<script>
+    var flagGravar = 0;
+</script>
 
 <div class="layui-row no-pad">
     <div class="callout callout-info">
@@ -25,10 +28,11 @@
                 <div class="layui-layout layui-layout-admin" style="padding-left: 10px;margin-top: 1px;">
                     <form id="form" name="form" class="form-horizontal dataForm" action="/admin/campo/update" method="post"
                         enctype="multipart/form-data">
-                        <div style="border-bottom: 1px dashed #210c81; height: 25px;" >
+                        <div style="border-bottom: 1px dashed #d2e3e9; height: 25px;" >
                             <button class="btn btn-sm btn-primary" lay-submit="" lay-filter="add"><i class="fa fa-file-o"></i> Novo</button>
-                            <button class="btn btn-sm btn-success" lay-submit="" lay-filter="edit"><i class="fa fa-floppy-o"></i> Gravar</button>
+                            <button id="btnGravar" class="btn btn-sm btn-success" lay-submit="" lay-filter="edit" disabled><i class="fa fa-floppy-o"></i> Gravar</button>
                             <a class="btn btn-danger btn-sm" href="javascript:;" id="del" lay-submit=""><i class="fa fa-trash"></i> Excluir</a>
+                            <button class="btn btn-sm btn-primary" lay-submit="" lay-filter="duplicar" ><i class="fa fa-copy"></i> Duplicar</button>
                             <button class="btn btn-sm btn-warning" lay-submit="" lay-filter="modelo" ><i class="fa fa-file-text-o"></i> Modelo</button>
                             <button class="btn btn-sm btn-info" lay-submit="" lay-filter="print" ><i class="fa fa-print"></i> Imprimir</button>
                             <!--<button class="btn btn-sm btn-info" lay-submit="" lay-filter="template" ><i class="fa fa-print"></i> Template</button>-->
@@ -112,7 +116,7 @@
                             </span>
         
                         </div>
-                        
+
                         <!-- Conteudo -->
                         <div name="div_conteudo" style="background-color: #d2e3e9">
                             <div id="editor" style="width: 100%; height: auto; border: none"></div>                            
@@ -120,6 +124,7 @@
 
                         <input type="hidden" name="paciente_id" autocomplete="off" id="paciente_id" class="layui-input" value="{{.paciente.Id}}">
                         <input type="hidden" name="id" autocomplete="off" class="layui-input" id="id" value="0">
+                        <input type="hidden" name="data_consulta" autocomplete="off" class="layui-input" id="data_consulta" value="">
                         <input type="hidden" name="AtendId" autocomplete="off" id="AtendId" class="layui-input" readonly value="{{.atendimento.AtendId}}">                             
                         <input type="hidden" name="NotaId" autocomplete="off" id="NotaId" class="layui-input" readonly value="{{.atendimento.NotaId}}">
                         <input type="hidden" name="cor" autocomplete="off" id="cor" class="layui-input" readonly value="{{.atendimento.Cor}}">
@@ -139,14 +144,35 @@
 </div>
 
 <script>
-    //Trata o conteudo
+    
+    var Delta = Quill.import('delta');
     var quill = new Quill('#editor', {
         modules: {
             toolbar: "#toolbar"
         },
         theme: 'snow'
     });
-    quill.root.innerHTML = document.getElementById("conteudo").value;
+
+    // Store accumulated changes
+    var change = new Delta();
+    quill.on('text-change', function(delta) {
+        change = change.compose(delta);
+    });
+
+    // Save periodically
+    setInterval(function() {
+        if (change.length() > 0) {
+            //console.log('Saving changes', change);
+            change = new Delta();
+            flagGravar = flagGravar + 1;
+            if ( flagGravar > 1) {
+                document.getElementById("btnGravar").disabled = false;
+            } else {
+                document.getElementById("btnGravar").disabled = true;
+            }
+        }
+    }, 2*1000);
+    
     document.documentElement.style.cursor = 'default';
 
     //Muda a cor na nota
@@ -161,6 +187,24 @@
 
         //console.log(cor);
         $("form[name=form]").find("div[name=div_conteudo]").css('background-color', '#' + cor);
+        document.getElementById("btnGravar").disabled = false;
+        //flagGravar = 2;
+    }
+
+    function confirma() {
+
+         var modId = layer.open({
+            title: 'Descartar as Alterações? ',
+            closeBtn: false,
+            type: 1,
+            btn: ["Sim","Não"],
+
+            yes: function(index, layero){
+                //console.log(flagGravar);
+                flagGravar = 0;
+                layer.close(index);
+            }
+        });    
     }
 
 </script>
@@ -178,7 +222,10 @@
 
                 switch(sub_type) {
                     case 'add':
-
+                         if (flagGravar > 1) {
+                            confirma();
+                            break;
+                        }                         
                         if ($("#id").val() == 0) {
                             $("form[name=form]").find("label[name=labelIdent]").text('NOVO ATENDIMENTO');
                         } else {
@@ -196,7 +243,29 @@
                         return false;
                         break;
 
+                    case 'duplicar':
+                         if (flagGravar > 1) {
+                            confirma();
+                            break;
+                        }                         
+
+                        if ($("#id").val() == 0) {
+                            $("form[name=form]").find("label[name=labelIdent]").text('NOVO ATENDIMENTO');
+                        } else {
+                            $("form[name=form]").find("label[name=labelIdent]").text('NOVA NOTA');
+                        }                        
+                        
+                        $("#id").val(0);
+                       
+                        $("form[name=form]").find("div[name=div_conteudo]").css('background-color', '#d2e3e9');
+
+                        return false;
+                        break;                        
                     case 'modelo':
+                         if (flagGravar > 1) {
+                            confirma();
+                            break;
+                        } 
                         var pacienteId = $("#paciente_id").val();
                         var modId = layer.open({
                             title: 'Selecione um Modelo',
@@ -215,7 +284,9 @@
                             yes: function(index, layero){
                                 var modeloId = layero.find('select')[0].value;
                                 var modeloNome = layero.find('select')[0].options[layero.find('select')[0].selectedIndex].text;
-                                //console.log(modeloId);
+                                var data_consulta = $('#data_consulta').val();
+                                //console.log("data ");
+                                //console.log(data_consulta);
                                 if (modeloId > 0){
                                     var adjustPage = layer.open({
                                         type: 2,
@@ -225,10 +296,11 @@
                                         skin: 'layui-layer-molv',
                                         anim: 1,
                                         title: "Importação de modelo",
-                                        content: '/admin/import/receita?pacienteId='+pacienteId+'&modeloId='+modeloId,
+                                        content: '/admin/import/receita?pacienteId='+pacienteId+'&modeloId='+modeloId+'&dataConsulta='+data_consulta,
                                          btn: ['<i class="layui-icon layui-icon-yes"/> Importar', '<i class="layui-icon layui-icon-close"/> Fechar'],
                                         yes: function(adjustPage, layero){
                                             $("form[name=form]").find("input[name=nome]").val(modeloNome);
+
                                             //console.log(modeloNome);
                                             if (modeloNome != 'Anaminese'){ 
                                                 var json_data = $(layero).find("iframe")[0].contentWindow;
@@ -245,6 +317,7 @@
                                                 
                                                 var form_data = $("form[name=form]").find("input[name=conteudo]").serialize();
                                                 //console.log(form_data);
+                                               
                                                 $.post('{{urlfor "AtendimentoController.AjusteConteudo"}}', form_data, function (out) {
                                                     //console.log("OUT")
                                                     //console.log(out.conteudo);
@@ -252,7 +325,6 @@
                                                         document.documentElement.style.cursor = 'default';
                                                         //alert("gravado");                                    
                                                         quill.root.innerHTML = out.conteudo
-                                                        
                                                     } else {
                                                         layer.msg(out.message)
                                                     }
@@ -286,31 +358,12 @@
                         window.location.reload();
                         return true;
                         break;
-/*                     case 'print':
-                        var pacienteId = $("#paciente_id").val();
-                        var AtendId = $("#AtendId").val();
-                        var NotaId = $("#NotaId").val();
-                        var rel = "";
-                        if (NotaId != "0") {
-                            rel = "nota";
-                        } else {
-                            rel = "atendimento";
-                        }
-                        var adjustPage = layer.open({
-                            type: 2,
-                            shade: [0.4, '#a0d06c'],
-                            shadeClose: false,         //yes: fecha ao clicar fora da janela
-                            id: 1,
-                            skin: 'layui-layer-molv',
-                            anim: 1,
-                            title: "Preparação da Impressão: ("+rel+")",
-                            content: '/admin/print/'+rel+'?pacienteId='+pacienteId+'&AtendId='+$("#AtendId").val()+'&NotaId='+$("#NotaId").val(),
-
-                            area: ['70%','80%'],   
-                        });
-                        return false;
-                        break;   */                     
+                    
                     case 'edit':
+                         if (flagGravar > 1) {
+                            confirma();
+                            break;
+                        } 
                         var cont = quill.root.innerHTML;
                         $("#conteudo").val(cont);
                         var NotaId = $("#NotaId").val();
@@ -345,6 +398,8 @@
                                 document.documentElement.style.cursor = 'default';
                                 //alert("gravado");
               
+                                flagGravar = 0;
+
                                 layer.msg("Gravado com sucesso!",{icon: 1},function () {
                                     window.location.reload();
                                 });
@@ -407,6 +462,11 @@
         };
 
         function editOnClick(e, treeId, treeNode) {
+             if (flagGravar > 1) {
+                //alert ("Conteúdo alterado e não salvo!!!");
+                confirma();
+                return false;
+            } 
             var zTree = $.fn.zTree.getZTreeObj("treeDemo")
 
             //document.documentElement.style.cursor = 'wait';
@@ -431,6 +491,7 @@
                 $("form[name=form]").find("input[name=NotaId]").val('0');
                 $("form[name=form]").find("input[name=nome]").val("");
                 $("form[name=form]").find("input[name=cor]").val("#F0F0E0");
+                $("form[name=form]").find("input[name=data_consulta]").val("");
                 quill.root.innerHTML = '';
 
                 form.render();
@@ -459,7 +520,10 @@
                         $("form[name=form]").find("input[name=nome]").val(data.Nome);
                         $("form[name=form]").find("input[name=cor]").val(data.Cor);
                         $("form[name=form]").find("input[name=conteudo]").val(data.Conteudo);
+
+                        $("form[name=form]").find("input[name=data_consulta]").val(data.data_consulta);
                         quill.root.innerHTML = data.Conteudo;
+                        flagGravar = 0;
 
                         //console.log(data);
 
@@ -469,12 +533,11 @@
                             $("form[name=form]").find("label[name=labelIdent]").text('IDENTIFICAÇÃO DA NOTA');
                         }
                         
-
                         $("form[name=form]").find("div[name=div_conteudo]").css('background-color', data.Cor);
                         $("form[name=form]").find("select[name=cor_id]").val(data.CorId);
             
                         form.render();
-                      
+                        //$("form[name=form]").find("input[name=gravar]").val(2)
                     }
                     document.documentElement.style.cursor = 'default';
                 }
@@ -586,11 +649,10 @@
                 title: "Alterando Paciente",
                 content: '/admin/atendimento/editpaciente?paciente_id='+pacienteId,
                 //btn: ['<i class="layui-icon layui-icon-ok" lay-submit="" lay-filter="sub"> Gravar</i>', '<i class="layui-icon layui-icon-close"/> Fechar'],
-                area: ['800px','480px'],
-                page: {
-                    html: '<\div style="width:460px; height:280px; background-color:#81BA25; color:#fff;"><\div style="padding:20px;">里面传入任何html元素<\/div><\/div>' 
-                }
+                area: ['850px','480px'],
+
             });
+    
         });
 
         //Excluir
