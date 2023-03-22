@@ -31,7 +31,8 @@
                         <div style="border-bottom: 1px dashed #d2e3e9; height: 25px;" >
                             <button class="btn btn-sm btn-primary" lay-submit="" lay-filter="add"><i class="fa fa-file-o"></i> Novo</button>
                             <button id="btnGravar" class="btn btn-sm btn-success" lay-submit="" lay-filter="edit" disabled><i class="fa fa-floppy-o"></i> Gravar</button>
-                            <button id="btnDesfazer" class="btn btn-sm btn-warning" lay-submit="" lay-filter="desfazer"><i class="fa fa-rotate-left"></i> Desfazer</button>
+                            <!-- <button id="btnDesfazer" class="btn btn-sm btn-warning" lay-submit="" lay-filter="desfazer"><i class="fa fa-rotate-left"></i> Desfazer</button> -->
+                            <a class="btn btn-warning btn-sm" href="javascript:;" id="desfazer" lay-submit=""><i class="fa fa-rotate-left"></i> Desfazer</a>
                             <a class="btn btn-danger btn-sm" href="javascript:;" id="del" lay-submit=""><i class="fa fa-trash"></i> Excluir</a>
                             <button class="btn btn-sm btn-primary" lay-submit="" lay-filter="duplicar" ><i class="fa fa-copy"></i> Duplicar</button>
                             <button class="btn btn-sm btn-warning" lay-submit="" lay-filter="modelo" ><i class="fa fa-file-text-o"></i> Modelo</button>
@@ -99,6 +100,10 @@
                             <span class="ql-format-group">
                                 <select class="ql-color"></select>
                                 <select class="ql-background"></select>
+                            </span>
+                                                        
+                            <span class="ql-format-group">
+                                <button  title="Inserir Imagem" class="ql-image" value="clean">Imagem</button>
                             </span>
                                 
                             <span class="ql-format-group">
@@ -248,11 +253,6 @@
 
                         return false;
                         break;
-                    case 'desfazer':
-                        flagGravar = 0;
-                        quill.root.innerHTML = $("#conteudo").val();
-                        return false;
-                        break;
                     case 'duplicar':
                         if (flagGravar > 1) {
                             layer.msg("Existe alterações, Grave primeiro ou Desfaça as alterações!",{icon: 3});
@@ -260,13 +260,14 @@
                         }                         
 
                         flagGravar = 2;
-                        $("#id").val(0)
 
                         if ($("#id").val() == 0) {
                             $("form[name=form]").find("label[name=labelIdent]").text('NOVO ATENDIMENTO');
+                            $("#id").val(0)
                             $("#AtendId").val(0);
                         } else {
                             $("form[name=form]").find("label[name=labelIdent]").text('NOVA NOTA');
+                            $("#id").val(0)
                         }                        
                                                
                         $("#conteudo").val(quill.root.innerHTML);
@@ -651,6 +652,12 @@
 /*         $(".nodes").click(function () {
             refresh_tree();            
         }); */
+
+        //Excluir
+        $('#desfazer').on('click',function(){
+            flagGravar = 0;
+            refresh_tree();            
+        });
 
         $(".toolTop").click(function () {
             //document.documentElement.style.cursor = 'wait';
