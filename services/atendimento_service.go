@@ -147,10 +147,7 @@ func (*AtendimentoService) Update(form *formvalidate.AtendimentoForm) int {
 		atendimento.CorId = form.CorId
 		atendimento.PacienteId = form.PacienteId
 		atendimento.EtiquetaId = 1
-		//atendimento.CriadorId = form.CriadorId
-		//atendimento.AlteradorId = form.AlteradorId
 
-		atendimento.CriadoEm = form.CriadoEm
 		atendimento.AlteradoEm = int(time.Now().Unix())
 		atendimento.Estado = 1
 

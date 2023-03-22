@@ -43,7 +43,7 @@
                             <td style="width: 45%;">
                                 <div class="layui-input-inline">
                                     <label for="nome" name="labelIdent" class="control-label">NOVO ATENDIMENTO:</label>
-                                    <input type="text" name="nome" id="nome"  autocomplete="off" placeholder="digite um identificador" class="layui-input form-control field-text" value="{{.data.Nome}}">
+                                    <input type="text" name="nome" id="nome"  autocomplete="off" placeholder="digite um identificador" class="layui-input form-control field-text" onfocus="setFlagGravar()" value="{{.data.Nome}}">
                                 </div>
                             </td>
                             <td  style="width: 2%;"></td>
@@ -206,6 +206,10 @@
                 layer.close(index);
             }
         });    
+    }
+    function setFlagGravar() {
+        flagGravar = 2;
+        document.getElementById("btnGravar").disabled = false;
     }
 
 </script>

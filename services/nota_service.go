@@ -117,7 +117,7 @@ func (*NotaService) Update(form *formvalidate.NotaForm) int {
 		nota.CorId = form.CorId
 		nota.EtiquetaId = form.EtiquetaId
 
-		nota.CriadoEm = form.CriadoEm
+		//nota.CriadoEm = form.CriadoEm
 		nota.AlteradoEm = int(time.Now().Unix())
 
 		nota.Estado = 1

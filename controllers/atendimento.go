@@ -88,7 +88,7 @@ func (uc *AtendimentoController) Export() {
 			body = append(body, record)
 		}
 		uc.Ctx.ResponseWriter.Header().Set("a", "b")
-		exceloffice.ExportData(header, body, "atendimento-"+time.Now().Format("2006-01-02-15-04-05"), "", "", uc.Ctx.ResponseWriter)
+		exceloffice.ExportData(header, body, "atendimento-"+time.Now().Format("2006-01-02"), "", "", uc.Ctx.ResponseWriter)
 	}
 
 	response.Error(uc.Ctx)

@@ -92,7 +92,7 @@ func (ic *IndexController) getSystemInfo() map[string]interface{} {
 	//go时区
 	systemInfo["timezone"] = time.UTC
 	//当前时间
-	systemInfo["date_time"] = time.Now().Format("2006-01-02 15:04:05")
+	systemInfo["date_time"] = time.Now().Format("2006-01-02")
 	//用户IP
 	systemInfo["user_ip"] = ic.Ctx.Input.IP()
 

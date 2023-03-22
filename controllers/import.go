@@ -42,10 +42,15 @@ func (uc *ImportController) Receita() {
 			switch v.Nome {
 				
 			case "hoje":
-				v.ValorInicial = time.Now().Format("02 de 01 de 2006")
+				v.ValorInicial = time.Now().Format("2006-01-02")
 				break
 			case "data_consulta":
-				v.ValorInicial = data_consulta
+				if (data_consulta != "") {
+					v.ValorInicial = data_consulta
+				} else {
+					v.ValorInicial = time.Now().Format("2006-01-02")
+				}
+				
 				break				
 			case "paciente":
 				v.ValorInicial = paciente.Nome
@@ -55,7 +60,7 @@ func (uc *ImportController) Receita() {
 				break				
 			case "idade":
 
-				d1, _ := time.Parse("2006-01-02", paciente.Nascimento)
+				d1, _ := time.Parse("02/01/2006", paciente.Nascimento)
 
 				//fmt.Println(d1)
 

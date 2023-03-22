@@ -106,7 +106,7 @@ func (*PacienteService) Update(form *formvalidate.PacienteForm) int {
 		paciente.Peso = form.Peso
 		paciente.Telefone = form.Telefone
 		paciente.Email = form.Email
-		paciente.CriadoEm = form.CriadoEm
+		//paciente.CriadoEm = form.CriadoEm
 		paciente.AlteradoEm = int(time.Now().Unix())
 		paciente.Estado = int8(form.Estado)
 
