@@ -261,13 +261,15 @@
 
                         flagGravar = 2;
 
-                        if ($("#id").val() == 0) {
+                        if ($("#NotaId").val() == 0) {
                             $("form[name=form]").find("label[name=labelIdent]").text('NOVO ATENDIMENTO');
                             $("#id").val(0)
                             $("#AtendId").val(0);
+
                         } else {
                             $("form[name=form]").find("label[name=labelIdent]").text('NOVA NOTA');
                             $("#id").val(0)
+                            $("#NotaId").val(0);
                         }                        
                                                
                         $("#conteudo").val(quill.root.innerHTML);

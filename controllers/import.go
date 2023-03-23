@@ -92,6 +92,7 @@ func (uc *ImportController) Receita() {
 			case "marque_1":
 				break
 			case "escolha":
+				fmt.Println("escolha",v.Tipo)
 				break
 			}
 			if (v.ValorInicial != "") {

@@ -15,7 +15,7 @@ type Campo struct {
 	Nome         string `form:"nome"      		alias:"Nome"    		valid:"Required;MaxSize(120)"`
 	Descricao    string `form:"descricao"   	alias:"Descricao"`
 	Resposta     string `form:"resposta"   		alias:"Resposta"`
-	ValorInicial string `form:"valor_nicial"   	alias:"ValorInicial"`
+	ValorInicial string `form:"valor_inicial"   	alias:"ValorInicial"`
 }
 
 // TableName

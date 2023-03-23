@@ -6,6 +6,7 @@ import (
 	"p-med/models"
 	"p-med/utils/page"
 	"strings"
+	//"fmt"
 
 	"github.com/beego/beego/v2/client/orm"
 )
@@ -27,7 +28,7 @@ func (us *CampoService) GetCampoByNome(nome string) []*models.Campo {
 
 // MontaCampo
 func (us *CampoService) MontaCampo(cpo string) *models.Campo {
-	campo := new(models.Campo)
+	campo := new(models.Campo) //[[label?campo:resultador]]
 	campo.Original = cpo
 	w1 := strings.Split(cpo, "?")
 	if len(w1) > 0 {
@@ -75,10 +76,13 @@ func (us *CampoService) GetPaginateData(listRows int, params url.Values) ([]*mod
 
 	var campos []*models.Campo
 	o := orm.NewOrm().QueryTable(new(models.Campo))
+	
 	_, err := us.PaginateAndScopeWhere(o, listRows, params).All(&campos)
+	//fmt.Println("err",err)
 	if err != nil {
 		return nil, us.Pagination
 	}
+	
 	return campos, us.Pagination
 }
 
@@ -98,9 +102,12 @@ func (*CampoService) Create(form *formvalidate.CampoForm) int {
 		Nome:      form.Nome,
 		Descricao: form.Descricao,
 		Resposta:  form.Resposta,
+		Original: form.Original,
+		ValorInicial: form.ValorInicial,
+		Tipo: form.Tipo,
+
 	}
 
-	//criptografia de senha
 	id, err := orm.NewOrm().Insert(&campo)
 
 	if err == nil {
@@ -129,6 +136,9 @@ func (*CampoService) Update(form *formvalidate.CampoForm) int {
 		campo.Nome = form.Nome
 		campo.Descricao = form.Descricao
 		campo.Resposta = form.Resposta
+		campo.Original = form.Original
+		campo.Tipo = form.Tipo
+		campo.ValorInicial = form.ValorInicial
 
 		num, err := o.Update(&campo)
 

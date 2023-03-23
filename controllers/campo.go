@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	//"fmt"
 
 	"github.com/adam-hanna/arrayOperations"
 	"github.com/gookit/validate"
@@ -30,6 +31,7 @@ func (uc *CampoController) Index() {
 
 	data, pagination := campoService.GetPaginateData(admin["per_page"].(int), gQueryParams)
 
+	//fmt.Println ("data",data)
 	uc.Data["data"] = data
 	uc.Data["paginate"] = pagination
 	uc.Data["campo_level_map"] = campoLevelMap
