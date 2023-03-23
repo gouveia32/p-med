@@ -5,8 +5,9 @@ import (
 	"p-med/formvalidate"
 	"p-med/models"
 	"p-med/utils/page"
+	"encoding/json"
 	"strings"
-	//"fmt"
+	"fmt"
 
 	"github.com/beego/beego/v2/client/orm"
 )
@@ -28,7 +29,7 @@ func (us *CampoService) GetCampoByNome(nome string) []*models.Campo {
 
 // MontaCampo
 func (us *CampoService) MontaCampo(cpo string) *models.Campo {
-	campo := new(models.Campo) //[[label?campo:resultador]]
+	campo := new(models.Campo) //[[descricao?nome:tipo=resultador]]
 	campo.Original = cpo
 	w1 := strings.Split(cpo, "?")
 	if len(w1) > 0 {
@@ -40,12 +41,18 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 			if len(w3) > 1 {
 				campo.Tipo = w3[0] //define multiplas respostas
 				campo.Resposta = w3[1]
+				err := json.Unmarshal([]byte(campo.Resposta), &campo.RespostaStrut)
+				fmt.Println(err)
 			} else {
-				campo.Tipo = w3[0] //define multiplas respostas
-				campo.Resposta = w3[0]
+				campo.Resposta = ""
 			}
 		}
 	}
+	
+	fmt.Println("\ncampo.Descricao: ",campo.Descricao)
+	fmt.Println("campo.Nome: ",campo.Nome)
+	fmt.Println("campo.Tipo: ",campo.Tipo)
+	fmt.Println("campo.Resposta: ",campo.Resposta)
 
 	return campo
 }

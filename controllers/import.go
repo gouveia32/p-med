@@ -63,6 +63,7 @@ func (uc *ImportController) Receita() {
 				d1, _ := time.Parse("02/01/2006", paciente.Nascimento)
 
 				//fmt.Println(d1)
+				
 
 				// Subtrair as duas datas para obter uma duração
 				dur := time.Now().Sub(d1)

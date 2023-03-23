@@ -9,7 +9,7 @@ type CampoForm struct {
 	Tipo		 string `form:"tipo"   			alias:"Tipo"`
 	Nome         string `form:"nome"      		alias:"Nome"    	valid:"Required;MaxSize(120)"`
 	Descricao    string `form:"descricao"   	alias:"Descricao"`
-	Resposta     string `form:"resposta"   		alias:"Resposta"`
+	Resposta     string `form:"resposta"   		alias:"Resposta"	json:"resposta"`
 	ValorInicial string `form:"valor_inicial"   alias:"ValorInicial"`
 }
 
