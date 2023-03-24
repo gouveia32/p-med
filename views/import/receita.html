@@ -22,12 +22,13 @@
                     {{ if ("escolha" | eq $item.Tipo) }}
                         <select name="campo{{$key}}" id="campo{{$key}}" class="form-control field-multi-select" multiple="multiple">
                             <option value="">{{$item.Resposta}}</option>
-                        </select>
                     {{end}}
 
+                    {{ if ("texto" | eq $item.Tipo) }}
                     <input type="text" id="campo{{$key}}" onblur="esconder({{$key}},true)" onfocus="substituir({{$item}},this.value,{{$key}})" onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="layui-input form-control field-text" />
                     <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
                     <input type="hidden" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
+                    {{end}}
                 {{end}}
             {{end}}
         </div>

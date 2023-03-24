@@ -38,11 +38,31 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 		if len(w2) > 0 {
 			campo.Nome = w2[0]
 			w3 := strings.Split(w2[1], "=")
+			campo.Tipo = w3[0]
 			if len(w3) > 1 {
-				campo.Tipo = w3[0] //define multiplas respostas
 				campo.Resposta = w3[1]
-				err := json.Unmarshal([]byte(campo.Resposta), &campo.RespostaStrut)
-				fmt.Println(err)
+				rsps := strings.Split(w3[1], ",")
+				if len(rsps) > 1 {
+					for _, r := range rsps {
+						fmt.Println("r: ", r)
+						var respostas []*models.Resposta
+						if r == "" {
+							continue
+						}
+						err := json.Unmarshal([]byte(r), &respostas)
+						
+						if err != nil {
+							continue
+						}
+
+						campo.Resposta	= r
+					}
+				} else {
+					campo.Resposta = rsps[0]
+				}
+
+				//err := json.Unmarshal([]byte(campo.Resposta), &campo.RespostaStrut)
+				//fmt.Println(err)
 			} else {
 				campo.Resposta = ""
 			}

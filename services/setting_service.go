@@ -13,7 +13,7 @@ type SettingService struct {
 	BaseService
 }
 
-// Show 显示设置
+// Show 
 func (settingService *SettingService) Show(id int) []*models.Setting {
 	data := settingService.getDataBySettingGroupId(id)
 
@@ -21,7 +21,7 @@ func (settingService *SettingService) Show(id int) []*models.Setting {
 
 	for key, value := range data {
 		//contentNew := ""
-		//value.Content转为json
+		//valor.Conteúdo convertido em json
 		var contents []*models.Content
 		if value.Content == "" {
 			continue
@@ -43,7 +43,7 @@ func (settingService *SettingService) Show(id int) []*models.Setting {
 	return data
 }
 
-// getDataBySettingGroupId 根据设置分组id获取多个设置信息
+// getDataBySettingGroupId Obtenha várias informações de configuração de acordo com o ID do grupo de configuração
 func (*SettingService) getDataBySettingGroupId(settingGroupId int) []*models.Setting {
 	var settings []*models.Setting
 	_, err := orm.NewOrm().QueryTable(new(models.Setting)).Filter("setting_group_id", settingGroupId).All(&settings)
@@ -53,7 +53,7 @@ func (*SettingService) getDataBySettingGroupId(settingGroupId int) []*models.Set
 	return settings
 }
 
-// GetSettingInfoById 根据设置id，获取对应的setting info
+// GetSettingInfoById De acordo com o id de configuração, obtenha o correspondente 
 func (*SettingService) GetSettingInfoById(id int) *models.Setting {
 	setting := models.Setting{Id: id}
 	orm.NewOrm().Read(&setting)
