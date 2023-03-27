@@ -20,9 +20,9 @@
                 {{if not $item.ValorInicial }}
                    <label id="label{{$key}}" class="label-micro">{{$item.Nome}}: </label>
                     {{ if (eq $item.Tipo "escolha" ) }}
-                        <select name="{{$item.Nome}}" id="{{$item.Nome}}" class="form-control field-select">
+                        <select name="{{$item.Nome}}" id="{{$item.Nome}}" class="form-control field-select" onfocus="substituir({{$item}},this.value,{{$key}})">
                         {{range $k,$it := $item.RespostaStrut}}
-                            <option value="">{{$it.Resposta}}</option>
+                            <option value="0">{{$it.Resposta}}</option>
                         {{end}}
                         </select>
                         
@@ -30,9 +30,9 @@
  
                     {{ if (eq $item.Tipo "texto" ) }}
                         <input type="text" id="campo{{$key}}" onblur="esconder({{$key}},true)" onfocus="substituir({{$item}},this.value,{{$key}})" onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="input form-control field-text" />
-                        <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
-                        <input type="hidden" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
                     {{end}}
+                    <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
+                    <input type="hidden" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
                 {{end}}
             {{end}}
         </div>
