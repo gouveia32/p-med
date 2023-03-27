@@ -5,9 +5,9 @@ import (
 	"p-med/formvalidate"
 	"p-med/models"
 	"p-med/utils/page"
-	"encoding/json"
+	//"encoding/json"
 	"strings"
-	"fmt"
+	//"fmt"
 
 	"github.com/beego/beego/v2/client/orm"
 )
@@ -42,21 +42,17 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 			if len(w3) > 1 {
 				campo.Resposta = w3[1]
 				rsps := strings.Split(w3[1], ",")
+				var respostas []*models.Resposta
 				if len(rsps) > 1 {
 					for _, r := range rsps {
-						fmt.Println("r: ", r)
-						var respostas []*models.Resposta
-						if r == "" {
-							continue
-						}
-						err := json.Unmarshal([]byte(r), &respostas)
-						
-						if err != nil {
-							continue
-						}
+						//fmt.Println("r: ", r)
+						rs := new(models.Resposta)
 
-						campo.Resposta	= r
+						rs.Resposta = r
+
+						respostas = append(respostas, rs)
 					}
+					campo.RespostaStrut = respostas
 				} else {
 					campo.Resposta = rsps[0]
 				}
@@ -69,10 +65,10 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 		}
 	}
 	
-	fmt.Println("\ncampo.Descricao: ",campo.Descricao)
-	fmt.Println("campo.Nome: ",campo.Nome)
-	fmt.Println("campo.Tipo: ",campo.Tipo)
-	fmt.Println("campo.Resposta: ",campo.Resposta)
+	//fmt.Println("\ncampo.Descricao: ",campo.Descricao)
+	//fmt.Println("campo.Nome: ",campo.Nome)
+	//fmt.Println("campo.Tipo: ",campo.Tipo)
+	//fmt.Println("campo.Resposta: ",campo.Resposta)
 
 	return campo
 }

@@ -10,7 +10,6 @@ import (
 
 //Respostas json
 type Resposta struct {
-	Tipo    string
 	Resposta   string
 }
 

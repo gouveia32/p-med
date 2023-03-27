@@ -60,7 +60,13 @@ func (uc *ImportController) Receita() {
 				break				
 			case "idade":
 
-				d1, _ := time.Parse("02/01/2006", paciente.Nascimento)
+				
+				//loc, _ := time.LoadLocation("Local")
+				d1, err := time.Parse("2006-01-02", paciente.Nascimento)
+
+				if (err != nil) {
+					continue	
+				}
 
 				//fmt.Println(d1)
 				

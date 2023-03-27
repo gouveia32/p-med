@@ -8,7 +8,7 @@
 
 <div class="row" style="height: auto;">
     <!-- <form class="layui-form" name="form" action="" method="post" > -->
-    <form class="layui-form" onsubmit="return false">
+    <form class="form" onsubmit="return false">
         <div>
             <label class="label-micro">Paciente: {{.paciente.Nome}}</label>
             <label class="label-micro">Modelo: {{.Modelo.Nome}}</label>
@@ -18,16 +18,20 @@
             
             {{range $key,$item := .Campos}}
                 {{if not $item.ValorInicial }}
-                    <label id="label{{$key}}" class="label-micro">{{$item.Nome}}</label>
-                    {{ if ("escolha" | eq $item.Tipo) }}
-                        <select name="campo{{$key}}" id="campo{{$key}}" class="form-control field-multi-select" multiple="multiple">
-                            <option value="">{{$item.Resposta}}</option>
+                   <label id="label{{$key}}" class="label-micro">{{$item.Nome}}: </label>
+                    {{ if (eq $item.Tipo "escolha" ) }}
+                        <select name="{{$item.Nome}}" id="{{$item.Nome}}" class="form-control field-select">
+                        {{range $k,$it := $item.RespostaStrut}}
+                            <option value="">{{$it.Resposta}}</option>
+                        {{end}}
+                        </select>
+                        
                     {{end}}
-
-                    {{ if ("texto" | eq $item.Tipo) }}
-                    <input type="text" id="campo{{$key}}" onblur="esconder({{$key}},true)" onfocus="substituir({{$item}},this.value,{{$key}})" onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="layui-input form-control field-text" />
-                    <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
-                    <input type="hidden" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
+ 
+                    {{ if (eq $item.Tipo "texto" ) }}
+                        <input type="text" id="campo{{$key}}" onblur="esconder({{$key}},true)" onfocus="substituir({{$item}},this.value,{{$key}})" onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="input form-control field-text" />
+                        <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
+                        <input type="hidden" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
                     {{end}}
                 {{end}}
             {{end}}
@@ -39,7 +43,7 @@
         <!-- Conteudo -->
         <div id="editor" style="height: 950px; max-height: 950px; overflow: auto; border-color: brown;"></div>
 
-        <input type="hidden" name="detalhe" autocomplete="off" id="detalhe" class="layui-input" value="{{.Modelo.Detalhe}}">
+        <input type="hidden" name="detalhe" autocomplete="off" id="detalhe" class="input" value="{{.Modelo.Detalhe}}">
         
     </form>
 </div>
