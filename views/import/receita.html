@@ -20,9 +20,9 @@
                 {{if not $item.ValorInicial }}
                    <label id="label{{$key}}" class="label-micro">{{$item.Nome}}: </label>
                     {{ if (eq $item.Tipo "escolha" ) }}
-                        <select name="{{$item.Nome}}" id="{{$item.Nome}}" class="form-control field-select" onfocus="substituir({{$item}},this.value,{{$key}})">
+                        <select name="{{$item.Nome}}" id="{{$item.Nome}}" class="form-control field-select" onchange="substituir_select(this,{{$item}})">
                         {{range $k,$it := $item.RespostaStrut}}
-                            <option value="0">{{$it.Resposta}}</option>
+                            <option value="{{$it.Resposta}}" >{{$it.Resposta}}</option>
                         {{end}}
                         </select>
                         
@@ -80,13 +80,19 @@
 
     }
 
+    function substituir_select(campo, valor) {
+
+
+        var c = '[['+campo.value+'?'+campo.value+':'+valor+']]';
+        console.log('c.select:',c);
+    }
     function substituir(campo,valor,key) {
 
         var p1 = $("input[name^=inicio" + key + "]").val();
         var p2 = $("input[name^=fim" + key + "]").val();
 
 
-        var c = '[['+campo.Descricao+'?'+campo.Nome+':'+campo.Resposta+']]';
+        var c = '[['+campo.Descricao+'?'+campo.Nome+':'+campo.RespostaStrut+']]';
         console.log('c:',c);
         bdhtml=quill.root.innerHTML;// Get the... Of the current page html Code
         if (p1 == 0) {
@@ -111,9 +117,9 @@
 
             //console.log(valor.length);
             //console.log(p2);
-            $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
+  /*           $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
 
-            quill.root.innerHTML= parte1 + valor + parte2;
+            quill.root.innerHTML= parte1 + valor + parte2; */
        }    
     }
 

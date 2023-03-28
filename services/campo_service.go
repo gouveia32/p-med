@@ -7,7 +7,7 @@ import (
 	"p-med/utils/page"
 	//"encoding/json"
 	"strings"
-	//"fmt"
+	"fmt"
 
 	"github.com/beego/beego/v2/client/orm"
 )
@@ -65,10 +65,10 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 		}
 	}
 	
-	//fmt.Println("\ncampo.Descricao: ",campo.Descricao)
-	//fmt.Println("campo.Nome: ",campo.Nome)
-	//fmt.Println("campo.Tipo: ",campo.Tipo)
-	//fmt.Println("campo.Resposta: ",campo.Resposta)
+	fmt.Println("\ncampo.Descricao: ",campo.Descricao)
+	fmt.Println("campo.Nome: ",campo.Nome)
+	fmt.Println("campo.Tipo: ",campo.Tipo)
+	fmt.Println("campo.Resposta: ",campo.Resposta)
 
 	return campo
 }
