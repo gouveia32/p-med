@@ -42,7 +42,12 @@ func (uc *ImportController) Receita() {
 			switch v.Nome {
 				
 			case "hoje":
-				v.ValorInicial = time.Now().Format("2006-01-02")
+				if (v.Tipo == "data") {
+					v.ValorInicial = time.Now().Format("2006-01-02")
+				}
+				if (v.Tipo == "data_extenso") { 
+					v.ValorInicial = time.Now().Format("02 de 01 de 2006")
+				}
 				break
 			case "data_consulta":
 				if (data_consulta != "") {
