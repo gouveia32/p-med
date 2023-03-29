@@ -17,10 +17,13 @@
 
             
             {{range $key,$item := .Campos}}
+
                 {{if not $item.ValorInicial }}
+                    <input type="text" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
+                    <input type="text" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
                    <label id="label{{$key}}" class="label-micro">{{$item.Nome}}: </label>
                     {{ if (eq $item.Tipo "escolha" ) }}
-                        <select name="{{$item.Nome}}" id="{{$item.Nome}}" class="form-control field-select" onchange="substituir_select(this,{{$item}},{{$key}})">
+                        <select name="{{$item.Nome}}" id="campo{{$key}}" class="form-control field-select" onchange="substituir({{$item}},this.value,{{$key}})">
                         {{range $k,$it := $item.RespostaStrut}}
                             <option value="{{$it.Resposta}}" >{{$it.Resposta}}</option>
                         {{end}}
@@ -31,8 +34,6 @@
                     {{ if (eq $item.Tipo "texto" ) }}
                         <input type="text" id="campo{{$key}}" onblur="esconder({{$key}},true)" onfocus="substituir({{$item}},this.value,{{$key}})" onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="input form-control field-text" />
                     {{end}}
-                    <input type="text" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
-                    <input type="text" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
                 {{end}}
             {{end}}
         </div>
@@ -106,7 +107,7 @@
         if (campo.value != '') {
             if (p1 > 0) {
                 $("form[name=form]").find("input[name=inicio" + key + "]").val(p1);
-                //console.log(campo.Fim);
+                console.log(p1);
             }
             //console.log(p1);
             //console.log(p2);
@@ -116,7 +117,7 @@
 
             //console.log(parte1);
             //console.log(p2);
-           $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
+            $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
 
             quill.root.innerHTML= parte1 + campo.value + parte2; 
         }
@@ -127,7 +128,7 @@
         var p2 = $("input[name^=fim" + key + "]").val();
 
 
-        var c = '[['+campo.Descricao+'?'+campo.Nome+':'+campo.RespostaStrut+']]';
+        var c = '[['+campo.Original+']]';
         console.log('c:',c);
         bdhtml=quill.root.innerHTML;// Get the... Of the current page html Code
         if (p1 == 0) {
@@ -152,9 +153,9 @@
 
             //console.log(valor.length);
             //console.log(p2);
-  /*           $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
+            $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
 
-            quill.root.innerHTML= parte1 + valor + parte2; */
+            quill.root.innerHTML= parte1 + valor + parte2;
        }    
     }
 

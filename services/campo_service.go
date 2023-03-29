@@ -66,9 +66,9 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 	}
 	
 	fmt.Println("\ncampo.Descricao: ",campo.Descricao)
-	fmt.Println("campo.Nome: ",campo.Nome)
-	fmt.Println("campo.Tipo: ",campo.Tipo)
-	fmt.Println("campo.Resposta: ",campo.Resposta)
+	//fmt.Println("campo.Nome: ",campo.Nome)
+	//fmt.Println("campo.Tipo: ",campo.Tipo)
+	//fmt.Println("campo.Resposta: ",campo.Resposta)
 
 	return campo
 }
