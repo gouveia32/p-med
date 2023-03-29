@@ -20,7 +20,7 @@
                 {{if not $item.ValorInicial }}
                    <label id="label{{$key}}" class="label-micro">{{$item.Nome}}: </label>
                     {{ if (eq $item.Tipo "escolha" ) }}
-                        <select name="{{$item.Nome}}" id="{{$item.Nome}}" class="form-control field-select" onchange="substituir_select(this,{{$item}})">
+                        <select name="{{$item.Nome}}" id="{{$item.Nome}}" class="form-control field-select" onchange="substituir_select(this,{{$item}},{{$key}})">
                         {{range $k,$it := $item.RespostaStrut}}
                             <option value="{{$it.Resposta}}" >{{$it.Resposta}}</option>
                         {{end}}
@@ -31,8 +31,8 @@
                     {{ if (eq $item.Tipo "texto" ) }}
                         <input type="text" id="campo{{$key}}" onblur="esconder({{$key}},true)" onfocus="substituir({{$item}},this.value,{{$key}})" onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="input form-control field-text" />
                     {{end}}
-                    <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
-                    <input type="hidden" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
+                    <input type="text" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
+                    <input type="text" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
                 {{end}}
             {{end}}
         </div>
@@ -80,11 +80,46 @@
 
     }
 
-    function substituir_select(campo, valor) {
+    function substituir_select(campo, item, key) {
 
+        var p1 = $("input[name^=inicio" + key + "]").val();
+        var p2 = $("input[name^=fim" + key + "]").val();
 
-        var c = '[['+campo.value+'?'+campo.value+':'+valor+']]';
+        var c = '[['+item.Original+']]';
+        console.log('p1:',p1);
+        console.log('p2:',p2);
         console.log('c.select:',c);
+        console.log('valor:',campo.value);
+        console.log('key:',key);
+
+        bdhtml=quill.root.innerHTML;// Get the... Of the current page html Code
+        if (p1 == 0) {
+            p1 = bdhtml.indexOf(c); // localiza inicio do campo
+            if (p2 == 0) {
+                p2 = p1 + c.length;
+            }
+        }
+
+        console.log('_p1:',p1);
+        console.log('_p2:',p2);
+
+        if (campo.value != '') {
+            if (p1 > 0) {
+                $("form[name=form]").find("input[name=inicio" + key + "]").val(p1);
+                //console.log(campo.Fim);
+            }
+            //console.log(p1);
+            //console.log(p2);
+            parte1=bdhtml.substring(0,p1); // pega a parte inicial 
+            parte2=bdhtml.substring(p2,bdhtml.length); // pega a parte final
+            p2 = (+p1) + campo.value.length;
+
+            //console.log(parte1);
+            //console.log(p2);
+           $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
+
+            quill.root.innerHTML= parte1 + campo.value + parte2; 
+        }
     }
     function substituir(campo,valor,key) {
 
