@@ -34,10 +34,13 @@
                     {{end}}
  
                     {{ if (eq $item.Tipo "texto" ) }}
-                        <input type="text" id="campo{{$key}}" onblur="esconder({{$key}},true)" onfocus="substituir({{$item}},this.value,{{$key}})" onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="input form-control field-text" />
+                        <input type="text" id="campo{{$key}}" 
+                            onfocus="substituir({{$item}},this.value,{{$key}})" 
+                            onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="input form-control field-text" />
                     {{end}}
                 {{end}}
             {{end}}
+            <button onclick="todos({{.Campos}})">Todos</button>
         </div>
 
         <!-- Barra de ferramentas -->
@@ -82,6 +85,26 @@
         input.hidden = esconder;   
 
     }
+
+    function todos(campos){
+
+        for (let i = 0; i < campos.length - 1; i++) {
+            if (campos[i].ValorInicial == "") {
+
+                if (campos[i].Tipo == "escolha") {
+                    var valor = $("select[name^=" + campos[i].Nome + "]").val();
+                } else {
+                    var valor = $("input[name^=" + campos[i].Nome + "]").val();
+                }
+                
+
+                substituir(campos[i],valor,i);
+            }
+
+        }
+
+    }
+
 
     function substituir(campo,valor,key) {
 
