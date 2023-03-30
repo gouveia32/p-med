@@ -38,6 +38,23 @@ func (uc *ImportController) Receita() {
 		//modelo.Campos = campos
 		//ajusta campos automáticos como data, paciente, etc...
 		for _, v := range campos {
+			switch v.Tipo {
+			case "lista":
+				var respostas []*models.Resposta
+				rsps := []string{"um","dois","Tres","Quatro"}
+				for _, r := range rsps {
+					rs := new(models.Resposta)
+
+					rs.Resposta = r
+
+					respostas = append(respostas, rs)
+				}
+				v.RespostaStruct = respostas
+				v.ValorInicial = v.RespostaStruct[0].Resposta
+				fmt.Println("r:", v.RespostaStruct[0].Resposta)
+				break	
+
+			}
 			//fmt.Println("Campo: ",v.Nome)
 			switch v.Nome {
 				
@@ -62,19 +79,6 @@ func (uc *ImportController) Receita() {
 				break
 			case "nascimento":
 				v.ValorInicial = paciente.Nascimento
-				break				
-			case "lista":
-				var respostas []*models.Resposta
-				rsps := []string{"um","dois"}
-				for _, r := range rsps {
-					rs := new(models.Resposta)
-
-					rs.Resposta = r
-
-					respostas = append(respostas, rs)
-				}
-				v.RespostaStruct = respostas
-				fmt.Println("r:", v.RespostaStruct)
 				break				
 			case "idade":
 
