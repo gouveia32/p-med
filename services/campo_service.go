@@ -54,7 +54,21 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 					}
 					campo.RespostaStruct = respostas
 				} else {
-					campo.Resposta = rsps[0]
+					if (campo.Tipo == "lista") { //buscar lista na tabela
+						var respostas []*models.Resposta
+
+						lista := GetListaByNome("exame")
+
+						/* rsps := []string{"um","dois","Tres","Quatro"} */
+						for _, r := range lista {
+							rs := new(models.Resposta)
+		
+							rs.Resposta = r
+		
+							respostas = append(respostas, rs)
+						}
+						campo.RespostaStruct = respostas
+					}
 				}
 
 				//err := json.Unmarshal([]byte(campo.Resposta), &campo.RespostaStruct)

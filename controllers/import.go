@@ -37,7 +37,7 @@ func (uc *ImportController) Receita() {
 
 		//modelo.Campos = campos
 		//ajusta campos automáticos como data, paciente, etc...
-		for _, v := range campos {
+/* 		for _, v := range campos {
 			switch v.Tipo {
 			case "lista":
 				var respostas []*models.Resposta
@@ -50,11 +50,11 @@ func (uc *ImportController) Receita() {
 					respostas = append(respostas, rs)
 				}
 				v.RespostaStruct = respostas
-				v.ValorInicial = v.RespostaStruct[0].Resposta
+				//v.ValorInicial = v.RespostaStruct[0].Resposta
 				fmt.Println("r:", v.RespostaStruct[0].Resposta)
 				break	
 
-			}
+			} */
 			//fmt.Println("Campo: ",v.Nome)
 			switch v.Nome {
 				
