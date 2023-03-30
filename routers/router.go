@@ -210,6 +210,15 @@ func init() {
 		web.NSRouter("/campo/del", &controllers.CampoController{}, "post:Del"),
 		web.NSRouter("/campo/export", &controllers.CampoController{}, "get:Export"),
 
+		//Ger lista
+		web.NSRouter("/lista/index", &controllers.ListaController{}, "get:Index"),
+		web.NSRouter("/lista/add", &controllers.ListaController{}, "get:Add"),
+		web.NSRouter("/lista/create", &controllers.ListaController{}, "post:Create"),
+		web.NSRouter("/lista/edit", &controllers.ListaController{}, "get:Edit"),
+		web.NSRouter("/lista/update", &controllers.ListaController{}, "post:Update"),
+		web.NSRouter("/lista/del", &controllers.ListaController{}, "post:Del"),
+		web.NSRouter("/lista/export", &controllers.ListaController{}, "get:Export"),
+		
 		//Ger cor
 		web.NSRouter("/cor/index", &controllers.CorController{}, "get:Index"),
 		web.NSRouter("/cor/add", &controllers.CorController{}, "get:Add"),

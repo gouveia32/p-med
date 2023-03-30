@@ -29,7 +29,7 @@ func (us *CampoService) GetCampoByNome(nome string) []*models.Campo {
 
 // MontaCampo
 func (us *CampoService) MontaCampo(cpo string) *models.Campo {
-	campo := new(models.Campo) //[[descricao?nome:tipo=resultador]]
+	campo := new(models.Campo) //[[descricao?nome:tipo=resultado]]
 	campo.Original = cpo
 	w1 := strings.Split(cpo, "?")
 	if len(w1) > 0 {
@@ -52,12 +52,12 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 
 						respostas = append(respostas, rs)
 					}
-					campo.RespostaStrut = respostas
+					campo.RespostaStruct = respostas
 				} else {
 					campo.Resposta = rsps[0]
 				}
 
-				//err := json.Unmarshal([]byte(campo.Resposta), &campo.RespostaStrut)
+				//err := json.Unmarshal([]byte(campo.Resposta), &campo.RespostaStruct)
 				//fmt.Println(err)
 			} else {
 				campo.Resposta = ""
@@ -69,6 +69,7 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 	//fmt.Println("campo.Nome: ",campo.Nome)
 	//fmt.Println("campo.Tipo: ",campo.Tipo)
 	//fmt.Println("campo.Resposta: ",campo.Resposta)
+	//fmt.Println("campo.RespostaStruct: ",campo.RespostaStruct)
 
 	return campo
 }

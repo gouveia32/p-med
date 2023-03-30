@@ -20,7 +20,7 @@ type Campo struct {
 	Nome         string `form:"nome"      		alias:"Nome"    		valid:"Required;MaxSize(120)"`
 	Descricao    string `form:"descricao"   	alias:"Descricao"`
 	Resposta     string `orm:"column(resposta);type(text)" description:"Resposta" json:"resposta"`
-	RespostaStrut []*Resposta `orm:"-"`
+	RespostaStruct []*Resposta `orm:"-"`
 	ValorInicial string `form:"valor_inicial"   alias:"ValorInicial"`
 }
 

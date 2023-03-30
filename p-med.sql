@@ -2702,6 +2702,19 @@ INSERT INTO `campo` (`id`, `Original`, `tipo`, `nome`, `descricao`, `resposta`, 
 	(1, NULL, NULL, 'sexo', 'escolha', 'Fem,Masc', NULL),
 	(2, '', '', 'sim_nao', 'escolha', 'Sim,Não', '');
 
+
+-- Copiando estrutura para tabela p-med.lista
+CREATE TABLE IF NOT EXISTS `lista` (
+  `id` tinyint unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(20) DEFAULT NULL,
+  `valor` varchar(100) DEFAULT NULL,
+
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `template_id` (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+
+
+
 -- Copiando estrutura para tabela p-med.cor
 CREATE TABLE IF NOT EXISTS `cor` (
   `id` tinyint unsigned NOT NULL AUTO_INCREMENT,

@@ -26,7 +26,7 @@
                             onfocus="substituir({{$item}},this.value,{{$key}})"
                             onchange="substituir({{$item}},this.value,{{$key}})"
                         >
-                        {{range $k,$it := $item.RespostaStrut}}
+                        {{range $k,$it := $item.RespostaStruct}}
                             <option value="{{$it.Resposta}}" >{{$it.Resposta}}</option>
                         {{end}}
                         </select>
@@ -34,9 +34,19 @@
                     {{end}}
  
                     {{ if (eq $item.Tipo "texto" ) }}
-                        <input type="text" id="campo{{$key}}" 
+                        <input type="text" id="campo{{$key}}" autocomplete="on"
                             onfocus="substituir({{$item}},this.value,{{$key}})" 
                             onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="input form-control field-text" />
+                    {{end}}
+                    {{ if (eq $item.Tipo "texto_auto" ) }}
+                        <input list="respostas" type="text" id="campo{{$key}}" 
+                            onfocus="substituir({{$item}},this.value,{{$key}})" 
+                            onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="input form-control field-text" />
+                        <datalist id="respostas">
+                            {{range $k,$it := $item.RespostaStruct}}
+                                <option value="{{$it.Resposta}}"></option>
+                            {{end}}
+                        </datalist>
                     {{end}}
                 {{end}}
             {{end}}

@@ -63,9 +63,21 @@ func (uc *ImportController) Receita() {
 			case "nascimento":
 				v.ValorInicial = paciente.Nascimento
 				break				
+			case "lista":
+				var respostas []*models.Resposta
+				rsps := []string{"um","dois"}
+				for _, r := range rsps {
+					rs := new(models.Resposta)
+
+					rs.Resposta = r
+
+					respostas = append(respostas, rs)
+				}
+				v.RespostaStruct = respostas
+				fmt.Println("r:", v.RespostaStruct)
+				break				
 			case "idade":
 
-				
 				//loc, _ := time.LoadLocation("Local")
 				d1, err := time.Parse("2006-01-02", paciente.Nascimento)
 
@@ -75,7 +87,6 @@ func (uc *ImportController) Receita() {
 
 				//fmt.Println(d1)
 				
-
 				// Subtrair as duas datas para obter uma duração
 				dur := time.Now().Sub(d1)
 
@@ -110,13 +121,6 @@ func (uc *ImportController) Receita() {
 			if (v.ValorInicial != "") {
 				modelo.Detalhe = strings.ReplaceAll(modelo.Detalhe, "[[" + v.Original + "]]", v.ValorInicial)
 			}
-
-
-
-
-/* 			if (v.ValorInicial != "") {
-				modelo.Detalhe += v.ValorInicial 
-			} */
 		}
 
 		if nomeModelo == "Anaminese" {

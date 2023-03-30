@@ -1,5 +1,13 @@
 # sistema de Prontuário Médico p-med
 
+# Modelo: formato do campo = [[Prompt?name:type=Answer]]
+  Exemplos: [[Sexo?sexo:escolha=M,F]]
+            [[Data atual:hoje=data]] ou [[Data atual:hoje=data_extenso]]
+            [[Exame?exame:texto_auto=resp1,resp2,resp3]]
+            [[Exame?exame:texto_auto=.um,dois,tres]]  busca lista um,dois,tres
+            [[Exame 2?exame2:lista=exame]]  busca lista de autopreenchimento da tabela lista
+
+
 
 
 
