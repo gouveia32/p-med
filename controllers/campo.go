@@ -184,3 +184,4 @@ func (uc *CampoController) Del() {
 		response.Error(uc.Ctx)
 	}
 }
+

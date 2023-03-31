@@ -17,6 +17,17 @@ type CampoService struct {
 	BaseService
 }
 
+
+// GetListaByNome
+func (us *CampoService) GetListaByNome(nome string) []*models.Lista {
+	var listas []*models.Lista
+	orm.NewOrm().QueryTable(new(models.Lista)).Filter("nome__in", nome).All(&listas)
+	if len(listas) > 0 {
+		return listas
+	}
+	return nil
+}
+
 // GetCampoByNome
 func (us *CampoService) GetCampoByNome(nome string) []*models.Campo {
 	var campos []*models.Campo
@@ -55,15 +66,14 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 					campo.RespostaStruct = respostas
 				} else {
 					if (campo.Tipo == "lista") { //buscar lista na tabela
+ 						lista := us.GetListaByNome(campo.Resposta)
+
 						var respostas []*models.Resposta
-
-						lista := GetListaByNome("exame")
-
-						/* rsps := []string{"um","dois","Tres","Quatro"} */
-						for _, r := range lista {
+						for _, l := range lista {
+							//fmt.Println(l.Valor)
 							rs := new(models.Resposta)
 		
-							rs.Resposta = r
+							rs.Resposta = l.Valor
 		
 							respostas = append(respostas, rs)
 						}

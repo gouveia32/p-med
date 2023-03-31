@@ -52,10 +52,11 @@
                             onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="input form-control field-text" />
                     {{end}}
                      {{ if (eq $item.Tipo "texto_auto" ) }}
-                        <input list="respostas" type="text" id="campo{{$key}}" 
+                        <input list="respostas{{$key}}" type="text" id="campo{{$key}}" 
+                            autocomplete="off"
                             onfocus="substituir({{$item}},this.value,{{$key}})" 
                             onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="input form-control field-text" />
-                        <datalist id="respostas">
+                        <datalist id="respostas{{$key}}">
                             {{range $k,$it := $item.RespostaStruct}}
                                 <option value="{{$it.Resposta}}"></option>
                             {{end}}
