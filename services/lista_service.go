@@ -16,6 +16,17 @@ type ListaService struct {
 	BaseService
 }
 
+// getDataByListaId 
+func (*ListaService) getDataByListaId(listaId int) []*models.Lista {
+	var listas []*models.Lista
+	_, err := orm.NewOrm().QueryTable(new(models.Lista)).Filter("lista_id", listaId).All(&listas)
+	if err != nil {
+		return nil
+	}
+	return listas
+}
+
+
 // GetListaByNome
 func (us *ListaService) GetListaByNome(nome string) []*models.Lista {
 	var listas []*models.Lista
@@ -30,6 +41,7 @@ func (us *ListaService) GetListaByNome(nome string) []*models.Lista {
 // GetPaginateData
 func (us *ListaService) GetPaginateData(listRows int, params url.Values) ([]*models.Lista, page.Pagination) {
 	//Pesquisa, atribuição de lista de consulta
+	
 	us.SearchField = append(us.SearchField, new(models.Lista).SearchField()...)
 
 	var listas []*models.Lista

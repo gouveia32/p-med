@@ -16,11 +16,11 @@
             <hr>
            
             {{range $key,$item := .Campos}}
-
                 {{if not $item.ValorInicial }}
                     <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
                     <input type="hidden" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
-                   <label id="label{{$key}}" class="label-micro">{{$item.Nome}}: </label>
+                   <label id="label{{$key}}" class="label-micro">{{$item.Descricao}}: </label>
+                   
                     {{ if (eq $item.Tipo "escolha" ) }}
                         <select name="{{$item.Nome}}" id="campo{{$key}}" class="form-control field-select" 
                             onfocus="substituir({{$item}},this.value,{{$key}})"
@@ -34,6 +34,7 @@
                     {{end}}
 
                     {{ if (eq $item.Tipo "lista" ) }}
+                        <button onclick="add({{$item}},this.value,{{$key}})">+</button>
                         <input list="respostas{{$key}}" type="text" id="campo{{$key}}" 
                             autocomplete="off"
                             onfocus="substituir({{$item}},this.value,{{$key}})" 
@@ -43,7 +44,6 @@
                                 <option value="{{$it.Resposta}}"></option>
                             {{end}}
                         </datalist>
-                    
                     {{end}}
  
                     {{ if (eq $item.Tipo "texto" ) }}
@@ -64,7 +64,7 @@
                     {{end}}
                 {{end}}
             {{end}}
-            <button onclick="todos({{.Campos}})">Todos</button>
+            <!-- <button onclick="todos({{.Campos}})">Todos</button> -->
         </div>
 
         <!-- Barra de ferramentas -->
@@ -107,11 +107,41 @@
 
         var input = document.getElementById("campo" + key); ;
         input.hidden = esconder;   
+    }
+
+    function add(campo,valor,key){
+        var p1 = $("input[name^=inicio" + key + "]").val();
+        var p2 = $("input[name^=fim" + key + "]").val();
+
+        var c = '[['+campo.Original+']]';
+        //console.log('c:',c);
+        bdhtml=quill.root.innerHTML;// Get the... Of the current page html Code
+
+        if (p1 == 0) {
+            p1 = bdhtml.indexOf(c); // localiza inicio do campo
+            if (p2 == 0) {
+                p2 = p1 + c.length;
+            }
+        }
+
+        if (valor != '') {
+            if (p1 > 0) {
+                $("form[name=form]").find("input[name=inicio" + key + "]").val(p1);
+                //console.log(campo.Fim);
+            }
+
+            parte1=bdhtml.substring(0,p2); // pega a parte inicial 
+            parte2=bdhtml.substring(p2+bdhtml.length); // pega a parte final
+            p2 = (+p1) + valor.length;
+
+            $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
+
+            quill.root.innerHTML= parte1 + valor + parte2;
+       }    
 
     }
 
     function todos(campos){
-
         for (let i = 0; i < campos.length - 1; i++) {
             if (campos[i].ValorInicial == "") {
 
@@ -134,7 +164,6 @@
 
         var p1 = $("input[name^=inicio" + key + "]").val();
         var p2 = $("input[name^=fim" + key + "]").val();
-
 
         var c = '[['+campo.Original+']]';
         //console.log('c:',c);
@@ -164,6 +193,9 @@
             $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
             /* $("form[name=form]").find("input[name=fim2]").val(p2); */
 
+            if (campo.Nome.indexOf("+")){
+                valor = valor + "\n" + c 
+            }
             quill.root.innerHTML= parte1 + valor + parte2;
        }    
     }

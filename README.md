@@ -7,6 +7,9 @@
             [[Exame?exame:texto_auto=.um,dois,tres]]  busca lista um,dois,tres
             [[Exame 2?exame2:lista=exame]]  busca lista de autopreenchimento da tabela lista
 
+            [[Exame?exame1:texto_auto=RX da Face, Sumário de Urina]]
+            [[Exame?exame2:texto_auto=TC,Ressonância]]
+
 
 
 
