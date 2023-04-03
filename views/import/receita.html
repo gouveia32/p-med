@@ -147,9 +147,9 @@
      
         if (valor != '') {
 
-            var cr = valor.indexOf("+");
+            var cr = valor.indexOf("@");
             if (cr > 0) {
-                valor = valor.substring(0,cr) + "<li class='ql-align-justify ql-indent-3'>" + valor.substring(cr+1, valor.length) + "</p>"
+                valor = valor.substring(0,cr) + "<br>" + valor.substring(cr+1, valor.length) 
             }
 
             console.log("cr:",cr)
@@ -160,10 +160,10 @@
             parte2=bdhtml.substring(p2,bdhtml.length); // pega a parte final
             if (valor == "+" ){
                 if (bdhtml.substring(p1,p1+2) == "[[") return;    //ainda é o primeiro
-                 valor =  bdhtml.substring(p1,p2) ;
-                c = c + "<li class='ql-align-justify ql-indent-3'>"
-                //c =  c + "\n";
-                valor = c + valor ;
+                
+                valor =  bdhtml.substring(p1,p2) ;
+                //c = c + "</p><p>"
+                valor = c + "<p>" + valor ;
 
                 p2 = (+p1) + campo.Original.length + 4;
             } else {
