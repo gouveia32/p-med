@@ -34,7 +34,7 @@
                     {{end}}
 
                     {{ if (eq $item.Tipo "lista" ) }}
-                        <button onclick="add({{$item}},this.value,{{$key}})">+</button>
+                        <button onclick="substituir({{$item}},'+',{{$key}})">+</button>
                         <input list="respostas{{$key}}" type="text" id="campo{{$key}}" 
                             autocomplete="off"
                             onfocus="substituir({{$item}},this.value,{{$key}})" 
@@ -109,38 +109,6 @@
         input.hidden = esconder;   
     }
 
-    function add(campo,valor,key){
-        var p1 = $("input[name^=inicio" + key + "]").val();
-        var p2 = $("input[name^=fim" + key + "]").val();
-
-        var c = '[['+campo.Original+']]';
-        //console.log('c:',c);
-        bdhtml=quill.root.innerHTML;// Get the... Of the current page html Code
-
-        if (p1 == 0) {
-            p1 = bdhtml.indexOf(c); // localiza inicio do campo
-            if (p2 == 0) {
-                p2 = p1 + c.length;
-            }
-        }
-
-        if (valor != '') {
-            if (p1 > 0) {
-                $("form[name=form]").find("input[name=inicio" + key + "]").val(p1);
-                //console.log(campo.Fim);
-            }
-
-            parte1=bdhtml.substring(0,p2); // pega a parte inicial 
-            parte2=bdhtml.substring(p2+bdhtml.length); // pega a parte final
-            p2 = (+p1) + valor.length;
-
-            $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
-
-            quill.root.innerHTML= parte1 + valor + parte2;
-       }    
-
-    }
-
     function todos(campos){
         for (let i = 0; i < campos.length - 1; i++) {
             if (campos[i].ValorInicial == "") {
@@ -178,24 +146,38 @@
         //console.log(p1);
      
         if (valor != '') {
-            if (p1 > 0) {
-                $("form[name=form]").find("input[name=inicio" + key + "]").val(p1);
-                //console.log(campo.Fim);
+
+            var cr = valor.indexOf("+");
+            if (cr > 0) {
+                valor = valor.substring(0,cr) + "<li class='ql-align-justify ql-indent-3'>" + valor.substring(cr+1, valor.length) + "</p>"
             }
+
+            console.log("cr:",cr)
+
             //console.log(p1);
             //console.log(p2);
             parte1=bdhtml.substring(0,p1); // pega a parte inicial 
             parte2=bdhtml.substring(p2,bdhtml.length); // pega a parte final
-            p2 = (+p1) + valor.length;
+            if (valor == "+" ){
+                if (bdhtml.substring(p1,p1+2) == "[[") return;    //ainda é o primeiro
+                 valor =  bdhtml.substring(p1,p2) ;
+                c = c + "<li class='ql-align-justify ql-indent-3'>"
+                //c =  c + "\n";
+                valor = c + valor ;
 
-            //console.log(valor.length);
-            //console.log(p2);
+                p2 = (+p1) + campo.Original.length + 4;
+            } else {
+                p2 = (+p1) + valor.length;
+            }
+
+            if (p1 > 0) {
+                $("form[name=form]").find("input[name=inicio" + key + "]").val(p1);
+                //console.log(campo.Fim);
+            }
+
             $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
             /* $("form[name=form]").find("input[name=fim2]").val(p2); */
 
-            if (campo.Nome.indexOf("+")){
-                valor = valor + "\n" + c 
-            }
             quill.root.innerHTML= parte1 + valor + parte2;
        }    
     }
