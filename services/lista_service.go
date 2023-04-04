@@ -6,7 +6,7 @@ import (
 	"p-med/models"
 	"p-med/utils/page"
 	//"encoding/json"
-	"fmt"
+	//"fmt"
 
 	"github.com/beego/beego/v2/client/orm"
 )
@@ -104,8 +104,8 @@ func (*ListaService) Update(form *formvalidate.ListaForm) int {
 
 		num, err := o.Update(&lista)
 
-		fmt.Println("err:",err)
-		fmt.Println("valor:",lista.Valor)
+/* 		fmt.Println("err:",err)
+		fmt.Println("valor:",lista.Valor) */
 		if err == nil {
 			return int(num)
 		}

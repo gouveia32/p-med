@@ -1,3 +1,7 @@
+<script>
+    var item = 0;
+</script>
+
 <!-- Main Quill library -->
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet"> 
 <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
@@ -35,7 +39,7 @@
 
                     {{ if (eq $item.Tipo "lista" ) }}
                         <button onclick="substituir({{$item}},'+',{{$key}})">+</button>
-                        <input list="respostas{{$key}}" type="text" id="campo{{$key}}" 
+                        <input list="respostas{{$key}}" type="text" id="campo{{$key}}" name="campo{{$key}}" 
                             autocomplete="off"
                             onfocus="substituir({{$item}},this.value,{{$key}})" 
                             onchange="substituir({{$item}},this.value,{{$key}})" name="{{$item.Nome}}" value="{{$item.ValorInicial}}"  class="input form-control field-text" />
@@ -149,23 +153,28 @@
 
             var cr = valor.indexOf("@");
             if (cr > 0) {
-                valor = valor.substring(0,cr) + "<br>" + valor.substring(cr+1, valor.length) 
+                item = (+item) + 1;
+                valor = item + ". " + valor.substring(0,cr) + "<br><p>    " + valor.substring(cr+1, valor.length) + "<br><p>" 
             }
 
-            console.log("cr:",cr)
+            //console.log("cr:",cr)
 
-            //console.log(p1);
-            //console.log(p2);
             parte1=bdhtml.substring(0,p1); // pega a parte inicial 
             parte2=bdhtml.substring(p2,bdhtml.length); // pega a parte final
             if (valor == "+" ){
                 if (bdhtml.substring(p1,p1+2) == "[[") return;    //ainda é o primeiro
                 
-                valor =  bdhtml.substring(p1,p2) ;
-                //c = c + "</p><p>"
-                valor = c + "<p>" + valor ;
+                valor =  bdhtml.substring(p1,p2);
+
+               // valor = c + "<br><br><p>" + valor;
+
+                valor = valor + "<br><br><p>"
+                p1 = (+p1) + valor.length;
+                valor = valor + c;
+
 
                 p2 = (+p1) + campo.Original.length + 4;
+                $("form[name=form]").find("input[name=campo" + key + "]").val("");  //limpa o campo para nova digitação
             } else {
                 p2 = (+p1) + valor.length;
             }
