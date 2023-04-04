@@ -143,7 +143,7 @@
         if (p1 == 0) {
             p1 = bdhtml.indexOf(c); // localiza inicio do campo
             if (p2 == 0) {
-                p2 = p1 + c.length;
+                p2 = (+p1) + c.length;
             }
         }
         //console.log(valor);
@@ -155,12 +155,17 @@
             if (cr > 0) {
                 item = (+item) + 1;
                 valor = item + ". " + valor.substring(0,cr) + "<br><p>    " + valor.substring(cr+1, valor.length) + "<br><p>" 
+                p2 = (+p1) + valor.length;
+                //console.log("@:p1",p1)
+                //console.log("@:valor.len",valor.length)
             }
 
             //console.log("cr:",cr)
 
             parte1=bdhtml.substring(0,p1); // pega a parte inicial 
             parte2=bdhtml.substring(p2,bdhtml.length); // pega a parte final
+            console.log("parte1:",parte1)
+            console.log("parte2:",parte2)
             if (valor == "+" ){
                 if (bdhtml.substring(p1,p1+2) == "[[") return;    //ainda é o primeiro
                 
@@ -168,12 +173,14 @@
 
                // valor = c + "<br><br><p>" + valor;
 
+                console.log("antes:",valor)
                 valor = valor + "<br><br><p>"
-                p1 = (+p1) + valor.length;
+                console.log("depois:",valor)
+
+                p1 = (+p2) + 11;  //adiciona os <br>
                 valor = valor + c;
 
-
-                p2 = (+p1) + campo.Original.length + 4;
+                p2 = (+p1) + valor.length;
                 $("form[name=form]").find("input[name=campo" + key + "]").val("");  //limpa o campo para nova digitação
             } else {
                 p2 = (+p1) + valor.length;
