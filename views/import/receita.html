@@ -21,8 +21,8 @@
            
             {{range $key,$item := .Campos}}
                 {{if not $item.ValorInicial }}
-                    <input type="text" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
-                    <input type="text" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
+                    <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
+                    <input type="hidden" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
                    <label id="label{{$key}}" class="label-micro">{{$item.Descricao}}: </label>
                    
                     {{ if (eq $item.Tipo "escolha" ) }}
@@ -139,6 +139,7 @@
         var c = '[['+campo.Original+']]';
         //console.log('c:',c);
         bdhtml=quill.root.innerHTML;// Get the... Of the current page html Code
+        
         if (p1 == 0) {
             p1 = bdhtml.indexOf(c); // localiza inicio do campo
             if (p2 == 0) {
@@ -156,27 +157,31 @@
             if (valor == "+" ){
                 if (bdhtml.substring(p1,p1+2) == "[[") return;    //ainda é o primeiro
                 
-                parte1=bdhtml.substring(0, p2);
-                valor =  c;
+                i = parte1.indexOf("<span class=") //<span class="ql-font-monospace">[[Medicamento?medicamento:lista=receita]]</span>
+                f = parte1.indexOf(">",i)
+                pref = "<br><p><br>" + parte1.substring(i,f + 1);
+                console.log("pref:",pref)
+                parte1=bdhtml.substring(0, p2) + pref;  // Acrescenta nova linha
+
+                valor = c;
 
                 p1 = 0;
                 p2 = 0;
 
                 $("form[name=form]").find("input[name=campo" + key + "]").val("");  //limpa o campo para nova digitação
             } else {
-                p2 = (+p1) + valor.length;
+                p2 = (+p1) + valor.length + 7;
             }
             
             $("form[name=form]").find("input[name=inicio" + key + "]").val(p1);
             $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
             /* $("form[name=form]").find("input[name=fim2]").val(p2); */
 
-            console.log("parte1:",parte1)
-            console.log("parte2:",parte2)
+            //console.log("parte1:",parte1)
+            //console.log("parte2:",parte2)
             quill.root.innerHTML= parte1 + valor + parte2;
        }    
     }
-
 
 </script>
 
