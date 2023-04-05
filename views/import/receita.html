@@ -21,8 +21,8 @@
            
             {{range $key,$item := .Campos}}
                 {{if not $item.ValorInicial }}
-                    <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
-                    <input type="hidden" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
+                    <input type="text" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
+                    <input type="text" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
                    <label id="label{{$key}}" class="label-micro">{{$item.Descricao}}: </label>
                    
                     {{ if (eq $item.Tipo "escolha" ) }}
@@ -131,7 +131,6 @@
 
     }
 
-
     function substituir(campo,valor,key) {
 
         var p1 = $("input[name^=inicio" + key + "]").val();
@@ -151,49 +150,29 @@
      
         if (valor != '') {
 
-            var cr = valor.indexOf("@");
-            if (cr > 0) {
-                item = (+item) + 1;
-                valor = item + ". " + valor.substring(0,cr) + "<br><p>    " + valor.substring(cr+1, valor.length) + "<br><p>" 
-                p2 = (+p1) + valor.length;
-                //console.log("@:p1",p1)
-                //console.log("@:valor.len",valor.length)
-            }
-
-            //console.log("cr:",cr)
-
             parte1=bdhtml.substring(0,p1); // pega a parte inicial 
-            parte2=bdhtml.substring(p2,bdhtml.length); // pega a parte final
-            console.log("parte1:",parte1)
-            console.log("parte2:",parte2)
+            parte2=bdhtml.substring(p2,bdhtml.length); // pega a posição final
+
             if (valor == "+" ){
                 if (bdhtml.substring(p1,p1+2) == "[[") return;    //ainda é o primeiro
                 
-                valor =  bdhtml.substring(p1,p2);
+                parte1=bdhtml.substring(0, p2);
+                valor =  c;
 
-               // valor = c + "<br><br><p>" + valor;
+                p1 = 0;
+                p2 = 0;
 
-                console.log("antes:",valor)
-                valor = valor + "<br><br><p>"
-                console.log("depois:",valor)
-
-                p1 = (+p2) + 11;  //adiciona os <br>
-                valor = valor + c;
-
-                p2 = (+p1) + valor.length;
                 $("form[name=form]").find("input[name=campo" + key + "]").val("");  //limpa o campo para nova digitação
             } else {
                 p2 = (+p1) + valor.length;
             }
-
-            if (p1 > 0) {
-                $("form[name=form]").find("input[name=inicio" + key + "]").val(p1);
-                //console.log(campo.Fim);
-            }
-
+            
+            $("form[name=form]").find("input[name=inicio" + key + "]").val(p1);
             $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
             /* $("form[name=form]").find("input[name=fim2]").val(p2); */
 
+            console.log("parte1:",parte1)
+            console.log("parte2:",parte2)
             quill.root.innerHTML= parte1 + valor + parte2;
        }    
     }
