@@ -144,26 +144,33 @@
             }
         }
 
+
+        console.log("cpo0:",bdhtml.substring(p1,p2 ));
+        console.log("cpo0.p1:",bdhtml.substring((+p1) - 3,p1) );
+        console.log("cpo0.p2:",bdhtml.substring(p2,(+p2) + 3) );
+
         parte1=bdhtml.substring(0,p1); // pega a parte inicial 
         parte2=bdhtml.substring(p2,bdhtml.length); // pega a posição final
 
-        i = parte1.lastIndexOf("<span class=") //<span class="ql-font-monospace">[[Medicamento?medicamento:lista=receita]]</span>
+/*      i = parte1.lastIndexOf("<span class=") //<span class="ql-font-monospace">[[Medicamento?medicamento:lista=receita]]</span>
         f = parte1.indexOf(">",i)
-        pref = parte1.substring(i,f + 1);
+        pref = parte1.substring(i,f + 1); */
         //console.log("pref:",pref)
      
+        //pref = "<span class='ql-font-monospace'>"
+        pref = "<span class='ql-font-monospace'>"
         if (valor != '') {
 
             PosSegundaLinha = valor.indexOf("@");
             if (PosSegundaLinha > 0 ) {
                 valor = pref + 
                         valor.substring(0,PosSegundaLinha) + 
-                        "<br><p>" + 
+                        "<p>" + 
                         pref +
                         valor.substring(PosSegundaLinha + 1, valor.length) +
-                        "</p></span><br>";
+                        "</span>";
 
-                console.log("tam.valor:",valor.length);
+                //console.log("tam.valor:",valor.length);
                 p2 = parte1.length + valor.length;
             }
 
@@ -173,25 +180,29 @@
                 
                 parte1=bdhtml.substring(0, p2);  // Acrescenta nova linha
 
-                valor = "<br><p><br>" + pref + c;
+                valor =  pref + "<p><p>" +  c + "</span>";
 
                 p1 = 0;
                 p2 = 0;
 
                 $("form[name=form]").find("input[name=campo" + key + "]").val("");  //limpa o campo para nova digitação
             } else {
-                p1 = parte1.length + 1;
-                p2 = (+p1) + valor.length + 5;
+                p1 = parte1.length;
+                p2 = (+p1) + valor.length;
+                
             }
 
             $("form[name=form]").find("input[name=inicio" + key + "]").val(p1);
             $("form[name=form]").find("input[name=fim" + key + "]").val(p2);
-            /* $("form[name=form]").find("input[name=fim2]").val(p2); */
 
             //console.log("parte1:",parte1)
             //console.log("valor:",valor)
             //console.log("parte2:",parte2)
-            quill.root.innerHTML= parte1 + valor + parte2;
+            cont = parte1 + valor + parte2;
+            quill.root.innerHTML= cont;
+            console.log("cpo:",cont.substring(p1,p2) );
+            console.log("cpo.p1:",cont.substring((+p1) - 3,p1) );
+            console.log("cpo.p2:",cont.substring(p2,(+p2) + 3) );
        }    
     }
 
