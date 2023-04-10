@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
 	//"fmt"
 
 	"github.com/adam-hanna/arrayOperations"
@@ -26,10 +27,28 @@ type ListaController struct {
 func (uc *ListaController) Index() {
 	var listaService services.ListaService
 
+	Busca := ""
+	for k, val := range gQueryParams {
+		if k == "_keywords" {
+			Busca = val[0]
+		}
+	}
+
+	cond := ""
+
+	if Busca != "" {
+		if cond == "" {
+			cond = "WHERE nome LIKE '%" + Busca + "%'"
+		} else {
+			cond = cond + " AND nome LIKE '%" + Busca + "%'"
+		}
+	}
+
 	//
 	listaLevelMap := make(map[int]string)
 
-	data, pagination := listaService.GetPaginateData(admin["per_page"].(int), gQueryParams)
+	//data, pagination := atendimentoService.GetPaginateDataAtend(admin["per_page"].(int), gQueryParams)
+	data, pagination := listaService.GetPaginateData(1, admin["per_page"].(int), cond)
 
 	//fmt.Println ("data",data)
 	uc.Data["data"] = data
@@ -113,6 +132,7 @@ func (uc *ListaController) Edit() {
 
 	//
 
+	//fmt.Println("lista_retornada:", lista)
 	uc.Data["data"] = lista
 
 	uc.Layout = "public/base.html"

@@ -1,4 +1,5 @@
-/**
+/*
+*
 @author : CCB_f
 @
 */
@@ -8,10 +9,16 @@ import (
 	"github.com/beego/beego/v2/client/orm"
 )
 
+type Item struct {
+	Id int64 `form:"id"        		alias:"ID" `
+	/* 	ListaId 	int    `orm:"column(lista_id);size(10);default(0)" description:"id da lista" json:"lista_id"` */
+	Descricao string `form:"descricao"   			alias:"Descricao"`
+}
+
 type Lista struct {
-	Id          int64  `form:"id"        		alias:"ID" `
-	Nome        string `form:"nome"      		alias:"Nome"    		valid:"Required;MaxSize(20)"`
-	Valor	 	string `form:"valor"   			alias:"Valor"`
+	Id   int64   `form:"id"        		alias:"ID" `
+	Nome string  `form:"nome"      		alias:"Nome"    		valid:"Required;MaxSize(20)"`
+	Item []*Item `orm:"-"`
 }
 
 // TableName
@@ -39,7 +46,7 @@ func (*Lista) TimeField() []string {
 	return []string{}
 }
 
-//Registre o campo definido no init
+// Registre o campo definido no init
 func init() {
 	orm.RegisterModel(new(Lista))
 }

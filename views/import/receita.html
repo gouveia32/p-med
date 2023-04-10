@@ -21,8 +21,8 @@
            
             {{range $key,$item := .Campos}}
                 {{if not $item.ValorInicial }}
-                    <input type="text" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
-                    <input type="text" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
+                    <input type="hidden" name="inicio{{$key}}" autocomplete="off" id="inicio[]" class="fields" value="0">
+                    <input type="hidden" name="fim{{$key}}" autocomplete="off" id="fim[]" class="fields" value="0">
                    <label id="label{{$key}}" class="label-micro">{{$item.Descricao}}: </label>
                    
                     {{ if (eq $item.Tipo "escolha" ) }}
@@ -132,10 +132,11 @@
 
         var p1 = $("input[name^=inicio" + key + "]").val();
         var p2 = $("input[name^=fim" + key + "]").val();
+        var pref = "- ";
 
         var c = '[['+campo.Original+']]';
         //console.log('c:',c);
-        bdhtml=quill.root.innerText;// Get the... Of the current page html Code
+        bdhtml=quill.root.innerHTML;// Get the... Of the current page html Code
         
         if (p1 == 0) {
             p1 = bdhtml.indexOf(c); // localiza inicio do campo
@@ -145,26 +146,30 @@
         }
 
         parte1=bdhtml.substring(0,p1); // pega a parte inicial 
+        //pref = parte1.substring(parte1.length - 2, 2);
         //alvo = bdhtml.substring((+p1) + 1, (+p2) - 1); // pega a parte inicial 
         parte2=bdhtml.substring(p2,bdhtml.length); // pega a posição final
-        console.log("alvo:",alvo );
+        //console.log("alvo:",alvo );
 
         if (valor != '') {
 
+            valor = pref + valor;
+
             PosSegundaLinha = valor.indexOf("@");
-            if (PosSegundaLinha > 0 ) {
+            while (PosSegundaLinha > 0 && PosSegundaLinha <= valor.length) {
                 valor = valor.substring(0,PosSegundaLinha) + 
-                        "<p>" + 
-                        valor.substring(PosSegundaLinha + 1, valor.length);
+                    "\n  " + 
+                    valor.substring(PosSegundaLinha + 1, valor.length);
+                PosSegundaLinha = valor.indexOf("@");
             }
 
             //trata o botão "+"
-            if (valor == "+") {
+            if (valor == pref + "+") {
                 if (bdhtml.substring(p1,p1+2) == "[[") return;    //ainda é o primeiro
                 
-                parte1=bdhtml.substring(0, p2);  // Acrescenta nova linha
+                parte1=bdhtml.substring(0, p2) + "\n\n";  // Acrescenta nova linha
 
-                valor =  c;
+                valor = c;
 
                 p1 = 0;
                 p2 = 0;

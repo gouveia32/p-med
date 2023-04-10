@@ -118,34 +118,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {{range $key,$item := .data}}
-                        <tr>
-                            <td>
-                                <input type="checkbox" onclick="checkThis(this)" name="data-checkbox"
-                                       data-id="{{$item.Id}}" class="checkbox data-list-check" value="{{$item.Id}}"
-                                       placeholder="escolher/Cancelar">
-                            </td>
-                            <!-- <td>{{$item.Id}}</td> -->
-                            <td>{{$item.Nome}}</td>
-                            <td>{{$item.Valor}}</td>
-
-                            <td class="td-do">
-                                <a href="/admin/lista/edit?id={{$item.Id}}"
-                                   class="btn btn-primary btn-xs" title="Alterar" data-toggle="tooltip">
-                                    <i class="fa fa-pencil"></i>
-                                </a>
-                                <a class="btn btn-danger btn-xs AjaxButton" data-toggle="tooltip" title="excluir"
-                                   data-id="{{$item.Id}}" 
-                                   data-confirm-title="Confirmação de Exclusão++"
-                                   data-confirm-button-ok="Sim"
-                                   data-confirm-content='Tem certeza de que deseja excluir a lista:<br><span class="text-red">{{$item.Nome}}</span>??'
-                                   data-url="/admin/lista/del">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-
-                            </td>
-                        </tr>
-                        {{end}}
+                            {{str2html .data}}
                         </tbody>
                     </table>
                 </div>

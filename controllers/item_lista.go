@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
 	//"fmt"
 
 	"github.com/adam-hanna/arrayOperations"
@@ -23,7 +24,7 @@ type ItemListaController struct {
 }
 
 // Index
-func (uc *ItemListaController) Index() {
+/* func (uc *ItemListaController) Index() {
 	var listaService services.ListaService
 
 	//
@@ -38,7 +39,7 @@ func (uc *ItemListaController) Index() {
 
 	uc.Layout = "public/base.html"
 	uc.TplName = "lista/index.html"
-}
+} */
 
 // Export
 func (uc *ItemListaController) Export() {

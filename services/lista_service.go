@@ -1,12 +1,14 @@
 package services
 
 import (
+	"fmt"
 	"net/url"
 	"p-med/formvalidate"
 	"p-med/models"
 	"p-med/utils/page"
+	"strconv"
+
 	//"encoding/json"
-	//"fmt"
 
 	"github.com/beego/beego/v2/client/orm"
 )
@@ -16,8 +18,8 @@ type ListaService struct {
 	BaseService
 }
 
-// getDataByListaId 
-func (*ListaService) getDataByListaId(listaId int) []*models.Lista {
+// getDataByListaId
+func (us *ListaService) getDataByListaId(listaId int) []*models.Lista {
 	var listas []*models.Lista
 	_, err := orm.NewOrm().QueryTable(new(models.Lista)).Filter("lista_id", listaId).All(&listas)
 	if err != nil {
@@ -26,34 +28,88 @@ func (*ListaService) getDataByListaId(listaId int) []*models.Lista {
 	return listas
 }
 
-
 // GetListaByNome
-func (us *ListaService) GetListaByNome(nome string) []*models.Lista {
+/* func (us *ListaService) GetListaByNome(nome string) []*models.Lista {
 	var listas []*models.Lista
 	orm.NewOrm().QueryTable(new(models.Lista)).Filter("nome__in", nome).All(&listas)
 	if len(listas) > 0 {
 		return listas
 	}
 	return nil
-}
-
+} */
 
 // GetPaginateData
-func (us *ListaService) GetPaginateData(listRows int, params url.Values) ([]*models.Lista, page.Pagination) {
-	//Pesquisa, atribuição de lista de consulta
-	
-	us.SearchField = append(us.SearchField, new(models.Lista).SearchField()...)
+func (us *ListaService) GetPaginateData(page, pageSize int, where string) ([]*models.ItemLista, page.Pagination) {
+	us.Pagination.CurrentPage = page
+	us.Pagination.ListRows = pageSize
 
-	var listas []*models.Lista
-	o := orm.NewOrm().QueryTable(new(models.Lista))
-	
-	_, err := us.PaginateAndScopeWhere(o, listRows, params).All(&listas)
-	//fmt.Println("err",err)
-	if err != nil {
-		return nil, us.Pagination
+	offset := (page - 1) * pageSize
+	itens := make([]*models.ItemLista, 0)
+	sql := "SELECT id, nome FROM lista " +
+		where + " ORDER BY id DESC LIMIT ?,?;"
+
+	orm.NewOrm().Raw(sql, offset, pageSize).QueryRows(&itens)
+
+	//total := len(list)
+	us.Pagination.Total = len(itens)
+	return itens, us.Pagination //precisa ajustes na paginação
+}
+
+// GetListaById
+func (us *ListaService) GetListaById(id int64) *models.Lista {
+
+	strId := strconv.FormatInt(int64(id), 10)
+	lista := make([]*models.Lista, 0)
+	sql := "SELECT id, nome, descricao FROM lista JOIN lista" +
+		" WHERE id=" + strId + " LIMIT 1;"
+
+	orm.NewOrm().Raw(sql).QueryRows(&lista)
+
+	//fmt.Println("lista:", lista)
+
+	return lista[0]
+}
+
+// GetListaByNome
+func (*ListaService) GetListaByNome(nome string) []*models.Lista {
+
+	lista := make([]*models.Lista, 0)
+	sql := "SELECT lista.id, lista.nome, item_lista.descricao FROM item_lista JOIN lista ON  item_lista.lista_id = lista.id " +
+		" WHERE lista.nome=" + nome
+
+	orm.NewOrm().Raw(sql).QueryRows(&lista)
+
+	//fmt.Println("lista:", lista)
+
+	return lista
+}
+
+// Update
+func (us *ListaService) Update(form *formvalidate.ListaForm) int {
+
+	o := orm.NewOrm()
+	lista := models.Lista{Id: form.Id}
+
+	//lista1 := us.GetListaById(form.Id)
+
+	fmt.Println("lista:", lista)
+
+	if o.Read(&lista) == nil {
+		//
+		lista.Nome = form.Nome
+		//lista.Valor = form.Valor
+
+		num, err := o.Update(&lista)
+
+		fmt.Println("err:", err)
+
+		if err == nil {
+			return int(num)
+		}
+		return 0
 	}
-	
-	return listas, us.Pagination
+
+	return 0
 }
 
 // Del
@@ -67,49 +123,16 @@ func (*ListaService) Del(ids []int) int {
 
 // Create
 func (*ListaService) Create(form *formvalidate.ListaForm) int {
-
 	lista := models.Lista{
-		Nome:   form.Nome,
-		Valor: 	form.Valor,
+		Nome: form.Nome,
+		///Valor: form.Valor,
 	}
 
+	//criptografia de senha
 	id, err := orm.NewOrm().Insert(&lista)
 
 	if err == nil {
 		return int(id)
-	}
-	return 0
-}
-
-// GetListaById
-func (*ListaService) GetListaById(id int64) *models.Lista {
-	o := orm.NewOrm()
-	lista := models.Lista{Id: id}
-	err := o.Read(&lista)
-	if err != nil {
-		return nil
-	}
-	return &lista
-}
-
-// Update
-func (*ListaService) Update(form *formvalidate.ListaForm) int {
-	o := orm.NewOrm()
-	lista := models.Lista{Id: form.Id}
-	
-	if o.Read(&lista) == nil {
-		//
-		lista.Nome = form.Nome
-		lista.Valor = form.Valor
-
-		num, err := o.Update(&lista)
-
-/* 		fmt.Println("err:",err)
-		fmt.Println("valor:",lista.Valor) */
-		if err == nil {
-			return int(num)
-		}
-		return 0
 	}
 	return 0
 }

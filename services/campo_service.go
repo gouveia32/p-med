@@ -1,13 +1,14 @@
 package services
 
 import (
+	"fmt"
 	"net/url"
 	"p-med/formvalidate"
 	"p-med/models"
 	"p-med/utils/page"
+
 	//"encoding/json"
 	"strings"
-	//"fmt"
 
 	"github.com/beego/beego/v2/client/orm"
 )
@@ -17,15 +18,18 @@ type CampoService struct {
 	BaseService
 }
 
-
 // GetListaByNome
-func (us *CampoService) GetListaByNome(nome string) []*models.Lista {
-	var listas []*models.Lista
-	orm.NewOrm().QueryTable(new(models.Lista)).Filter("nome__in", nome).All(&listas)
-	if len(listas) > 0 {
-		return listas
-	}
-	return nil
+func (*CampoService) GetListaByNome(nome string) []*models.ItemLista {
+
+	itens := make([]*models.ItemLista, 0)
+	sql := "SELECT lista.id, lista.nome, item_lista.descricao FROM item_lista JOIN lista ON  item_lista.lista_id = lista.id " +
+		" WHERE lista.nome='" + nome + "';"
+
+	orm.NewOrm().Raw(sql).QueryRows(&itens)
+
+	fmt.Println("lista:", itens)
+
+	return itens
 }
 
 // GetCampoByNome
@@ -65,16 +69,17 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 					}
 					campo.RespostaStruct = respostas
 				} else {
-					if (campo.Tipo == "lista") { //buscar lista na tabela
- 						lista := us.GetListaByNome(campo.Resposta)
+					if campo.Tipo == "lista" { //buscar lista na tabela
+						lista := us.GetListaByNome(campo.Resposta)
 
 						var respostas []*models.Resposta
+						fmt.Println("lista:", lista[0])
 						for _, l := range lista {
-							//fmt.Println(l.Valor)
+
 							rs := new(models.Resposta)
-		
-							rs.Resposta = l.Valor
-		
+
+							rs.Resposta = l.Descricao
+
 							respostas = append(respostas, rs)
 						}
 						campo.RespostaStruct = respostas
@@ -88,7 +93,7 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 			}
 		}
 	}
-	
+
 	//fmt.Println("\ncampo.Descricao: ",campo.Descricao)
 	//fmt.Println("campo.Nome: ",campo.Nome)
 	//fmt.Println("campo.Tipo: ",campo.Tipo)
@@ -124,13 +129,13 @@ func (us *CampoService) GetPaginateData(listRows int, params url.Values) ([]*mod
 
 	var campos []*models.Campo
 	o := orm.NewOrm().QueryTable(new(models.Campo))
-	
+
 	_, err := us.PaginateAndScopeWhere(o, listRows, params).All(&campos)
 	//fmt.Println("err",err)
 	if err != nil {
 		return nil, us.Pagination
 	}
-	
+
 	return campos, us.Pagination
 }
 
@@ -147,13 +152,12 @@ func (*CampoService) Del(ids []int) int {
 func (*CampoService) Create(form *formvalidate.CampoForm) int {
 
 	campo := models.Campo{
-		Nome:      form.Nome,
-		Descricao: form.Descricao,
-		Resposta:  form.Resposta,
-		Original: form.Original,
+		Nome:         form.Nome,
+		Descricao:    form.Descricao,
+		Resposta:     form.Resposta,
+		Original:     form.Original,
 		ValorInicial: form.ValorInicial,
-		Tipo: form.Tipo,
-
+		Tipo:         form.Tipo,
 	}
 
 	id, err := orm.NewOrm().Insert(&campo)
