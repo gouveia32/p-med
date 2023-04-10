@@ -7,10 +7,10 @@ import (
 	"p-med/models"
 	"p-med/services"
 	"p-med/utils"
-	"p-med/utils/exceloffice"
+	//"p-med/utils/exceloffice"
 	"strconv"
 	"strings"
-	"time"
+	//"time"
 
 	//"fmt"
 
@@ -48,7 +48,7 @@ func (uc *ListaController) Index() {
 	listaLevelMap := make(map[int]string)
 
 	//data, pagination := atendimentoService.GetPaginateDataAtend(admin["per_page"].(int), gQueryParams)
-	data, pagination := listaService.GetPaginateData(1, admin["per_page"].(int), cond)
+	data, pagination := listaService.GetPaginateDataItemLista(1, admin["per_page"].(int), cond)
 
 	//fmt.Println ("data",data)
 	uc.Data["data"] = data
@@ -57,30 +57,6 @@ func (uc *ListaController) Index() {
 
 	uc.Layout = "public/base.html"
 	uc.TplName = "lista/index.html"
-}
-
-// Export
-func (uc *ListaController) Export() {
-	exportData := uc.GetString("export_data")
-	if exportData == "1" {
-		var listaService services.ListaService
-
-		data := listaService.GetExportData(gQueryParams)
-		header := []string{"Id", "Nome", "Valor"}
-		body := [][]string{}
-		for _, item := range data {
-			record := []string{
-				strconv.FormatInt(item.Id, 10),
-			}
-			record = append(record, item.Nome)
-
-			body = append(body, record)
-		}
-		uc.Ctx.ResponseWriter.Header().Set("a", "b")
-		exceloffice.ExportData(header, body, "lista-"+time.Now().Format("2006-01-02"), "", "", uc.Ctx.ResponseWriter)
-	}
-
-	response.Error(uc.Ctx)
 }
 
 // Add
@@ -123,17 +99,17 @@ func (uc *ListaController) Edit() {
 		response.ErrorWithMessage("Parâmetros com erro.", uc.Ctx)
 	}
 
-	var listaService services.ListaService
+	var itemListaService services.ItemListaService
 
-	lista := listaService.GetListaById(id)
-	if lista == nil {
+	item := itemListaService.GetListaById(id)
+	if item == nil {
 		response.ErrorWithMessage("Não encontrado informações para o Id.", uc.Ctx)
 	}
 
 	//
 
 	//fmt.Println("lista_retornada:", lista)
-	uc.Data["data"] = lista
+	uc.Data["data"] = item
 
 	uc.Layout = "public/base.html"
 	uc.TplName = "lista/edit.html"

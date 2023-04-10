@@ -7,10 +7,8 @@ import (
 	"p-med/models"
 	"p-med/services"
 	"p-med/utils"
-	"p-med/utils/exceloffice"
 	"strconv"
 	"strings"
-	"time"
 
 	//"fmt"
 
@@ -21,48 +19,6 @@ import (
 // ListaController struct
 type ItemListaController struct {
 	baseController
-}
-
-// Index
-/* func (uc *ItemListaController) Index() {
-	var listaService services.ListaService
-
-	//
-	listaLevelMap := make(map[int]string)
-
-	data, pagination := listaService.GetPaginateData(admin["per_page"].(int), gQueryParams)
-
-	//fmt.Println ("data",data)
-	uc.Data["data"] = data
-	uc.Data["paginate"] = pagination
-	uc.Data["lista_level_map"] = listaLevelMap
-
-	uc.Layout = "public/base.html"
-	uc.TplName = "lista/index.html"
-} */
-
-// Export
-func (uc *ItemListaController) Export() {
-	exportData := uc.GetString("export_data")
-	if exportData == "1" {
-		var listaService services.ListaService
-
-		data := listaService.GetExportData(gQueryParams)
-		header := []string{"Id", "Nome", "Valor"}
-		body := [][]string{}
-		for _, item := range data {
-			record := []string{
-				strconv.FormatInt(item.Id, 10),
-			}
-			record = append(record, item.Nome)
-
-			body = append(body, record)
-		}
-		uc.Ctx.ResponseWriter.Header().Set("a", "b")
-		exceloffice.ExportData(header, body, "lista-"+time.Now().Format("2006-01-02"), "", "", uc.Ctx.ResponseWriter)
-	}
-
-	response.Error(uc.Ctx)
 }
 
 // Add
@@ -105,16 +61,16 @@ func (uc *ItemListaController) Edit() {
 		response.ErrorWithMessage("Parâmetros com erro.", uc.Ctx)
 	}
 
-	var listaService services.ListaService
+	var itemListaService services.ItemListaService
 
-	lista := listaService.GetListaById(id)
-	if lista == nil {
+	item := itemListaService.GetItemListaById(id)
+	if item == nil {
 		response.ErrorWithMessage("Não encontrado informações para o Id.", uc.Ctx)
 	}
 
 	//
 
-	uc.Data["data"] = lista
+	uc.Data["data"] = item
 
 	uc.Layout = "public/base.html"
 	uc.TplName = "lista/edit.html"
@@ -137,8 +93,8 @@ func (uc *ItemListaController) Update() {
 		response.ErrorWithMessage(v.Errors.One(), uc.Ctx)
 	}
 
-	var listaService services.ListaService
-	num := listaService.Update(&listaForm)
+	var itemListaService services.ItemListaService
+	num := itemListaService.Update(&listaForm)
 
 	if num > 0 {
 		response.Success(uc.Ctx)

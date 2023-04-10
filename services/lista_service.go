@@ -2,7 +2,6 @@ package services
 
 import (
 	"fmt"
-	"net/url"
 	"p-med/formvalidate"
 	"p-med/models"
 	"p-med/utils/page"
@@ -38,13 +37,13 @@ func (us *ListaService) getDataByListaId(listaId int) []*models.Lista {
 	return nil
 } */
 
-// GetPaginateData
-func (us *ListaService) GetPaginateData(page, pageSize int, where string) ([]*models.ItemLista, page.Pagination) {
+// GetPaginateDataLista
+func (us *ListaService) GetPaginateDataLista(page, pageSize int, where string) ([]*models.Lista, page.Pagination) {
 	us.Pagination.CurrentPage = page
 	us.Pagination.ListRows = pageSize
 
 	offset := (page - 1) * pageSize
-	itens := make([]*models.ItemLista, 0)
+	itens := make([]*models.Lista, 0)
 	sql := "SELECT id, nome FROM lista " +
 		where + " ORDER BY id DESC LIMIT ?,?;"
 
@@ -54,6 +53,24 @@ func (us *ListaService) GetPaginateData(page, pageSize int, where string) ([]*mo
 	us.Pagination.Total = len(itens)
 	return itens, us.Pagination //precisa ajustes na paginação
 }
+
+// GetPaginateDataItemLista
+func (us *ListaService) GetPaginateDataItemLista(page, pageSize int, where string) ([]*models.ItemLista, page.Pagination) {
+	us.Pagination.CurrentPage = page
+	us.Pagination.ListRows = pageSize
+
+	offset := (page - 1) * pageSize
+	itens := make([]*models.ItemLista, 0)
+	sql := "SELECT item_lista.id as id, lista.nome as nome, item_lista.descricao as descricao FROM lista JOIN item_lista ON lista.id = item_lista.lista_id " +
+		where + " ORDER BY id DESC LIMIT ?,?;"
+
+	orm.NewOrm().Raw(sql, offset, pageSize).QueryRows(&itens)
+
+	//total := len(list)
+	us.Pagination.Total = len(itens)
+	return itens, us.Pagination //precisa ajustes na paginação
+}
+
 
 // GetListaById
 func (us *ListaService) GetListaById(id int64) *models.Lista {
@@ -137,15 +154,3 @@ func (*ListaService) Create(form *formvalidate.ListaForm) int {
 	return 0
 }
 
-// GetExportData
-func (us *ListaService) GetExportData(params url.Values) []*models.Lista {
-	//
-	us.SearchField = append(us.SearchField, new(models.Lista).SearchField()...)
-	var lista []*models.Lista
-	o := orm.NewOrm().QueryTable(new(models.Lista))
-	_, err := us.ScopeWhere(o, params).All(&lista)
-	if err != nil {
-		return nil
-	}
-	return lista
-}

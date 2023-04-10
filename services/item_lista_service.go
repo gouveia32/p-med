@@ -1,14 +1,13 @@
 package services
 
 import (
-	"net/url"
 	"p-med/formvalidate"
 	"p-med/models"
 	"p-med/utils/page"
 	"strconv"
 
 	//"encoding/json"
-	//"fmt"
+	"fmt"
 
 	"github.com/beego/beego/v2/client/orm"
 )
@@ -34,7 +33,7 @@ func (us *ItemListaService) GetItemListaById(id int64) *models.ItemLista {
 	strId := strconv.FormatInt(int64(id), 10)
 	item := make([]*models.ItemLista, 0)
 	sql := "SELECT item_lista.id as id, lista.nome as nome, item_lista.descricao as descricao FROM item_lista JOIN lista ON  item_lista.lista_id = lista.id " +
-		" WHERE lista.id=" + strId + " LIMIT 1;"
+		" WHERE item_lista.id=" + strId + " LIMIT 1;"
 
 	orm.NewOrm().Raw(sql).QueryRows(&item)
 
@@ -83,22 +82,6 @@ func (*ItemListaService) Del(ids []int) int {
 	return 0
 }
 
-// Create
-func (*ItemListaService) Create(form *formvalidate.ListaForm) int {
-
-	lista := models.Lista{
-		Nome: form.Nome,
-		///Valor: form.Valor,
-	}
-
-	id, err := orm.NewOrm().Insert(&lista)
-
-	if err == nil {
-		return int(id)
-	}
-	return 0
-}
-
 // GetListaById
 func (*ItemListaService) GetListaById(id int64) *models.Lista {
 	o := orm.NewOrm()
@@ -110,37 +93,46 @@ func (*ItemListaService) GetListaById(id int64) *models.Lista {
 	return &lista
 }
 
+// Create
+func (*ItemListaService) Create(form *formvalidate.ListaForm) int {
+	
+
+	item := models.ItemListaBd{
+		ListaId: form.ListaId,
+		Descricao: form.Descricao,
+	}
+
+	id, err := orm.NewOrm().Insert(&item)
+
+	if err == nil {
+		return int(id)
+	}
+	return 0
+}
+
 // Update
 func (*ItemListaService) Update(form *formvalidate.ListaForm) int {
 	o := orm.NewOrm()
-	lista := models.Lista{Id: form.Id}
+	//fmt.Println("id",form.Id)
+	item := models.ItemListaBd{Id: form.Id}
 
-	if o.Read(&lista) == nil {
+	//fmt.Println("item",item)
+
+	if o.Read(&item) == nil {
 		//
-		lista.Nome = form.Nome
-		///lista.Valor = form.Valor
+		item.Descricao = form.Descricao
 
-		num, err := o.Update(&lista)
+/* 		fmt.Println("item.Id",item.Id)
+		fmt.Println("item.ListaId",item.ListaId)
+		fmt.Println("item.Desc",item.Descricao)
+ */
+		num, err := o.Update(&item)
+		fmt.Println("err",err)
 
-		/* 		fmt.Println("err:",err)
-		   		fmt.Println("valor:",lista.Valor) */
 		if err == nil {
 			return int(num)
 		}
 		return 0
 	}
 	return 0
-}
-
-// GetExportData
-func (us *ItemListaService) GetExportData(params url.Values) []*models.Lista {
-	//
-	us.SearchField = append(us.SearchField, new(models.Lista).SearchField()...)
-	var lista []*models.Lista
-	o := orm.NewOrm().QueryTable(new(models.Lista))
-	_, err := us.ScopeWhere(o, params).All(&lista)
-	if err != nil {
-		return nil
-	}
-	return lista
 }
