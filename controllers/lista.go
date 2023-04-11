@@ -31,14 +31,24 @@ func (uc *ListaController) Index() {
 
 	//listas := [2]string{"receita", "exame"}
 	listas := listaService.GetAllLista()
+
 	Busca := ""
+	lSel := ""
 	for k, val := range gQueryParams {
-		if k == "_keywords" {
+		//fmt.Println ("k:",k,"val:",val)
+		if k == "_nome" {
 			Busca = val[0]
+			lSel = Busca
 		}
 	}
 
-	cond := "WHERE lista.nome = '" + listas[0].Nome + "'"
+	if lSel == "" {
+		lSel = listas[0].Nome
+		Busca = listas[0].Nome
+	}
+
+	//cond := "WHERE lista.nome = '" + listas[0].Nome + "'"
+	cond := ""
 
 	if Busca != "" {
 		if cond == "" {
@@ -57,6 +67,7 @@ func (uc *ListaController) Index() {
 
 	//fmt.Println ("data",data)
 	uc.Data["lista"] = listas
+	uc.Data["lista_selecionada"] = lSel
 	uc.Data["data"] = data
 	uc.Data["paginate"] = pagination
 	uc.Data["lista_level_map"] = listaLevelMap
@@ -74,20 +85,12 @@ func (uc *ListaController) Add() {
 
 // Create
 func (uc *ListaController) Create() {
-	var listaForm formvalidate.ListaForm
+	listaNome := uc.GetString("lista_nome")
 
-	if err := uc.ParseForm(&listaForm); err != nil {
-		response.ErrorWithMessage(err.Error(), uc.Ctx)
-	}
-
-	v := validate.Struct(listaForm)
-
-	if !v.Validate() {
-		response.ErrorWithMessage(v.Errors.One(), uc.Ctx)
-	}
+	//fmt.Println("lnome:",listaNome)
 
 	var listaService services.ListaService
-	insertID := listaService.Create(&listaForm)
+	insertID := listaService.Create(listaNome)
 
 	url := global.URL_BACK
 
@@ -95,7 +98,7 @@ func (uc *ListaController) Create() {
 		response.SuccessWithMessageAndUrl("Adicionado com sucesso", url, uc.Ctx)
 	} else {
 		response.Error(uc.Ctx)
-	}
+	} 
 }
 
 // Edit

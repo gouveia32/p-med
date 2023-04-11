@@ -9,44 +9,25 @@
                     <form class="form-inline searchForm" id="searchForm" action="/admin/lista/index" method="GET">
 
                         <div class="form-group">
-                            <strong>{{.admin.title}} </strong> | Filtrar:
+                            <strong>{{.admin.title}} </strong> | 
                         </div>
 
                         <div class="form-group">
-                            <input value="{{._keywords}}"
-                                   name="_keywords" id="_keywords" class="form-control input-sm"
-                                   placeholder="Nome">
+                            <!-- <label for="nome" text-align="right" class="col-sm-1 control-label">Nome:</label> -->
+                            <div class="col-sm-3 col-md-2">
+                                <select name="_nome" id="_nome" class="form-control" onchange="searchForm.submit()">
+                                    {{range $index, $val := .lista}}
+                                        <option value="{{$val.Nome}}" {{if compare $val.Nome $.lista_selecionada}} selected {{end}}>{{$val.Nome}}</option>
+                                    {{end}}
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <select name="_order" id="_order" class="form-control input-sm index-order">
-                                <option value="">Ordem p/</option>
-                                <option value="id" {{if compare ._order "id"}}selected {{end}}>ID</option>
-                                <option value="nome" {{if compare ._order "nome"}}selected {{end}}>Nome</option>
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <select name="_by" id="_by" class="form-control input-sm index-order">
-                                <option value="">ordem</option>
-                                <option value="asc" {{if compare ._by "asc"}}selected {{end}}>crescente</option>
-                                <option value="desc" {{if compare ._by "desc"}}selected {{end}}>decrescente</option>
-                            </select>
-                        </div>
-                        <script>
-                            $('#_order').select2();
-                            $('#_by').select2();
-                        </script>
-
-                        <div class="form-group">
-                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-search"></i> Investigar
-                            </button>
-                        </div>
-                        <div class="form-group">
-                            <button onclick="clearSearchForm()" class="btn btn-sm btn-default" type="button"><i
-                                    class="fa  fa-eraser"></i> limpar filtro
-                            </button>
+<!--                             <a title="AdicLista" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/lista/add">
+                                <i class="fa fa-plus"></i> Nova Lista
+                            </a> -->
+                            <button class="btn btn-sm btn-info" lay-submit="" lay-filter="nova_lista" ><i class="fa fa-file-text-o"></i> Nova Lista</button>
                         </div>
                     </form>
                 </div>
@@ -61,7 +42,7 @@
                 <!--topo da lista de dados-->
                 <div class="box-header">
                     <div>
-                        <a title="Adicionar" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/lista/add">
+                        <a title="Adicionar" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/item_lista/add">
                             <i class="fa fa-plus"></i> Adicionar
                         </a>
                         <a class="btn btn-danger btn-sm AjaxButton" 
@@ -80,27 +61,6 @@
                             <i class="fa fa-refresh"></i> atualizar
                         </a>
                     </div>
-                    <div>
-                        <label for="nome" text-align="right" class="col-sm-1 control-label">NOME:</label>
-                        <div class="col-sm-3 col-md-2">
-                            <select name="nome" id="nome" class="form-control select2">
-                                {{range $key,$item := .lista}}
-                                    <option value="{{$item.Nome}}" {{if compare $item.Nome $item}}selected{{end}}>
-                                    {{$item.Nome}}
-                                    </option>
-                                {{end}}
-                            </select>
-                        </div>
-                    
-                        <script>
-                            /** seleciona o lista  */
-                            $('#nome').select2();
-                        </script>
-
-                        <a title="Adicionar_lista" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/lista/add">
-                            <i class="fa fa-plus"></i> Nova Lista
-                        </a>
-                    </div>
                 </div>
 
                 <div class="box-body table-responsive">
@@ -112,7 +72,7 @@
                                        placeholder="Selecionar/Cancelar">
                             </th>
                             <!-- <th>Id</th> -->
-                            <th>Nome</th>
+                            <!-- <th>Nome</th> -->
                             <th>Descrição</th>
 
                             <th>Ação</th>
@@ -127,7 +87,7 @@
                                            placeholder="escolher/Cancelar">
                                 </td>
                                 <!-- <td>{{$item.Id}}</td> -->
-                                <td>{{$item.Nome}}</td>
+                                <!-- <td>{{$item.Nome}}</td> -->
                                 <td>{{$item.Descricao}}</td>
     
                                 <td class="td-do">
@@ -175,6 +135,68 @@
     </div>
 </section>
 
+
+<script src="/static/layui/layui.js?s=36"></script>
+<script language="javascript">
+    var $,form;
+    layui.config({
+                base : "js/"
+        }).use(['form','element','layer','jquery'],function(){
+            document.documentElement.style.cursor = 'default';
+          form = layui.form; //Somente após esta etapa ser realizada, alguns elementos do formulário serão decorados automaticamente com sucesso
+          $ = layui.jquery;
+          form.on("submit",function(data) {
+                var sub_type = data.elem.getAttribute("lay-filter")
+
+                switch(sub_type) {
+                    case 'nova_lista':
+                        var modId = layer.open({
+                            title: 'Digite o solicitado',
+                            closeBtn: false,
+                            type: 1,
+                            btn: ["Ok","Fechar"],
+                            content: '<div style="width: 250px; padding-left: 20px"> ' +
+                                       '<label for="nome_lista"> Nome da Nova Lista: </label>' +
+                                       '<input type="text" name="nome" id="nome"  autocomplete="on" placeholder="nome" class="layui-input form-control field-text" value="">' +
+                                     '</div>',
+                            yes: function(index, layero){
+                                var listaNome = layero.find('input')[0].value;
+                                var data_consulta = $('#data_consulta').val();
+                                console.log("nome: ", listaNome);
+
+                                var form_data = $("form").serialize();
+                                //alert("AquAtendi");
+                                $.post('{{urlfor "ListaController.Create"}}', {lista_nome:listaNome}, function (out) {
+                                    //console.log(out);   
+                                    
+                                    if (out.code > 0) {
+                                        document.documentElement.style.cursor = 'default';
+                                        //alert("gravado");
+                    
+                                        flagGravar = 0;
+
+                                        layer.msg("Gravado com sucesso!",{icon: 1},function () {
+                                            window.location.reload();
+                                        });
+                                    } else {
+                                        layer.msg(out.message)
+                                    }
+                                }, "json");
+                                
+                                layer.close(index);
+                            }
+
+                          });     
+                        return false;
+                        break;
+                }
+            });
+        });
+
+    /** seleciona o lista  */
+    $('#nome').select2();
+
+</script>
 
 
 

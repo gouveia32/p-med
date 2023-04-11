@@ -217,6 +217,7 @@ func init() {
 		web.NSRouter("/lista/edit", &controllers.ItemListaController{}, "get:Edit"),
 		web.NSRouter("/lista/update", &controllers.ItemListaController{}, "post:Update"),
 		web.NSRouter("/lista/del", &controllers.ListaController{}, "post:Del"),
+		web.NSRouter("/item_lista/add", &controllers.ItemListaController{}, "get:Add"),
 		
 		//Ger cor
 		web.NSRouter("/cor/index", &controllers.CorController{}, "get:Index"),

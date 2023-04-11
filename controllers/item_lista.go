@@ -42,8 +42,8 @@ func (uc *ItemListaController) Create() {
 		response.ErrorWithMessage(v.Errors.One(), uc.Ctx)
 	}
 
-	var listaService services.ListaService
-	insertID := listaService.Create(&listaForm)
+	var itemListaService services.ItemListaService
+	insertID := itemListaService.Create(&listaForm)
 
 	url := global.URL_BACK
 

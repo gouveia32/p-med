@@ -150,13 +150,12 @@ func (*ListaService) Del(ids []int) int {
 }
 
 // Create
-func (*ListaService) Create(form *formvalidate.ListaForm) int {
+func (*ListaService) Create(listaNome string) int {
 	lista := models.Lista{
-		Nome: form.Nome,
-		///Valor: form.Valor,
+		Nome: listaNome,
 	}
 
-	//criptografia de senha
+	//
 	id, err := orm.NewOrm().Insert(&lista)
 
 	if err == nil {
