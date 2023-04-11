@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"net/url"
 	"p-med/formvalidate"
 	"p-med/models"
@@ -27,7 +26,7 @@ func (*CampoService) GetListaByNome(nome string) []*models.ItemLista {
 
 	orm.NewOrm().Raw(sql).QueryRows(&itens)
 
-	fmt.Println("lista:", itens)
+	//fmt.Println("lista:", itens)
 
 	return itens
 }
@@ -73,7 +72,7 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 						lista := us.GetListaByNome(campo.Resposta)
 
 						var respostas []*models.Resposta
-						fmt.Println("lista:", lista[0])
+						//fmt.Println("lista:", lista[0])
 						for _, l := range lista {
 
 							rs := new(models.Resposta)

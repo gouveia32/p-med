@@ -1,3 +1,6 @@
+<script>
+    var listaNome = "receita";
+</script>
 <!--Página da lista de dados-->
 <section class="content">
 
@@ -6,7 +9,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-body">
-                    <form class="form-inline searchForm" id="searchForm" action="/admin/lista/index" method="GET">
+                    <form class="form-inline searchForm" name="searchForm" id="searchForm" action="/admin/lista/index" method="GET">
 
                         <div class="form-group">
                             <strong>{{.admin.title}} </strong> | 
@@ -42,7 +45,7 @@
                 <!--topo da lista de dados-->
                 <div class="box-header">
                     <div>
-                        <a title="Adicionar" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/item_lista/add">
+                        <a title="Adicionar" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/item_lista/add?nome={{.listaNome}}">
                             <i class="fa fa-plus"></i> Adicionar
                         </a>
                         <a class="btn btn-danger btn-sm AjaxButton" 
@@ -150,6 +153,7 @@
 
                 switch(sub_type) {
                     case 'nova_lista':
+
                         var modId = layer.open({
                             title: 'Digite o solicitado',
                             closeBtn: false,
@@ -157,25 +161,20 @@
                             btn: ["Ok","Fechar"],
                             content: '<div style="width: 250px; padding-left: 20px"> ' +
                                        '<label for="nome_lista"> Nome da Nova Lista: </label>' +
-                                       '<input type="text" name="nome" id="nome"  autocomplete="on" placeholder="nome" class="layui-input form-control field-text" value="">' +
+                                       '<input type="text" name="nome" id="nome"  autocomplete="off" placeholder="nome" class="layui-input form-control field-text" value="">' +
                                      '</div>',
                             yes: function(index, layero){
                                 var listaNome = layero.find('input')[0].value;
-                                var data_consulta = $('#data_consulta').val();
-                                console.log("nome: ", listaNome);
+                                //console.log("nome: ", listaNome);
+/*                                 $("form[name=searchForm]").find("select[name=_nome]").val(listaNome);
+                                searchForm.submit(); */
 
-                                var form_data = $("form").serialize();
-                                //alert("AquAtendi");
                                 $.post('{{urlfor "ListaController.Create"}}', {lista_nome:listaNome}, function (out) {
                                     //console.log(out);   
                                     
                                     if (out.code > 0) {
-                                        document.documentElement.style.cursor = 'default';
-                                        //alert("gravado");
-                    
-                                        flagGravar = 0;
 
-                                        layer.msg("Gravado com sucesso!",{icon: 1},function () {
+                                        layer.msg("Gravado com sucesso! Agora selecione a nova lista criada!",{icon: 1},function () {                                           
                                             window.location.reload();
                                         });
                                     } else {

@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	//"fmt"
+	"fmt"
 
 	"github.com/adam-hanna/arrayOperations"
 	"github.com/gookit/validate"
@@ -23,6 +23,9 @@ type ItemListaController struct {
 
 // Add
 func (uc *ItemListaController) Add() {
+	listaNome := uc.GetString("nome")
+
+	fmt.Println("listaNome: ", listaNome)
 
 	uc.Layout = "public/base.html"
 	uc.TplName = "lista/add.html"

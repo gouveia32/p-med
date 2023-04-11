@@ -120,7 +120,7 @@ func (us *ListaService) Update(form *formvalidate.ListaForm) int {
 
 	//lista1 := us.GetListaById(form.Id)
 
-	fmt.Println("lista:", lista)
+	//fmt.Println("lista:", lista)
 
 	if o.Read(&lista) == nil {
 		//
