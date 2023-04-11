@@ -64,6 +64,7 @@ func (us *ListaService) GetPaginateDataItemLista(page, pageSize int, where strin
 	sql := "SELECT item_lista.id as id, lista.nome as nome, item_lista.descricao as descricao FROM lista JOIN item_lista ON lista.id = item_lista.lista_id " +
 		where + " ORDER BY id DESC LIMIT ?,?;"
 
+	//fmt.Println("sql:", sql)
 	orm.NewOrm().Raw(sql, offset, pageSize).QueryRows(&itens)
 
 	//total := len(list)
@@ -71,6 +72,16 @@ func (us *ListaService) GetPaginateDataItemLista(page, pageSize int, where strin
 	return itens, us.Pagination //precisa ajustes na paginação
 }
 
+// GetAllLista
+func (us *ListaService) GetAllLista() []*models.Lista {
+
+	listas := make([]*models.Lista, 0)
+	sql := "SELECT id, nome FROM lista; "
+	orm.NewOrm().Raw(sql).QueryRows(&listas)
+
+	//total := len(list)
+	return listas
+}
 
 // GetListaById
 func (us *ListaService) GetListaById(id int64) *models.Lista {
@@ -153,4 +164,3 @@ func (*ListaService) Create(form *formvalidate.ListaForm) int {
 	}
 	return 0
 }
-

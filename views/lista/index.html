@@ -81,8 +81,24 @@
                         </a>
                     </div>
                     <div>
+                        <label for="nome" text-align="right" class="col-sm-1 control-label">NOME:</label>
+                        <div class="col-sm-3 col-md-2">
+                            <select name="nome" id="nome" class="form-control select2">
+                                {{range $key,$item := .lista}}
+                                    <option value="{{$item.Nome}}" {{if compare $item.Nome $item}}selected{{end}}>
+                                    {{$item.Nome}}
+                                    </option>
+                                {{end}}
+                            </select>
+                        </div>
+                    
+                        <script>
+                            /** seleciona o lista  */
+                            $('#nome').select2();
+                        </script>
+
                         <a title="Adicionar_lista" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/lista/add">
-                            <i class="fa fa-plus"></i> Adicionar Lista
+                            <i class="fa fa-plus"></i> Nova Lista
                         </a>
                     </div>
                 </div>

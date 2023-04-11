@@ -7,9 +7,11 @@ import (
 	"p-med/models"
 	"p-med/services"
 	"p-med/utils"
+
 	//"p-med/utils/exceloffice"
 	"strconv"
 	"strings"
+
 	//"time"
 
 	//"fmt"
@@ -27,6 +29,8 @@ type ListaController struct {
 func (uc *ListaController) Index() {
 	var listaService services.ListaService
 
+	//listas := [2]string{"receita", "exame"}
+	listas := listaService.GetAllLista()
 	Busca := ""
 	for k, val := range gQueryParams {
 		if k == "_keywords" {
@@ -34,7 +38,7 @@ func (uc *ListaController) Index() {
 		}
 	}
 
-	cond := ""
+	cond := "WHERE lista.nome = '" + listas[0].Nome + "'"
 
 	if Busca != "" {
 		if cond == "" {
@@ -44,6 +48,7 @@ func (uc *ListaController) Index() {
 		}
 	}
 
+	//fmt.Println("cond:", cond)
 	//
 	listaLevelMap := make(map[int]string)
 
@@ -51,6 +56,7 @@ func (uc *ListaController) Index() {
 	data, pagination := listaService.GetPaginateDataItemLista(1, admin["per_page"].(int), cond)
 
 	//fmt.Println ("data",data)
+	uc.Data["lista"] = listas
 	uc.Data["data"] = data
 	uc.Data["paginate"] = pagination
 	uc.Data["lista_level_map"] = listaLevelMap
