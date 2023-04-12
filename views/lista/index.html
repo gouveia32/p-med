@@ -1,6 +1,4 @@
-<script>
-    var listaNome = "receita";
-</script>
+
 <!--Página da lista de dados-->
 <section class="content">
 
@@ -18,7 +16,7 @@
                         <div class="form-group">
                             <!-- <label for="nome" text-align="right" class="col-sm-1 control-label">Nome:</label> -->
                             <div class="col-sm-3 col-md-2">
-                                <select name="_nome" id="_nome" class="form-control" onchange="searchForm.submit()">
+                                <select name="_nome" id="_nome" class="form-control" onchange="trataLista(this)">
                                     {{range $index, $val := .lista}}
                                         <option value="{{$val.Nome}}" {{if compare $val.Nome $.lista_selecionada}} selected {{end}}>{{$val.Nome}}</option>
                                     {{end}}
@@ -45,7 +43,7 @@
                 <!--topo da lista de dados-->
                 <div class="box-header">
                     <div>
-                        <a title="Adicionar" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/item_lista/add?nome={{.listaNome}}">
+                        <a title="Adicionar" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/item_lista/add?nome={{.lista_selecionada}}">
                             <i class="fa fa-plus"></i> Adicionar
                         </a>
                         <a class="btn btn-danger btn-sm AjaxButton" 
@@ -146,9 +144,10 @@
                 base : "js/"
         }).use(['form','element','layer','jquery'],function(){
             document.documentElement.style.cursor = 'default';
-          form = layui.form; //Somente após esta etapa ser realizada, alguns elementos do formulário serão decorados automaticamente com sucesso
-          $ = layui.jquery;
-          form.on("submit",function(data) {
+
+            form = layui.form; //Somente após esta etapa ser realizada, alguns elementos do formulário serão decorados automaticamente com sucesso
+            $ = layui.jquery;
+            form.on("submit",function(data) {
                 var sub_type = data.elem.getAttribute("lay-filter")
 
                 switch(sub_type) {
@@ -195,6 +194,12 @@
     /** seleciona o lista  */
     $('#nome').select2();
 
+    //Muda a cor na nota
+    function trataLista(campo) {
+        listanome = campo.value;
+        searchForm.submit();
+    }
+    
 </script>
 
 
