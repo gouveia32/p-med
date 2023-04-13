@@ -24,14 +24,15 @@
                     </div>
                 </div>
                 <!-- Formato -->
-                <form id="dataForm" class="form-horizontal dataForm" action="/admin/lista/create" method="post"
+                <form id="dataForm" class="form-horizontal dataForm" action="/admin/item_lista/create" method="post"
                     enctype="multipart/form-data">
+                    <input type="hidden" name="lista_id" value="{{.lista.Id}}">
 
                     <table width="75%">
                         <tr>
                             <td style="width: 30%">
                                 <label class="label-micro">NOME</label>
-                                <input type="text" name="nome" id="nome"  autocomplete="off" placeholder="nome" class="layui-input form-control field-text" value="{{.data.Nome}}">
+                                <input readonly type="text" name="nome" id="nome"  autocomplete="off" placeholder="nome" class="layui-input form-control field-text" value="{{.lista.Nome}}">
                             </td>
                         </tr>
                         <tr>

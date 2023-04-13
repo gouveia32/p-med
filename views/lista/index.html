@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <!-- <label for="nome" text-align="right" class="col-sm-1 control-label">Nome:</label> -->
                             <div class="col-sm-3 col-md-2">
-                                <select name="_nome" id="_nome" class="form-control" onchange="trataLista(this)">
+                                <select name="_nome" id="_nome" class="form-control" onchange="searchForm.submit()">
                                     {{range $index, $val := .lista}}
                                         <option value="{{$val.Nome}}" {{if compare $val.Nome $.lista_selecionada}} selected {{end}}>{{$val.Nome}}</option>
                                     {{end}}
@@ -29,6 +29,12 @@
                                 <i class="fa fa-plus"></i> Nova Lista
                             </a> -->
                             <button class="btn btn-sm btn-info" lay-submit="" lay-filter="nova_lista" ><i class="fa fa-file-text-o"></i> Nova Lista</button>
+                        </div>
+                        <div class="form-group">
+                            <a href="/admin/lista/del"
+                                class="btn btn-primary btn-xs" title="Excluir a Lista" data-toggle="tooltip">
+                                    <i class="fa fa-trash"> Excluir a lista</i>
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -54,7 +60,7 @@
                            data-confirm-ok-label="Sim"
                            data-confirm-button-cancel="Não"
                            data-id="checked"
-                           data-url="/admin/lista/del">
+                           data-url="/admin/item_lista/del">
                             <i class="fa fa-trash"></i> excluir
                         </a>
 
@@ -100,8 +106,8 @@
                                        data-id="{{$item.Id}}" 
                                        data-confirm-title="Confirmação de Exclusão++"
                                        data-confirm-button-ok="Sim"
-                                       data-confirm-content='Tem certeza de que deseja excluir a lista:<br><span class="text-red">{{$item.Nome}}</span>??'
-                                       data-url="/admin/lista/del">
+                                       data-confirm-content='Tem certeza de que deseja excluir o item:<br><span class="text-red">{{$item.Descricao}}</span>??'
+                                       data-url="/admin/item_lista/del">
                                         <i class="fa fa-trash"></i>
                                     </a>
     

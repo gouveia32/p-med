@@ -18,7 +18,7 @@ type CampoService struct {
 }
 
 // GetListaByNome
-func (*CampoService) GetListaByNome(nome string) []*models.ItemLista {
+func (*CampoService) GetItemListaByNome(nome string) []*models.ItemLista {
 
 	itens := make([]*models.ItemLista, 0)
 	sql := "SELECT lista.id, lista.nome, item_lista.descricao FROM item_lista JOIN lista ON  item_lista.lista_id = lista.id " +
@@ -69,7 +69,7 @@ func (us *CampoService) MontaCampo(cpo string) *models.Campo {
 					campo.RespostaStruct = respostas
 				} else {
 					if campo.Tipo == "lista" { //buscar lista na tabela
-						lista := us.GetListaByNome(campo.Resposta)
+						lista := us.GetItemListaByNome(campo.Resposta)
 
 						var respostas []*models.Resposta
 						//fmt.Println("lista:", lista[0])

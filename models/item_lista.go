@@ -16,10 +16,9 @@ type ItemLista struct {
 	Descricao string `form:"descricao"   			alias:"Descricao"`
 }
 
-
 type ItemListaBd struct {
-	Id        int64  `form:"id"        		alias:"ID" `
-	ListaId   int64   `orm:"column(lista_id);size(10);default(0)" description:"id da lista" json:"lista_id"`
+	Id      int64 `form:"id"        		alias:"ID" `
+	ListaId int64 `orm:"column(lista_id);size(10);default(0)" description:"id da lista" json:"lista_id"`
 	//Nome      string `form:"nome"      		alias:"Nome"    		valid:"Required;MaxSize(20)"`
 	Descricao string `form:"descricao"   			alias:"Descricao"`
 }

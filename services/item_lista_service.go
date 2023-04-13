@@ -75,7 +75,7 @@ func (us *ItemListaService) GetPaginateData(page, pageSize int, where string) ([
 
 // Del
 func (*ItemListaService) Del(ids []int) int {
-	count, err := orm.NewOrm().QueryTable(new(models.Lista)).Filter("id__in", ids).Delete()
+	count, err := orm.NewOrm().QueryTable(new(models.ItemListaBd)).Filter("id__in", ids).Delete()
 	if err == nil {
 		return int(count)
 	}
@@ -93,12 +93,27 @@ func (*ItemListaService) GetListaById(id int64) *models.Lista {
 	return &lista
 }
 
+// GetItemListaByNome
+/* func (*ItemListaService) GetItemListaByNome(nome string) []*models.Lista {
+
+	itens := make([]*models.Lista, 0)
+	sql := "SELECT lista.id, lista.nome, item_lista.descricao FROM item_lista JOIN lista ON  item_lista.lista_id = lista.id " +
+		" WHERE lista.nome=" + nome
+
+	orm.NewOrm().Raw(sql).QueryRows(&itens)
+
+	//fmt.Println("lista:", lista)
+
+	return itens
+} */
+
 // Create
 func (*ItemListaService) Create(form *formvalidate.ListaForm) int {
-	
+
+	//fmt.Println("nome:", form.Nome)
 
 	item := models.ItemListaBd{
-		ListaId: form.ListaId,
+		ListaId:   form.ListaId,
 		Descricao: form.Descricao,
 	}
 
@@ -122,12 +137,12 @@ func (*ItemListaService) Update(form *formvalidate.ListaForm) int {
 		//
 		item.Descricao = form.Descricao
 
-/* 		fmt.Println("item.Id",item.Id)
-		fmt.Println("item.ListaId",item.ListaId)
-		fmt.Println("item.Desc",item.Descricao)
- */
+		/* 		fmt.Println("item.Id",item.Id)
+		   		fmt.Println("item.ListaId",item.ListaId)
+		   		fmt.Println("item.Desc",item.Descricao)
+		*/
 		num, err := o.Update(&item)
-		fmt.Println("err",err)
+		fmt.Println("err", err)
 
 		if err == nil {
 			return int(num)

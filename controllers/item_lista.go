@@ -10,8 +10,6 @@ import (
 	"strconv"
 	"strings"
 
-	"fmt"
-
 	"github.com/adam-hanna/arrayOperations"
 	"github.com/gookit/validate"
 )
@@ -24,8 +22,16 @@ type ItemListaController struct {
 // Add
 func (uc *ItemListaController) Add() {
 	listaNome := uc.GetString("nome")
+	var listaService services.ListaService
+	lista := new(models.Lista)
 
-	fmt.Println("listaNome: ", listaNome)
+	//fmt.Println("listaNome: ", listaNome)
+
+	lista = listaService.GetOneListaByNome(listaNome)
+
+	//fmt.Println("lista: ", lista.Id)
+
+	uc.Data["lista"] = lista
 
 	uc.Layout = "public/base.html"
 	uc.TplName = "lista/add.html"
@@ -34,6 +40,8 @@ func (uc *ItemListaController) Add() {
 // Create
 func (uc *ItemListaController) Create() {
 	var listaForm formvalidate.ListaForm
+
+	//fmt.Println("AQUI")
 
 	if err := uc.ParseForm(&listaForm); err != nil {
 		response.ErrorWithMessage(err.Error(), uc.Ctx)
@@ -127,7 +135,7 @@ func (uc *ItemListaController) Del() {
 		response.ErrorWithMessage("Id de parâmetro errado.", uc.Ctx)
 	}
 
-	noDeletionID := new(models.Lista).NoDeletionId()
+	noDeletionID := new(models.ItemListaBd).NoDeletionId()
 
 	m, b := arrayOperations.Intersect(noDeletionID, idArr)
 
@@ -135,9 +143,12 @@ func (uc *ItemListaController) Del() {
 		response.ErrorWithMessage("ID é"+strings.Join(utils.IntArrToStringArr(noDeletionID), ",")+"os dados não podem ser excluídos!", uc.Ctx)
 	}
 
-	var listaService services.ListaService
-	count := listaService.Del(idArr)
+	//fmt.Println("aqui", idArr)
 
+	var itemListaService services.ItemListaService
+	count := itemListaService.Del(idArr)
+
+	//fmt.Println("aqui2", count)
 	if count > 0 {
 		response.SuccessWithMessageAndUrl("Operação bem-sucedida", global.URL_RELOAD, uc.Ctx)
 	} else {

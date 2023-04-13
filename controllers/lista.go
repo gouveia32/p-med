@@ -98,7 +98,7 @@ func (uc *ListaController) Create() {
 		response.SuccessWithMessageAndUrl("Adicionado com sucesso", url, uc.Ctx)
 	} else {
 		response.Error(uc.Ctx)
-	} 
+	}
 }
 
 // Edit
@@ -153,12 +153,12 @@ func (uc *ListaController) Update() {
 
 // Del
 func (uc *ListaController) Del() {
-	idStr := uc.GetString("id")
+	idStr := uc.GetString("lista_id")
 	ids := make([]int, 0)
 	var idArr []int
 
 	if idStr == "" {
-		uc.Ctx.Input.Bind(&ids, "id")
+		uc.Ctx.Input.Bind(&ids, "lista_id")
 	} else {
 		id, _ := strconv.Atoi(idStr)
 		idArr = append(idArr, id)

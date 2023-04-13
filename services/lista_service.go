@@ -27,16 +27,6 @@ func (us *ListaService) getDataByListaId(listaId int) []*models.Lista {
 	return listas
 }
 
-// GetListaByNome
-/* func (us *ListaService) GetListaByNome(nome string) []*models.Lista {
-	var listas []*models.Lista
-	orm.NewOrm().QueryTable(new(models.Lista)).Filter("nome__in", nome).All(&listas)
-	if len(listas) > 0 {
-		return listas
-	}
-	return nil
-} */
-
 // GetPaginateDataLista
 func (us *ListaService) GetPaginateDataLista(page, pageSize int, where string) ([]*models.Lista, page.Pagination) {
 	us.Pagination.CurrentPage = page
@@ -99,17 +89,16 @@ func (us *ListaService) GetListaById(id int64) *models.Lista {
 }
 
 // GetListaByNome
-func (*ListaService) GetListaByNome(nome string) []*models.Lista {
+func (*ListaService) GetOneListaByNome(nome string) *models.Lista {
 
 	lista := make([]*models.Lista, 0)
-	sql := "SELECT lista.id, lista.nome, item_lista.descricao FROM item_lista JOIN lista ON  item_lista.lista_id = lista.id " +
-		" WHERE lista.nome=" + nome
+	sql := "SELECT id, nome FROM lista WHERE lista.nome='" + nome + "' LIMIT 1;"
 
 	orm.NewOrm().Raw(sql).QueryRows(&lista)
 
 	//fmt.Println("lista:", lista)
 
-	return lista
+	return lista[0]
 }
 
 // Update
