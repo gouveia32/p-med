@@ -216,7 +216,8 @@ func init() {
 		web.NSRouter("/lista/create", &controllers.ListaController{}, "post:Create"),
 		web.NSRouter("/lista/edit", &controllers.ItemListaController{}, "get:Edit"),
 		web.NSRouter("/lista/update", &controllers.ItemListaController{}, "post:Update"),
-		web.NSRouter("/lista/del", &controllers.ListaController{}, "post:Del"),
+		web.NSRouter("/lista/del", &controllers.ListaController{}, "get:Index"),
+
 		web.NSRouter("/item_lista/add", &controllers.ItemListaController{}, "get:Add"),
 		web.NSRouter("/item_lista/create", &controllers.ItemListaController{}, "post:Create"),
 		web.NSRouter("/item_lista/del", &controllers.ItemListaController{}, "post:Del"),

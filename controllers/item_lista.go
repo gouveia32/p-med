@@ -25,11 +25,7 @@ func (uc *ItemListaController) Add() {
 	var listaService services.ListaService
 	lista := new(models.Lista)
 
-	//fmt.Println("listaNome: ", listaNome)
-
 	lista = listaService.GetOneListaByNome(listaNome)
-
-	//fmt.Println("lista: ", lista.Id)
 
 	uc.Data["lista"] = lista
 
@@ -40,8 +36,6 @@ func (uc *ItemListaController) Add() {
 // Create
 func (uc *ItemListaController) Create() {
 	var listaForm formvalidate.ListaForm
-
-	//fmt.Println("AQUI")
 
 	if err := uc.ParseForm(&listaForm); err != nil {
 		response.ErrorWithMessage(err.Error(), uc.Ctx)
@@ -78,8 +72,6 @@ func (uc *ItemListaController) Edit() {
 	if item == nil {
 		response.ErrorWithMessage("Não encontrado informações para o Id.", uc.Ctx)
 	}
-
-	//
 
 	uc.Data["data"] = item
 

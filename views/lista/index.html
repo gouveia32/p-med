@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group">
                             <a href="/admin/lista/del"
-                                class="btn btn-primary btn-xs" title="Excluir a Lista" data-toggle="tooltip">
+                                class="btn btn-danger btn-xs" title="Excluir a Lista" data-toggle="tooltip">
                                     <i class="fa fa-trash"> Excluir a lista</i>
                             </a>
                         </div>
@@ -164,10 +164,12 @@
                             closeBtn: false,
                             type: 1,
                             btn: ["Ok","Fechar"],
-                            content: '<div style="width: 250px; padding-left: 20px"> ' +
-                                       '<label for="nome_lista"> Nome da Nova Lista: </label>' +
-                                       '<input type="text" name="nome" id="nome"  autocomplete="off" placeholder="nome" class="layui-input form-control field-text" value="">' +
-                                     '</div>',
+                            content: '<form>' +
+                                        '<div style="width: 250px; padding-left: 20px"> ' +
+                                            '<label for="nome_lista"> Nome da Nova Lista: </label>' +
+                                            '<input autocomplete="off" type="text" name="nome" id="nome da lista" placeholder="nome" class="layui-input form-control field-text" value="">' +
+                                        '</div>' +
+                                    '</ form>',
                             yes: function(index, layero){
                                 var listaNome = layero.find('input')[0].value;
                                 //console.log("nome: ", listaNome);
@@ -183,7 +185,8 @@
                                             window.location.reload();
                                         });
                                     } else {
-                                        layer.msg(out.message)
+                                        layer.msg("Não foi possível gravar este nome!",{icon: 2});
+                                        return true;
                                     }
                                 }, "json");
                                 

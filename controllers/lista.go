@@ -14,7 +14,7 @@ import (
 
 	//"time"
 
-	//"fmt"
+	"fmt"
 
 	"github.com/adam-hanna/arrayOperations"
 	"github.com/gookit/validate"
@@ -153,12 +153,14 @@ func (uc *ListaController) Update() {
 
 // Del
 func (uc *ListaController) Del() {
-	idStr := uc.GetString("lista_id")
+	idStr := uc.GetString("listaNome")
+	fmt.Println ("lista:",idStr)
 	ids := make([]int, 0)
 	var idArr []int
 
+
 	if idStr == "" {
-		uc.Ctx.Input.Bind(&ids, "lista_id")
+		uc.Ctx.Input.Bind(&ids, "nome")
 	} else {
 		id, _ := strconv.Atoi(idStr)
 		idArr = append(idArr, id)
