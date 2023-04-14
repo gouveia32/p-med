@@ -77,7 +77,7 @@ func (uc *ListaController) Index() {
 }
 
 // Add
-func (uc *ListaController) Add() {
+func (uc *ListaController) Del() {
 
 	uc.Layout = "public/base.html"
 	uc.TplName = "lista/add.html"
@@ -152,12 +152,11 @@ func (uc *ListaController) Update() {
 }
 
 // Del
-func (uc *ListaController) Del() {
+func (uc *ListaController) Add() {
 	idStr := uc.GetString("listaNome")
-	fmt.Println ("lista:",idStr)
+	fmt.Println("lista:", idStr)
 	ids := make([]int, 0)
 	var idArr []int
-
 
 	if idStr == "" {
 		uc.Ctx.Input.Bind(&ids, "nome")
