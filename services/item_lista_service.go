@@ -7,7 +7,6 @@ import (
 	"strconv"
 
 	//"encoding/json"
-	"fmt"
 
 	"github.com/beego/beego/v2/client/orm"
 )
@@ -47,7 +46,7 @@ func (*ItemListaService) GetItemListaByNome(nome string) []*models.ItemLista {
 
 	itens := make([]*models.ItemLista, 0)
 	sql := "SELECT item_lista.id as id, lista.nome as nome, item_lista.descricao as descricao FROM item_lista JOIN lista ON  item_lista.lista_id = lista.id " +
-		" WHERE lista.nome=" + nome
+		" WHERE lista.nome='" + nome + "'"
 
 	orm.NewOrm().Raw(sql).QueryRows(&itens)
 
@@ -74,7 +73,7 @@ func (us *ItemListaService) GetPaginateData(page, pageSize int, where string) ([
 }
 
 // Del
-func (*ItemListaService) Del(ids []int) int {
+func (*ItemListaService) Del(ids []int64) int {
 	count, err := orm.NewOrm().QueryTable(new(models.ItemListaBd)).Filter("id__in", ids).Delete()
 	if err == nil {
 		return int(count)
@@ -142,7 +141,7 @@ func (*ItemListaService) Update(form *formvalidate.ListaForm) int {
 		   		fmt.Println("item.Desc",item.Descricao)
 		*/
 		num, err := o.Update(&item)
-		fmt.Println("err", err)
+		//fmt.Println("err", err)
 
 		if err == nil {
 			return int(num)

@@ -4,19 +4,12 @@ import (
 	"p-med/formvalidate"
 	"p-med/global"
 	"p-med/global/response"
-	"p-med/models"
 	"p-med/services"
-	"p-med/utils"
 
 	//"p-med/utils/exceloffice"
-	"strconv"
-	"strings"
 
 	//"time"
 
-	"fmt"
-
-	"github.com/adam-hanna/arrayOperations"
 	"github.com/gookit/validate"
 )
 
@@ -77,7 +70,7 @@ func (uc *ListaController) Index() {
 }
 
 // Add
-func (uc *ListaController) Del() {
+func (uc *ListaController) Add() {
 
 	uc.Layout = "public/base.html"
 	uc.TplName = "lista/add.html"
@@ -96,6 +89,42 @@ func (uc *ListaController) Create() {
 
 	if insertID > 0 {
 		response.SuccessWithMessageAndUrl("Adicionado com sucesso", url, uc.Ctx)
+	} else {
+		response.Error(uc.Ctx)
+	}
+}
+
+// Del
+func (uc *ListaController) Del() {
+	listaNome := uc.GetString("nome")
+
+	var listaService services.ListaService
+
+	//Apaga todos itens da lista
+	var itemListaService services.ItemListaService
+	itens := itemListaService.GetItemListaByNome(listaNome)
+
+	if len(itens) > 0 {
+		var idArr []int64
+
+		for _, it := range itens {
+			idArr = append(idArr, it.Id)
+		}
+
+		count := itemListaService.Del(idArr)
+
+		if count <= 0 {
+			response.Error(uc.Ctx)
+		}
+	}
+
+	//Apaga a lista
+	delID := listaService.GetOneListaByNome(listaNome)
+
+	num := listaService.Del(delID.Id)
+
+	if num > 0 {
+		response.SuccessWithMessageAndUrl("Operação bem-sucedida", global.URL_RELOAD, uc.Ctx)
 	} else {
 		response.Error(uc.Ctx)
 	}
@@ -146,46 +175,6 @@ func (uc *ListaController) Update() {
 
 	if num > 0 {
 		response.Success(uc.Ctx)
-	} else {
-		response.Error(uc.Ctx)
-	}
-}
-
-// Del
-func (uc *ListaController) Add() {
-	idStr := uc.GetString("listaNome")
-	fmt.Println("lista:", idStr)
-	ids := make([]int, 0)
-	var idArr []int
-
-	if idStr == "" {
-		uc.Ctx.Input.Bind(&ids, "nome")
-	} else {
-		id, _ := strconv.Atoi(idStr)
-		idArr = append(idArr, id)
-	}
-
-	if len(ids) > 0 {
-		idArr = ids
-	}
-
-	if len(idArr) == 0 {
-		response.ErrorWithMessage("Id de parâmetro errado.", uc.Ctx)
-	}
-
-	noDeletionID := new(models.Lista).NoDeletionId()
-
-	m, b := arrayOperations.Intersect(noDeletionID, idArr)
-
-	if len(noDeletionID) > 0 && len(m.Interface().([]int)) > 0 && b {
-		response.ErrorWithMessage("ID é"+strings.Join(utils.IntArrToStringArr(noDeletionID), ",")+"os dados não podem ser excluídos!", uc.Ctx)
-	}
-
-	var listaService services.ListaService
-	count := listaService.Del(idArr)
-
-	if count > 0 {
-		response.SuccessWithMessageAndUrl("Operação bem-sucedida", global.URL_RELOAD, uc.Ctx)
 	} else {
 		response.Error(uc.Ctx)
 	}

@@ -109,14 +109,14 @@ func (uc *ItemListaController) Update() {
 // Del
 func (uc *ItemListaController) Del() {
 	idStr := uc.GetString("id")
-	ids := make([]int, 0)
-	var idArr []int
+	ids := make([]int64, 0)
+	var idArr []int64
 
 	if idStr == "" {
 		uc.Ctx.Input.Bind(&ids, "id")
 	} else {
 		id, _ := strconv.Atoi(idStr)
-		idArr = append(idArr, id)
+		idArr = append(idArr, int64(id))
 	}
 
 	if len(ids) > 0 {

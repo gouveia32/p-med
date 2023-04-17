@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Servidor:                     localhost
--- Versão do servidor:           8.0.31 - MySQL Community Server - GPL
+-- Versão do servidor:           8.0.32 - MySQL Community Server - GPL
 -- OS do Servidor:               Win64
 -- HeidiSQL Versão:              12.2.0.6576
 -- --------------------------------------------------------
@@ -25,10 +25,73 @@ CREATE TABLE IF NOT EXISTS `admin_log` (
   `create_time` int NOT NULL DEFAULT '0' COMMENT '操作时间',
   `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT COMMENT='Registro de operações';
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT COMMENT='Registro de operações';
 
--- Copiando dados para a tabela p-med.admin_log: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela p-med.admin_log: ~26 rows (aproximadamente)
 DELETE FROM `admin_log`;
+INSERT INTO `admin_log` (`id`, `admin_user_id`, `name`, `url`, `log_method`, `log_ip`, `create_time`, `update_time`) VALUES
+	(1, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681504912, 1681504912),
+	(2, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681506367, 1681506367),
+	(3, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681506914, 1681506914),
+	(4, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681507009, 1681507009),
+	(5, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681508117, 1681508117),
+	(6, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681512190, 1681512190),
+	(7, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681512237, 1681512237),
+	(8, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681512357, 1681512357),
+	(9, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681512649, 1681512649),
+	(10, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681513458, 1681513458),
+	(11, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681513650, 1681513650),
+	(12, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681513794, 1681513794),
+	(13, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681514417, 1681514417),
+	(14, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681515612, 1681515612),
+	(15, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681515930, 1681515930),
+	(16, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681516636, 1681516636),
+	(17, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681516754, 1681516754),
+	(18, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681516886, 1681516886),
+	(19, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681517091, 1681517091),
+	(20, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681558548, 1681558548),
+	(21, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681566559, 1681566559),
+	(22, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681567840, 1681567840),
+	(23, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681568048, 1681568048),
+	(24, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681568284, 1681568284),
+	(25, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681568382, 1681568382),
+	(26, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681568553, 1681568553),
+	(27, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681569456, 1681569456),
+	(28, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681569513, 1681569513),
+	(29, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681569762, 1681569762),
+	(30, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681572905, 1681572905),
+	(31, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681572944, 1681572944),
+	(32, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681573366, 1681573366),
+	(33, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681574088, 1681574088),
+	(34, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681574170, 1681574170),
+	(35, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681574256, 1681574256),
+	(36, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681574308, 1681574308),
+	(37, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681574658, 1681574658),
+	(38, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681575191, 1681575191),
+	(39, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681575281, 1681575281),
+	(40, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681575503, 1681575503),
+	(41, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681575983, 1681575983),
+	(42, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681576088, 1681576088),
+	(43, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681576162, 1681576162),
+	(44, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681576228, 1681576228),
+	(45, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681576286, 1681576286),
+	(46, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681644825, 1681644825),
+	(47, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681645246, 1681645246),
+	(48, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681646236, 1681646236),
+	(49, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681647662, 1681647662),
+	(50, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681647771, 1681647771),
+	(51, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681647923, 1681647923),
+	(52, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681648053, 1681648053),
+	(53, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681648247, 1681648247),
+	(54, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681648430, 1681648430),
+	(55, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681648442, 1681648442),
+	(56, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681648472, 1681648472),
+	(57, 1, 'Login', 'admin/auth/login', 'POST', '127.0.0.1', 1681649375, 1681649375),
+	(58, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681650369, 1681650369),
+	(59, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681650598, 1681650598),
+	(60, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681652026, 1681652026),
+	(61, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681652111, 1681652111),
+	(62, 1, 'Login', 'admin/auth/login', 'POST', '::1', 1681660877, 1681660877);
 
 -- Copiando estrutura para tabela p-med.admin_log_data
 CREATE TABLE IF NOT EXISTS `admin_log_data` (
@@ -36,10 +99,73 @@ CREATE TABLE IF NOT EXISTS `admin_log_data` (
   `admin_log_id` int NOT NULL COMMENT '日志ID',
   `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '日志内容',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT COMMENT='Registro de operações';
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT COMMENT='Registro de operações';
 
--- Copiando dados para a tabela p-med.admin_log_data: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela p-med.admin_log_data: ~26 rows (aproximadamente)
 DELETE FROM `admin_log_data`;
+INSERT INTO `admin_log_data` (`id`, `admin_log_id`, `data`) VALUES
+	(1, 1, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(2, 2, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(3, 3, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(4, 4, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(5, 5, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(6, 6, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(7, 7, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(8, 8, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(9, 9, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(10, 10, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(11, 11, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(12, 12, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(13, 13, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(14, 14, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(15, 15, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(16, 16, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(17, 17, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(18, 18, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(19, 19, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(20, 20, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(21, 21, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(22, 22, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(23, 23, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(24, 24, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(25, 25, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(26, 26, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(27, 27, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(28, 28, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(29, 29, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(30, 30, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(31, 31, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(32, 32, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(33, 33, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(34, 34, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(35, 35, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(36, 36, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(37, 37, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(38, 38, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(39, 39, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(40, 40, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(41, 41, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(42, 42, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(43, 43, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(44, 44, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(45, 45, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(46, 46, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(47, 47, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(48, 48, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(49, 49, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(50, 50, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(51, 51, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(52, 52, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(53, 53, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(54, 54, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(55, 55, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(56, 56, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(57, 57, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(58, 58, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(59, 59, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(60, 60, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(61, 61, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z'),
+	(62, 62, 'R78jWlZKFejEqiuWVsBhu+EQVOoHMwN3a1fHdV7X3085/jofZfLbJ1I8bH9mkBFLFPxLD/Ly4aEb3r04U/tPBd6+LjnVevCPsDwst/zff9Cvr8ODnJIR59Ltx0bYnP+Z');
 
 -- Copiando estrutura para tabela p-med.admin_menu
 CREATE TABLE IF NOT EXISTS `admin_menu` (
@@ -59,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `admin_menu` (
 DELETE FROM `admin_menu`;
 INSERT INTO `admin_menu` (`id`, `parent_id`, `name`, `url`, `icon`, `is_show`, `sort_id`, `log_method`) VALUES
 	(1, 0, 'Atendimento', 'admin/atendimento/index', 'fa-handshake-o', 1, 9, '不记录'),
-	(2, 0, 'Adm de sistema', 'admin/sys', 'fa-desktop', 1, 1099, '不记录'),
+	(2, 0, 'Adm de sistema', 'admin/sys', 'fa-desktop', 0, 1099, '不记录'),
 	(3, 2, 'Ger de usuários', 'admin/admin_user/index', 'fa-user', 1, 1000, '不记录'),
 	(4, 3, 'Adicionar usuário', 'admin/admin_user/add', 'fa-plus', 0, 1000, '不记录'),
 	(5, 3, 'Modificar usuário', 'admin/admin_user/edit', 'fa-edit', 0, 1000, '不记录'),
@@ -181,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `atendimento` (
   KEY `idx_nota` (`paciente_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Copiando dados para a tabela p-med.atendimento: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela p-med.atendimento: ~1 rows (aproximadamente)
 DELETE FROM `atendimento`;
 INSERT INTO `atendimento` (`id`, `paciente_id`, `nome`, `conteudo`, `cor_id`, `etiqueta_id`, `criado_em`, `alterado_em`, `estado`) VALUES
 	(18, 9, 'Consulta', '<h3 class="ql-align-center"><strong style="background-color: transparent; color: rgb(0, 0, 0);">1º CONSULTA:&nbsp;</strong></h3><h3 class="ql-align-center"><strong style="background-color: transparent; color: rgb(0, 0, 0);">CONSULTA SEGUIMENTO: 2023-03-22</strong></h3><p><span style="background-color: transparent; color: rgb(0, 0, 0);">NOME:&nbsp;</span><strong style="background-color: transparent; color: rgb(0, 0, 0);">Marly Josefina</strong></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">DATA DE NASCIMENTO:&nbsp;</span><strong style="background-color: transparent; color: rgb(0, 0, 0);">1999-09-08</strong></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">DATA:&nbsp;</span><strong style="background-color: transparent; color: rgb(0, 0, 0);">2023-03-22</strong></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">IDADE:&nbsp;</span><strong style="background-color: transparent; color: rgb(0, 0, 0);">292 anos</strong></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">NOME DOS PAIS:&nbsp;</span><strong style="background-color: transparent; color: rgb(0, 0, 0);">pai e mãe</strong></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">ENDEREÇO:&nbsp;</span><strong style="background-color: transparent; color: rgb(0, 0, 0);">, </strong></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">PROCEDÊNCIA:&nbsp;</span></p><p><br></p><ol><li><strong style="background-color: transparent;">QPD:&nbsp;</strong></li></ol><p><br></p><ol><li><strong style="background-color: transparent;">HMA:&nbsp;</strong></li></ol><p><br></p><p><br></p><ol><li><strong style="background-color: transparent;">HISTÓRIA PATOLÓGICA PREGRESSA</strong></li></ol><p><br></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">DOENÇAS ANTERIORES:&nbsp;</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">CIRURGIAS:&nbsp; &nbsp; &nbsp; &nbsp; / INTERNAÇÕES: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; / ALERGIAS:&nbsp;</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">MEDICAÇÃO CONTÍNUA:&nbsp;</span></p><p><br></p><ol><li><strong style="background-color: transparent;">HISTÓRIA FISIOLÓGICA:</strong></li></ol><p><span style="background-color: transparent; color: rgb(0, 0, 0);">APETITE:&nbsp;</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">SONO:&nbsp;&nbsp;</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">RITMO INTESTINAL:&nbsp;</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">FUNÇÃO URINÁRIA/DESFRALDE:&nbsp;</span></p><p><br></p><ol><li><strong style="background-color: transparent;">HISTÓRIA GESTACIONAL</strong></li></ol><p><br></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">IDADE MATERNA:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; / GPA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; / IG:&nbsp;</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">APGAR: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; / GS RN&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; / GS MÃE&nbsp;</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Peso ao nascer: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; estatura:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p><ol><li><strong style="background-color: transparent;">TRIAGENS NEONATAIS:&nbsp;</strong></li></ol><p><br></p><ol><li><strong style="background-color: transparent;">ALIMENTAÇÃO:&nbsp;</strong></li></ol><p><br></p><p><br></p><ol><li><strong style="background-color: transparent;">VACINAÇÃO:&nbsp;</strong></li></ol><p><br></p><ol><li><strong style="background-color: transparent;">DNPM:&nbsp;</strong></li></ol><p><br></p><ol><li><strong style="background-color: transparent;">HISTÓRIA FAMILIAR</strong></li></ol><p><br></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">MÃE:&nbsp;</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">PAI:&nbsp;</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">IRMÃOS:&nbsp;</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">OUTROS:&nbsp;</span></p><p><br></p><ol><li><strong style="background-color: transparent;">EXAME FÍSICO</strong></li></ol><p><span style="background-color: transparent; color: rgb(0, 0, 0);">FC:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FR: &nbsp; &nbsp; SatO2: &nbsp; &nbsp; Temp:</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Geral: BEG, normocorado, hidratado, acianótico, afebril</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">ACV: BRNF em 2 tempos sem sopros</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">AR: MV+ em ambos HT sem RA</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Abdome: plano, flácido, indolor à palpação, ausência de massas e VMG</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">GU: típica masculina para sexo e idade, testículos palpáveis</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Extremidades: bem perfundidas, sem edema, TEC&lt;2s</span></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Neurológico: ativo, reativo, sem sinais de meninginismo, ampla movimentação dos 4 membros</span></p><p><br></p><ol><li><strong style="background-color: transparent;">EXAMES COMPLEMENTARES</strong></li></ol><p><br></p><p><br></p><ol><li><strong style="background-color: transparent;">HIPÓTESE DIAGNÓSTICA</strong></li></ol><p><br></p><p><br></p><p><br></p><ol><li><strong style="background-color: transparent;">CONDUTAS:</strong></li></ol><p><br></p>', 15, 1, 1679513582, 1679514365, 1);
@@ -301,35 +427,39 @@ INSERT INTO `estados` (`id`, `nome`, `sigla`) VALUES
 CREATE TABLE IF NOT EXISTS `item_lista` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `lista_id` int unsigned DEFAULT NULL,
-  `valor` varchar(100) DEFAULT NULL,
+  `descricao` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `template_id` (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 
--- Copiando dados para a tabela p-med.item_lista: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela p-med.item_lista: ~6 rows (aproximadamente)
 DELETE FROM `item_lista`;
-INSERT INTO `item_lista` (`id`, `lista_id`, `valor`) VALUES
+INSERT INTO `item_lista` (`id`, `lista_id`, `descricao`) VALUES
 	(1, 1, 'Sumário de Urina'),
-	(2, 1, 'RX da Face');
+	(3, 1, 'RX do tórax'),
+	(4, 2, 'Dipirona monoidratada 500mg ------------------------------------------------ 10cp@  Tomar 1 comprimido de 8/8h.'),
+	(5, 2, 'Pantoprazol 20mg ----------------------------------------------------------- 60cp@  Tomar 1 comprimido em jejun diariamente por 60 dias.'),
+	(6, 2, 'Domperidona 30mg ----------------------------------------------------------- 28cp@  Tomar 1 comprimido a cada 6h durante 8 dias.'),
+	(7, 1, 'RX da face'),
+	(12, 15, 'um'),
+	(13, 15, 'dois'),
+	(14, 15, 'tres');
 
 -- Copiando estrutura para tabela p-med.lista
 CREATE TABLE IF NOT EXISTS `lista` (
   `id` tinyint unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(20) DEFAULT NULL,
-  `valor` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `template_id` (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+  UNIQUE KEY `template_id` (`id`) USING BTREE,
+  UNIQUE KEY `nome` (`nome`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 
--- Copiando dados para a tabela p-med.lista: ~9 rows (aproximadamente)
+-- Copiando dados para a tabela p-med.lista: ~2 rows (aproximadamente)
 DELETE FROM `lista`;
-INSERT INTO `lista` (`id`, `nome`, `valor`) VALUES
-	(3, 'exame', 'RX do tórax'),
-	(4, 'exame', 'Sumário de urina'),
-	(5, 'exame', 'Hemograma básico'),
-	(6, 'receita', '- Dipirona monoidratada 500mg ------------------------------------------------ 10cp@  Tomar 1 comprimido de 8/8h.'),
-	(7, 'receita', '- Pantoprazol 20mg ----------------------------------------------------------- 60cp@  Tomar 1 comprimido em jejun diariamente por 60 dias.'),
-	(8, 'receita', '- Domperidona 30mg ----------------------------------------------------------- 28cp@  Tomar 1 comprimido a cada 6h durante 8 dias.');
+INSERT INTO `lista` (`id`, `nome`) VALUES
+	(1, 'exame'),
+	(2, 'receita'),
+	(15, 'teste');
 
 -- Copiando estrutura para tabela p-med.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -396,7 +526,7 @@ CREATE TABLE IF NOT EXISTS `nota` (
   KEY `idx_tipo_nota` (`tipo_nota`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Copiando dados para a tabela p-med.nota: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela p-med.nota: ~4 rows (aproximadamente)
 DELETE FROM `nota`;
 INSERT INTO `nota` (`id`, `nome`, `tipo_nota`, `conteudo`, `atendimento_id`, `cor_id`, `etiqueta_id`, `criado_em`, `alterado_em`, `estado`) VALUES
 	(34, 'exames_1ano', 1, '<p class="ql-align-right"><img src="data:image/png;base64,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"></p><p class="ql-align-right"><span style="color: rgb(136, 136, 136);">----------------------------------------------------------------------------------------------</span></p><p class="ql-align-right"><br></p><p class="ql-align-center"><br></p><h4 class="ql-align-center"><strong><u>Exames Complementares</u></strong></h4><p class="ql-align-center"><br></p><p>Paciente:<span style="color: rgb(0, 0, 0); background-color: transparent;">&nbsp;</span><strong style="color: rgb(0, 0, 0); background-color: transparent;">Marly Josefina</strong></p><p><br></p><p class="ql-align-right"><br></p><p class="ql-align-right"><br></p><p class="ql-align-right"><br></p><h3 class="ql-align-justify"><strong>Solicito:</strong>	</h3><p class="ql-align-justify"><br></p><ul><li class="ql-align-justify">Hemograma completo</li><li class="ql-align-justify">Glicemia de jejum</li><li class="ql-align-justify">25 OAH vitamina D</li><li class="ql-align-justify">Vitamina B12</li><li class="ql-align-justify">Ureia </li><li class="ql-align-justify">Creatinina</li><li class="ql-align-justify">TSH</li><li class="ql-align-justify">T4 livre</li><li class="ql-align-justify">Sumário de urina</li><li class="ql-align-justify">Parasitológico de fezes 01 amostra</li></ul><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p class="ql-indent-3 ql-align-justify"><br></p><p class="ql-indent-3 ql-align-justify"><br></p><p class="ql-indent-3 ql-align-justify"><br></p><p class="ql-indent-3 ql-align-justify"><br></p><p class="ql-indent-3 ql-align-justify"><br></p><p class="ql-align-justify"> 06 de 04 de 2023</p><p><br></p>', 18, 15, 0, 1680197396, 1680813629, 1),
@@ -432,7 +562,7 @@ CREATE TABLE IF NOT EXISTS `paciente` (
 -- Copiando dados para a tabela p-med.paciente: ~1 rows (aproximadamente)
 DELETE FROM `paciente`;
 INSERT INTO `paciente` (`id`, `nome`, `acompanhante`, `email`, `telefone`, `logradoro`, `numero`, `bairro`, `municipio`, `uf`, `cep`, `sexo`, `nascimento`, `altura`, `peso`, `imagem`, `criado_em`, `alterado_em`, `no_selecionado`, `estado`) VALUES
-	(9, 'Marly Josefina', 'pai', '', '', '', '', '', '', '--', '', '', '1998-09-08', 110, 48.0, '', 0, 1680304047, 6, 1);
+	(9, 'Marly Josefina', 'pai', '', '', '', '', '', '', '--', '', '', '1998-09-08', 110, 48.0, '', 0, 1681652121, 6, 1);
 
 -- Copiando estrutura para tabela p-med.setting
 CREATE TABLE IF NOT EXISTS `setting` (
@@ -473,7 +603,7 @@ CREATE TABLE IF NOT EXISTS `setting_group` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT COMMENT='\r\nGrupo separado';
 
--- Copiando dados para a tabela p-med.setting_group: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela p-med.setting_group: ~1 rows (aproximadamente)
 DELETE FROM `setting_group`;
 INSERT INTO `setting_group` (`id`, `module`, `name`, `description`, `code`, `sort_number`, `auto_create_menu`, `auto_create_file`, `icon`, `create_time`, `update_time`, `delete_time`) VALUES
 	(1, 'admin', 'Configurações', 'Configurações de gerenciamento em segundo plano', 'admin', 1000, 1, 1, 'fa-adjust', 1587879871, 1587879871, 0);

@@ -130,8 +130,8 @@ func (us *ListaService) Update(form *formvalidate.ListaForm) int {
 }
 
 // Del
-func (*ListaService) Del(ids []int) int {
-	count, err := orm.NewOrm().QueryTable(new(models.Lista)).Filter("id__in", ids).Delete()
+func (*ListaService) Del(id int64) int {
+	count, err := orm.NewOrm().QueryTable(new(models.Lista)).Filter("id", id).Delete()
 	if err == nil {
 		return int(count)
 	}

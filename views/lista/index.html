@@ -25,17 +25,20 @@
                         </div>
 
                         <div class="form-group">
-<!--                             <a title="AdicLista" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/lista/add">
-                                <i class="fa fa-plus"></i> Nova Lista
-                            </a> -->
                             <button class="btn btn-sm btn-info" lay-submit="" lay-filter="nova_lista" ><i class="fa fa-file-text-o"></i> Nova Lista</button>
                         </div>
-                        <div class="form-group">
-                            <a href="/admin/lista/add"
-                                class="btn btn-danger btn-sm" title="Excluir a Lista" data-toggle="tooltip">
-                                    <i class="fa fa-trash"> Excluir a lista</i>
-                            </a>
-                        </div>
+
+                        <a class="btn btn-danger btn-sm AjaxButton" 
+                            data-toggle="tooltip" 
+                            title="excluir a lista"
+                            data-confirm-title="Confirmação de exclusão" 
+                            data-confirm-content="Tem certeza de que deseja excluir a lista {{.lista_selecionada}}?"
+                            data-confirm-ok-label="Sim"
+                            data-confirm-button-cancel="Não"
+                            data-id="listaNome"
+                            data-url="/admin/lista/del?nome={{.lista_selecionada}}">
+                            <i class="fa fa-trash"></i> excluir lista
+                        </a>
                     </form>
                 </div>
             </div>
@@ -95,7 +98,7 @@
                                 </td>
                                 <!-- <td>{{$item.Id}}</td> -->
                                 <!-- <td>{{$item.Nome}}</td> -->
-                                <td>{{$item.Descricao}}</td>
+                                <td style="font-family: monospace;">{{$item.Descricao}}</td>
     
                                 <td class="td-do">
                                     <a href="/admin/lista/edit?id={{$item.Id}}"
@@ -167,23 +170,18 @@
                             content: '<form>' +
                                         '<div style="width: 250px; padding-left: 20px"> ' +
                                             '<label for="nome_lista"> Nome da Nova Lista: </label>' +
-                                            '<input autocomplete="off" type="text" name="nome" id="nome da lista" placeholder="nome" class="layui-input form-control field-text" value="">' +
+                                            '<input autocomplete="@" type="text" name="nome" id="nome da lista" placeholder="nome" class="layui-input form-control field-text" value="" >' +
                                         '</div>' +
                                     '</ form>',
                             yes: function(index, layero){
                                 var listaNome = layero.find('input')[0].value;
-                                //console.log("nome: ", listaNome);
-/*                                 $("form[name=searchForm]").find("select[name=_nome]").val(listaNome);
-                                searchForm.submit(); */
 
                                 $.post('{{urlfor "ListaController.Create"}}', {lista_nome:listaNome}, function (out) {
                                     //console.log(out);   
                                     
                                     if (out.code > 0) {
-
-                                        layer.msg("Gravado com sucesso! Agora selecione a nova lista criada!",{icon: 1},function () {                                           
-                                            window.location.reload();
-                                        });
+                                        window.location.reload();
+                                        layer.msg("Gravado com sucesso! Agora selecione a nova lista criada!",{icon: 1});
                                     } else {
                                         layer.msg("Não foi possível gravar este nome!",{icon: 2});
                                         return true;
@@ -196,9 +194,9 @@
                           });     
                         return false;
                         break;
-                }
+                    }
+                });
             });
-        });
 
     /** seleciona o lista  */
     $('#nome').select2();

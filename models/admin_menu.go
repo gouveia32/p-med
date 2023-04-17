@@ -13,7 +13,7 @@ type AdminMenu struct {
 	Icon      string `orm:"column(icon);size(30);default(fa-list)" description:"Ícone"`
 	IsShow    int8   `orm:"column(is_show);size(1);default(1)" description:"等级"`
 	SortId    int    `orm:"column(sort_id);size(10);default(1000)" description:"排序"`
-	LogMethod string `orm:"column(log_method);size(8);default(不记录)" description:"记录日志方法"`
+	LogMethod string `orm:"column(log_method);size(8);default(GET)" description:"记录日志方法"`
 }
 
 // TableName 自定义table Nome
@@ -21,14 +21,14 @@ func (*AdminMenu) TableName() string {
 	return "admin_menu"
 }
 
-//在init中注册定义的model
+// 在init中注册定义的model
 func init() {
 	orm.RegisterModel(new(AdminMenu))
 }
 
 // GetLogMethod 自定义方法
 func (*AdminMenu) GetLogMethod() []string {
-	return []string{"不记录", "GET", "POST", "PUT", "DELETE"}
+	return []string{"GET", "GET", "POST", "PUT", "DELETE"}
 }
 
 // SearchField 定义模型的可搜索字段

@@ -76,7 +76,6 @@ func (uc *PacienteController) Add() {
 func (uc *PacienteController) Create() {
 	var pacienteForm formvalidate.PacienteForm
 
-	
 	if err := uc.ParseForm(&pacienteForm); err != nil {
 		response.ErrorWithMessage(err.Error(), uc.Ctx)
 	}
@@ -147,8 +146,8 @@ func (uc *PacienteController) Update() {
 	num := pacienteService.Update(&pacienteForm)
 
 	if num > 0 {
-		response.Success(uc.Ctx)
-		//response.SuccessWithMessageAndUrl("Atualizado!", global.URL_RELOAD, uc.Ctx)
+		//response.Success(uc.Ctx)
+		response.SuccessWithMessageAndUrl("Atualizado! Agora feche a janela.", global.URL_RELOAD, uc.Ctx)
 	} else {
 		response.Error(uc.Ctx)
 	}

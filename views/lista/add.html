@@ -28,17 +28,17 @@
                     enctype="multipart/form-data">
                     <input type="hidden" name="lista_id" value="{{.lista.Id}}">
 
-                    <table width="75%">
+                    <table width="95%">
                         <tr>
-                            <td style="width: 30%">
+                            <td >
                                 <label class="label-micro">NOME</label>
                                 <input readonly type="text" name="nome" id="nome"  autocomplete="off" placeholder="nome" class="layui-input form-control field-text" value="{{.lista.Nome}}">
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 30%">
+                            <td >
                                 <label class="label-micro">DESCRICAO</label>
-                                <input type="text" name="descricao" id="valor"  autocomplete="off" placeholder="descricao" class="layui-input form-control field-text" value="{{.data.Descricao}}">
+                                <input style="font-family: monospace;" type="text" name="descricao" id="valor"  autocomplete="off" placeholder="descricao" class="layui-input form-control field-text" value="{{.data.Descricao}}">
                             </td>
                         </tr>
                     </table>

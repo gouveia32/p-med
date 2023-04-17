@@ -129,7 +129,7 @@ layui.define('layer', function(exports){
         init_name = item.name.replace(/^(.*)\[\]$/, '$1['+ (nameIndex[key]++) +']');
       }
       
-      if(/^checkbox|radio$/.test(item.type) && !item.checked) return;  //复选框和单选框未选中，不记录字段     
+      if(/^checkbox|radio$/.test(item.type) && !item.checked) return;  //复选框和单选框未选中，GET字段     
       field[init_name || item.name] = item.value;
     });
     
