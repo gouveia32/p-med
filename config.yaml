@@ -14,10 +14,10 @@ redis:
 #  password: 'ebtaju'
 
 mysql:
-  host: 'localhost'
+  host: 'srv'
   port: 3306
   database: 'p-med'
-  username: 'root'
+  username: 'ccb'
   password: 'ebtaju'
 
 
