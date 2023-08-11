@@ -24,7 +24,7 @@
 
     <table vertical-align="top" class="table table-bordered" style="width: 100%;">
         <tr>
-            <td id="td_conteudo" style="width: 93%;">
+            <td id="td_conteudo">
                 <div class="layui-layout layui-layout-admin" style="padding-left: 10px;margin-top: 1px;">
                     <form id="form" name="form" class="form-horizontal dataForm" action="/admin/campo/update" method="post"
                         enctype="multipart/form-data">
@@ -43,7 +43,7 @@
                         <table>
                             <td style="width: 45%;">
                                 <div class="layui-input-inline">
-                                    <label for="nome" name="labelIdent" class="control-label">NOVO ATENDIMENTO:</label>
+                                    <label for="nome" name="labelIdent" class="label-micro">NOVO ATENDIMENTO:</label>
                                     <input type="text" name="nome" id="nome"  autocomplete="off" placeholder="digite um identificador" class="layui-input form-control field-text" onfocus="setFlagGravar()" value="{{.data.Nome}}">
                                 </div>
                             </td>
@@ -141,7 +141,7 @@
                 </div>
                             
             </td>
-            <td width="7%" bgcolor="#d1dbb6" class="layui-col-md3">
+            <td bgcolor="#d1dbb6" width="16%" style="margin-left: 1px; max-width:95px;" >
                 <ul id="treeDemo" class="ztree" style="vertical-align: top; margin-left: 2px; height:600px; margin-right: 2px;">
                 </ul>
             </td>

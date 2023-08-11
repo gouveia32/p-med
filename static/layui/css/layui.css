@@ -661,7 +661,7 @@ a cite{font-style: normal; *cursor:pointer;}
 .layui-input-block{margin-left: 110px; min-height: 36px;}
 .layui-input-inline{display: inline-block; vertical-align: middle;}
 .layui-form-item .layui-input-inline{float: left; width: 190px; margin-right: 10px;}
-.layui-form-text .layui-input-inline{width: auto;}
+.layui-form-text .{width: auto;}
 
 /* 分割块 */.layui-form-mid{position: relative; float: left; display: block; padding: 9px 0 !important; line-height: 20px; margin-right: 10px;}
 /* 警告域 */.layui-form-danger:focus

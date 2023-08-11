@@ -510,3 +510,12 @@ End Function
     End Class
 
 End Namespace
+
+
+
+
+
+
+
+produção
+go build -ldflags "-s -w"
