@@ -11,7 +11,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	//"fmt"
+
+	"fmt"
 
 	"github.com/adam-hanna/arrayOperations"
 	"github.com/gookit/validate"
@@ -68,6 +69,30 @@ func (uc *AtendimentoController) Index() {
 
 	uc.Layout = "public/base.html"
 	uc.TplName = "atendimento/index.html"
+}
+
+// Vizualizar
+func (uc *AtendimentoController) Vizualizar() {
+	var atendimentoForm formvalidate.AtendimentoForm
+
+	fmt.Println("Aqui")
+	if err := uc.ParseForm(&atendimentoForm); err != nil {
+		response.ErrorWithMessage(err.Error(), uc.Ctx)
+	}
+
+	v := validate.Struct(atendimentoForm)
+
+	if !v.Validate() {
+		response.ErrorWithMessage(v.Errors.One(), uc.Ctx)
+	}
+
+	//
+	uc.Data["conteudo"] = atendimentoForm.Conteudo
+	fmt.Println("Atend:", atendimentoForm.Conteudo)
+
+	//uc.Layout = "public/base.html"
+	uc.TplName = "atendimento/vizualizar.html"
+
 }
 
 // Export
@@ -163,9 +188,11 @@ func (uc *AtendimentoController) Atendimento() {
 
 }
 
-/* -------------------------------------------------------------------------------
-   GetNode
-   obter todos os nós
+/*
+-------------------------------------------------------------------------------
+
+	GetNode
+	obter todos os nós
 */
 func (uc *AtendimentoController) GetNodes() {
 
@@ -216,8 +243,10 @@ func (uc *AtendimentoController) GetNodes() {
 	uc.ServeJSON()
 }
 
-/* -------------------------------------------------------------------------------
-   GetNode
+/*
+-------------------------------------------------------------------------------
+
+	GetNode
 */
 func (uc *AtendimentoController) GetNode() {
 	var notaService services.NotaService
@@ -244,12 +273,12 @@ func (uc *AtendimentoController) GetNode() {
 		row["NotaId"] = nota.Id
 
 		row["AtendId"] = nota.AtendimentoId
-		if ( nota.AtendimentoId > 0) {
+		if nota.AtendimentoId > 0 {
 			atendimento := atendimentoService.GetAtendimentoById(nota.AtendimentoId)
-			row["data_consulta"] =  time.Unix(int64(atendimento.CriadoEm), 0).Format("2006-01-02")
+			row["data_consulta"] = time.Unix(int64(atendimento.CriadoEm), 0).Format("2006-01-02")
 		}
 		row["Nome"] = nota.Nome
-		
+
 		row["Conteudo"] = nota.Conteudo
 		row["nota"] = nota
 
@@ -273,7 +302,7 @@ func (uc *AtendimentoController) GetNode() {
 		row["NotaId"] = 0
 		row["TipoNota"] = 0
 		row["Nome"] = atendimento.Nome
-		row["data_consulta"] =  time.Unix(int64(atendimento.CriadoEm), 0).Format("2006-01-02")
+		row["data_consulta"] = time.Unix(int64(atendimento.CriadoEm), 0).Format("2006-01-02")
 		row["Conteudo"] = atendimento.Conteudo
 		row["nota"] = atendimento
 
@@ -293,8 +322,10 @@ func (uc *AtendimentoController) GetNode() {
 	uc.ServeJSON()
 }
 
-/* -------------------------------------------------------------------------------
-   AjusteConteudo
+/*
+-------------------------------------------------------------------------------
+
+	AjusteConteudo
 */
 func (uc *AtendimentoController) AjusteConteudo() {
 	var notaForm formvalidate.NotaForm
@@ -308,7 +339,6 @@ func (uc *AtendimentoController) AjusteConteudo() {
 	if !v.Validate() {
 		response.ErrorWithMessage(v.Errors.One(), uc.Ctx)
 	}
-
 
 	row := make(map[string]interface{})
 	conteudo := uc.GetString("conteudo")
@@ -324,8 +354,10 @@ func (uc *AtendimentoController) AjusteConteudo() {
 	uc.ServeJSON()
 }
 
-/* -------------------------------------------------------------------------------
-   Edit Paciente
+/*
+-------------------------------------------------------------------------------
+
+	Edit Paciente
 */
 func (uc *AtendimentoController) EditPaciente() {
 	var pacienteService services.PacienteService

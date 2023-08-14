@@ -1,0 +1,41 @@
+
+<div class="layui-row no-pad">
+    <!-- Conteudo -->
+    <div name="div_conteudo" style="background-color: #d2e3e9">
+        <p>Antes</p>
+        <div id="editor" style="width: 100%; height: 450px; border: none"></div>
+        <p>Depois</p>                            
+    </div>
+</div>
+
+<script>
+    
+    var Delta = Quill.import('delta');
+    var quill = new Quill('#editor', {
+        theme: 'snow'
+    });
+
+    // Store accumulated changes
+    var change = new Delta();
+    quill.on('text-change', function(delta) {
+        change = change.compose(delta);
+    });
+
+    // Save periodically
+    setInterval(function() {
+        if (change.length() > 0) {
+            //console.log('Saving changes', change);
+            change = new Delta();
+            flagGravar = flagGravar + 1;
+            if ( flagGravar > 1) {
+                document.getElementById("btnGravar").disabled = false;
+            } else {
+                document.getElementById("btnGravar").disabled = true;
+            }
+        }
+    }, 2*1000);
+    
+    document.documentElement.style.cursor = 'default';
+
+
+</script>

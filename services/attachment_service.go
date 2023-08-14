@@ -171,7 +171,7 @@ func (*AttachmentService) UploadMulti(ctx *context.Context, name string, adminUs
 	if result != nil {
 		return result, nil
 	}
-	return nil, errors.New("无法获取文件")
+	return nil, errors.New("incapaz de buscar o arquivo")
 
 }
 
@@ -180,11 +180,11 @@ func validateForAttachment(h *multipart.FileHeader) error {
 	validateSize, _ := strconv.Atoi(global.BA_CONFIG.Attachment.ValidateSize)
 	validateExt := global.BA_CONFIG.Attachment.ValidateExt
 	if int(h.Size) > validateSize {
-		return errors.New("文件超过限制大小")
+		return errors.New("O tamanho do arquivo excede o limite")
 	}
 
 	if !strings.Contains(validateExt, strings.ToLower(strings.TrimLeft(path.Ext(h.Filename), "."))) {
-		return errors.New("不支持的文件格式")
+		return errors.New("formato de arquivo não suportado")
 	}
 
 	return nil

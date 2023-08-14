@@ -179,7 +179,7 @@ func init() {
 		web.NSRouter("/atendimento/export", &controllers.AtendimentoController{}, "get:Export"),
 
 		web.NSRouter("/atendimento/getnodes", &controllers.AtendimentoController{}, "get:GetNodes"),
-
+		web.NSRouter("/atendimento/vizualizar", &controllers.AtendimentoController{}, "get:Vizualizar"),
 		//Ger notas
 		web.NSRouter("/nota/index", &controllers.NotaController{}, "get:Index"),
 		web.NSRouter("/nota/add", &controllers.NotaController{}, "get:Add"),

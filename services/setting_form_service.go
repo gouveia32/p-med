@@ -51,7 +51,7 @@ var formHTML map[string]string = map[string]string{
 	"dateRangeHtml": `<div class="form-group">
 		<label for="[FIELD_NAME]" class="col-sm-2 control-label">[FORM_NAME]</label>
 		<div class="col-sm-10 col-md-4">
-			<input id="[FIELD_NAME]" name="[FIELD_NAME]" value="[FIELD_CONTENT]" placeholder="请选择[FORM_NAME]" type="text" class="form-control filed-date-range">
+			<input id="[FIELD_NAME]" name="[FIELD_NAME]" value="[FIELD_CONTENT]" placeholder="por favor escolha[FORM_NAME]" type="text" class="form-control filed-date-range">
 		</div>
 	</div>
 	<script>
@@ -64,7 +64,7 @@ var formHTML map[string]string = map[string]string{
 	"datatimeHtml": `<div class="form-group">
 		<label for="[FIELD_NAME]" class="col-sm-2 control-label">[FORM_NAME]</label>
 		<div class="col-sm-10 col-md-4">
-			<input id="[FIELD_NAME]" name="[FIELD_NAME]" value="[FIELD_CONTENT]" placeholder="请选择[FORM_NAME]" type="text" class="form-control filed-datetime">
+			<input id="[FIELD_NAME]" name="[FIELD_NAME]" value="[FIELD_CONTENT]" placeholder="por favor escolha[FORM_NAME]" type="text" class="form-control filed-datetime">
 		</div>
 	</div>
 	<script>
@@ -77,7 +77,7 @@ var formHTML map[string]string = map[string]string{
 	"datetimeRangeHtml": `<div class="form-group">
 		<label for="[FIELD_NAME]" class="col-sm-2 control-label">[FORM_NAME]</label>
 		<div class="col-sm-10 col-md-4">
-			<input id="[FIELD_NAME]" name="[FIELD_NAME]" value="[FIELD_CONTENT]" placeholder="请选择[FORM_NAME]" type="text" class="form-control filed-datetime-range">
+			<input id="[FIELD_NAME]" name="[FIELD_NAME]" value="[FIELD_CONTENT]" placeholder="por favor escolha[FORM_NAME]" type="text" class="form-control filed-datetime-range">
 		</div>
 	</div>
 	<script>
@@ -104,7 +104,7 @@ var formHTML map[string]string = map[string]string{
 	"emailhtml": `<div class="form-group">
 		<label for="[FIELD_NAME]" class="col-sm-2 control-label">[FORM_NAME]</label>
 		<div class="col-sm-10 col-md-4">
-			<input id="[FIELD_NAME]" name="[FIELD_NAME]" value="[FIELD_CONTENT]" placeholder="请输入[FORM_NAME]" type="email" class="form-control field-email">
+			<input id="[FIELD_NAME]" name="[FIELD_NAME]" value="[FIELD_CONTENT]" placeholder="Por favor, insira[FORM_NAME]" type="email" class="form-control field-email">
 		</div>
 	</div>`,
 
@@ -159,7 +159,7 @@ var formHTML map[string]string = map[string]string{
     $('#[FIELD_NAME]').fileinput({
         language: 'en',
         overwriteInitial: true,
-        browseLabel: '浏览',
+        browseLabel: 'Não',
         initialPreviewAsData: true,
         dropZoneEnabled: false,
         showUpload:false,
