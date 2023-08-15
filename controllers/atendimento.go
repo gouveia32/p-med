@@ -12,8 +12,6 @@ import (
 	"strings"
 	"time"
 
-	"fmt"
-
 	"github.com/adam-hanna/arrayOperations"
 	"github.com/gookit/validate"
 )
@@ -73,25 +71,16 @@ func (uc *AtendimentoController) Index() {
 
 // Vizualizar
 func (uc *AtendimentoController) Vizualizar() {
-	var atendimentoForm formvalidate.AtendimentoForm
 
-	fmt.Println("Aqui")
-	if err := uc.ParseForm(&atendimentoForm); err != nil {
-		response.ErrorWithMessage(err.Error(), uc.Ctx)
-	}
-
-	v := validate.Struct(atendimentoForm)
-
-	if !v.Validate() {
-		response.ErrorWithMessage(v.Errors.One(), uc.Ctx)
-	}
+	data := uc.GetString("form_data")
 
 	//
-	uc.Data["conteudo"] = atendimentoForm.Conteudo
-	fmt.Println("Atend:", atendimentoForm.Conteudo)
+	//fmt.Println("Atend:", data)
 
-	//uc.Layout = "public/base.html"
-	uc.TplName = "atendimento/vizualizar.html"
+	uc.Data["data"] = data
+	/* 	uc.Layout = "public/base.html"
+	   	uc.TplName = "atendimento/vizualizar.html" */
+	uc.ServeJSON()
 
 }
 
@@ -202,6 +191,8 @@ func (uc *AtendimentoController) GetNodes() {
 	pid := 1
 
 	paciente_id, _ := uc.GetInt("paciente_id", 0)
+
+	//fmt.Println("no GetNodes")
 	pId := strconv.Itoa(paciente_id)
 	lstAtend, _ := atendimentoService.AtendimentoGetList(1, 100, " WHERE estado=1 AND paciente_id="+pId)
 	list := make([]map[string]interface{}, 0)

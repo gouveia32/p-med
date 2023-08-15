@@ -171,6 +171,7 @@ func init() {
 		web.NSRouter("/atendimento/ajusteconteudo", &controllers.AtendimentoController{}, "post:AjusteConteudo"),
 		web.NSRouter("/atendimento/getnode", &controllers.AtendimentoController{}, "post:GetNode"),
 		web.NSRouter("/atendimento/getnodes", &controllers.AtendimentoController{}, "post:GetNodes"),
+		web.NSRouter("/atendimento/visualizar", &controllers.AtendimentoController{}, "post:Vizualizar"),
 		web.NSRouter("/atendimento/editpaciente", &controllers.AtendimentoController{}, "get:EditPaciente"),
 		web.NSRouter("/atendimento/update", &controllers.AtendimentoController{}, "post:Update"),
 		web.NSRouter("/atendimento/enable", &controllers.AtendimentoController{}, "post:Enable"),
@@ -178,8 +179,6 @@ func init() {
 		web.NSRouter("/atendimento/del", &controllers.AtendimentoController{}, "post:Del"),
 		web.NSRouter("/atendimento/export", &controllers.AtendimentoController{}, "get:Export"),
 
-		web.NSRouter("/atendimento/getnodes", &controllers.AtendimentoController{}, "get:GetNodes"),
-		web.NSRouter("/atendimento/vizualizar", &controllers.AtendimentoController{}, "get:Vizualizar"),
 		//Ger notas
 		web.NSRouter("/nota/index", &controllers.NotaController{}, "get:Index"),
 		web.NSRouter("/nota/add", &controllers.NotaController{}, "get:Add"),
