@@ -37,8 +37,8 @@
                             <button class="btn btn-xs btn-primary" lay-submit="" lay-filter="duplicar" ><i class="fa fa-copy"></i> Duplicar</button>
                             <button class="btn btn-xs btn-warning" lay-submit="" lay-filter="modelo" ><i class="fa fa-file-text-o"></i> Modelo</button>
                             <button class="btn btn-xs btn-info" lay-submit="" lay-filter="print" ><i class="fa fa-print"></i> Imprimir</button>
-                            <!-- <button class="btn btn-xs btn-info" lay-submit="" lay-filter="view" ><i class="fa fa-print"></i> Ver</button> -->
-                            <a class="btn btn-warning btn-xs" href="javascript:;" id="view" lay-submit=""><i class="fa fa-rotate-left"></i> Vizualizar</a>
+                            <button class="btn btn-xs btn-info" lay-submit="" lay-filter="view" ><i class="fa fa-print"></i> Ver</button>
+                            <!-- <a class="btn btn-warning btn-xs" href="javascript:;" id="view" lay-submit=""><i class="fa fa-rotate-left"></i> Vizualizar</a> -->
                             <!--<button class="btn btn-sm btn-info" lay-submit="" lay-filter="template" ><i class="fa fa-print"></i> Template</button>-->
                         </div>
                         
@@ -143,16 +143,17 @@
                 </div>
                             
             </td>
-            <td bgcolor="#d1dbb6" width="12%" style="margin-left: 1px; max-width:95px;" >
-                <ul id="treeDemo" class="ztree" style="vertical-align: top; margin-left: 2px; height:600px; margin-right: 2px;">
-                </ul>
+            <td name="td_treeDemo" bgcolor="#d1dbb6" style="margin-left: 1px; width: 10%; max-width: 110px;" >
+                <div>
+                    <button id="btnRecoler" class="btn btn-xs btn-success" lay-submit="" lay-filter="recolher">>></button>
+                    <ul id="treeDemo" class="ztree" style="vertical-align: top; margin-left: 2px; height:600px; margin-right: 2px;"></ul>
+                </div>
             </td>
         </tr>
     </table>
 </div>
 
 <script>
-    
     var Delta = Quill.import('delta');
     var quill = new Quill('#editor', {
         modules: {
@@ -382,23 +383,9 @@
                         window.location.reload();
                         return true;
                         break;
-                    case 'view':
-                        var form_data = $("form[name=form]").find("input[name=conteudo]").serialize();
-                        var modId = layer.open({
-                            title: 'Visualizar ',
-                            closeBtn: true,
-                            type: 2,
-                            area: ['800px','100%'],
-                            /* content: '/admin/atendimento/vizualizar', */
-                             content: `<p>Início</p> 
-                                    <div name="div_conteudo" style="background-color: #d2e3e9"> 
-                                       <div id="editor" style="width: 100%; height: auto; border: none"></div> 
-                                    </div>
-                                    <div id="treeDemo" class="ztree" style="vertical-align: top; margin-left: 2px; height:600px; margin-right: 2px;"> </div>
-                                    <p>FIM</p>`, 
-
-                        });     
-                        return false;
+                    case 'recolher':
+                        console.log("Recolhendo...")
+                        $("form[name=form]").find("td[name=td_treeDemo]").css('display', none);
                         break;
                     case 'edit':
 
