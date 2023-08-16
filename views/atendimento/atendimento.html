@@ -22,7 +22,7 @@
         </a>
     </div>
 
-    <table vertical-align="top" class="table table-bordered" style="width: 100%;">
+    <table id="tb_conteudo" vertical-align="top" class="table table-bordered" style="width: 100%;">
         <tr>
             <td id="td_conteudo">
                 <div class="layui-layout layui-layout-admin" style="padding-left: 10px;margin-top: 1px;">
@@ -37,11 +37,12 @@
                             <button class="btn btn-xs btn-primary" lay-submit="" lay-filter="duplicar" ><i class="fa fa-copy"></i> Duplicar</button>
                             <button class="btn btn-xs btn-warning" lay-submit="" lay-filter="modelo" ><i class="fa fa-file-text-o"></i> Modelo</button>
                             <button class="btn btn-xs btn-info" lay-submit="" lay-filter="print" ><i class="fa fa-print"></i> Imprimir</button>
-                            <button class="btn btn-xs btn-info" lay-submit="" lay-filter="view" ><i class="fa fa-print"></i> Ver</button>
+                            <input id="bt_mostrar" type='button' onClick='javascript:show_hide_column(this.value);' value='Esconder'>
+
                             <!-- <a class="btn btn-warning btn-xs" href="javascript:;" id="view" lay-submit=""><i class="fa fa-rotate-left"></i> Vizualizar</a> -->
                             <!--<button class="btn btn-sm btn-info" lay-submit="" lay-filter="template" ><i class="fa fa-print"></i> Template</button>-->
                         </div>
-                        
+
                         <table>
                             <td style="width: 45%;">
                                 <div class="layui-input-inline">
@@ -141,11 +142,10 @@
         
                     </form>
                 </div>
-                            
+                
             </td>
             <td name="td_treeDemo" bgcolor="#d1dbb6" style="margin-left: 1px; width: 10%; max-width: 110px;" >
                 <div>
-                    <button id="btnRecoler" class="btn btn-xs btn-success" lay-submit="" lay-filter="recolher">>></button>
                     <ul id="treeDemo" class="ztree" style="vertical-align: top; margin-left: 2px; height:600px; margin-right: 2px;"></ul>
                 </div>
             </td>
@@ -218,6 +218,30 @@
     function setFlagGravar() {
         flagGravar = 2;
         document.getElementById("btnGravar").disabled = false;
+    }
+
+    function show_hide_column(v) {
+        var stl;
+
+        var tbl  = document.getElementById('tb_conteudo');
+        var rows = tbl.getElementsByTagName('tr');
+
+        for (var row=0; row<rows.length;row++) {
+            var cels = rows[row].getElementsByTagName('td')
+
+            col = cels[4].style;
+            console.log ("v:",v)
+
+            if (v = 'Esconder') {
+                $("#bt_mostrar").val('Mostrar');
+                stl = 'none'
+            } else {
+                $("#bt_mostrar").val('Esconder');
+                stl = 'block';
+            } 
+            cels[4].style.display=stl;
+
+        }
     }
 
 </script>
@@ -385,7 +409,7 @@
                         break;
                     case 'recolher':
                         console.log("Recolhendo...")
-                        $("form[name=form]").find("td[name=td_treeDemo]").css('display', none);
+                        $("form[name=form]").find("td[name=td_treeDemo]").hide();
                         break;
                     case 'edit':
 
@@ -668,25 +692,12 @@
         });
 
         //Vizualizar
-        $('#view').on('click',function(){
-            console.log("Aqui")
-             var time   = Date.parse(new Date());
-            var form_data = $("form[name=form]").find("input[name=conteudo]").serialize();
-            $.ajax({
-                type: "post",
-                url: "/admin/atendimento/visualizar",
-                data: {form_data:form_data},
-                dataType: "json",
-                success: function(data) {
-
-                    if(data.length>0){
-                        
-                    }
-                    //console.log(data);
-                   
-                }
-            });             
+        $("#tb_conteudo").hideCols({
+            hideColumn: '&times;', // this creates the × character
+            unhideColumn: 'Display product column',
+            unhideAll: 'Display All Product Info'
         });
+
 
         $(".toolTop").click(function () {
             //document.documentElement.style.cursor = 'wait';
