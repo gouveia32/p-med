@@ -2,26 +2,34 @@
     var flagGravar = 0;
 </script>
 
-<div class="layui-row no-pad">
-    <div class="callout callout-info">
+<nav class="navbar navbar-static-top callout callout-info" style="height: auto;">
+    <ul class="nav navbar-nav navbar-left">
         <a class="btn flat btn-sm btn-default BackButton" style="background-color:rgb(255, 255, 255); color: black;">
             <i class="fa fa-arrow-left"></i>
             Retornar
         </a>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn flat btn-sm btn-info" onClick='javascript:editP(this.value);' style="background-color:rgb(255, 255, 255); color: black;">
+            <i class="fa fa-pencil"></i>
+            Alterar Paciente
+        </a>
+
         PACIENTE: Nome: <strong>{{.paciente.Nome}}</strong>
             {{if .paciente.Telefone}}Telefone: <strong>{{.paciente.Telefone}}</strong>{{end}}
             Sexo: <strong>{{.paciente.Sexo}}</strong>
             {{if .paciente.Peso}}Peso: <strong>{{.paciente.Peso}}</strong>{{end}}
             {{if .paciente.Altura}}Altura: <strong>{{.paciente.Altura}}</strong>{{end}}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            
-        <a class="layui-btn layui-btn-normal layui-btn-xm toolTop"
-            title="Alterar Paciente"
-            lay-event="editP"><i class="fa fa-pencil">Alterar Paciente</i>
-        </a>
-    </div>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <a id="bt_mostrar" 
+            class="btn flat btn-sm btn-info" 
+            onClick='javascript:show_hide_column(this.value);' 
+            style="background-color:rgb(255, 255, 255); color: black;">
+            <i class="fa fa-bars"></i>
+        </a> 
+    </ul>
+</nav>
 
+<div class="box box-primary">
     <table id="tb_conteudo" vertical-align="top" class="table table-bordered" style="width: 100%;">
         <tr>
             <td id="td_conteudo">
@@ -37,12 +45,7 @@
                             <button class="btn btn-xs btn-primary" lay-submit="" lay-filter="duplicar" ><i class="fa fa-copy"></i> Duplicar</button>
                             <button class="btn btn-xs btn-warning" lay-submit="" lay-filter="modelo" ><i class="fa fa-file-text-o"></i> Modelo</button>
                             <button class="btn btn-xs btn-info" lay-submit="" lay-filter="print" ><i class="fa fa-print"></i> Imprimir</button>
-                            <input id="bt_mostrar" type='button' onClick='javascript:show_hide_column(this.value);' value='Esconder'>
-
-                            <!-- <a class="btn btn-warning btn-xs" href="javascript:;" id="view" lay-submit=""><i class="fa fa-rotate-left"></i> Vizualizar</a> -->
-                            <!--<button class="btn btn-sm btn-info" lay-submit="" lay-filter="template" ><i class="fa fa-print"></i> Template</button>-->
-                        </div>
-
+                        </div>  
                         <table>
                             <td style="width: 45%;">
                                 <div class="layui-input-inline">
@@ -144,10 +147,8 @@
                 </div>
                 
             </td>
-            <td name="td_treeDemo" bgcolor="#d1dbb6" style="margin-left: 1px; width: 10%; max-width: 110px;" >
-                <div>
-                    <ul id="treeDemo" class="ztree" style="vertical-align: top; margin-left: 2px; height:600px; margin-right: 2px;"></ul>
-                </div>
+            <td name="td_treeDemo" bgcolor="#d1dbb6" style="margin-left: 1px; width: 15%" >
+                <ul id="treeDemo" class="ztree" style="vertical-align: top; margin-left: 3px; height:600px; margin-right: 3px;"></ul>
             </td>
         </tr>
     </table>
@@ -232,16 +233,32 @@
             col = cels[4].style;
             console.log ("v:",v)
 
-            if (v = 'Esconder') {
-                $("#bt_mostrar").val('Mostrar');
-                stl = 'none'
-            } else {
+            if (v == 'Mostrar') {
                 $("#bt_mostrar").val('Esconder');
                 stl = 'block';
+            } else {
+                $("#bt_mostrar").val('Mostrar');
+                stl = 'none';
             } 
             cels[4].style.display=stl;
-
         }
+    }
+
+    function editP(v) {
+        var pacienteId = $("#paciente_id").val();
+            layer.open({
+                type: 2,
+                shade: [0.4, '#a0d06c'],
+                shadeClose: true,
+                id: 1,
+                skin: 'layui-layer-lan',
+                anim: 1,
+                title: "Alterando Paciente",
+                content: '/admin/atendimento/editpaciente?paciente_id='+pacienteId,
+                //btn: ['<i class="layui-icon layui-icon-ok" lay-submit="" lay-filter="sub"> Gravar</i>', '<i class="layui-icon layui-icon-close"/> Fechar'],
+                area: ['850px','480px'],
+
+            });
     }
 
 </script>
@@ -696,26 +713,6 @@
             hideColumn: '&times;', // this creates the × character
             unhideColumn: 'Display product column',
             unhideAll: 'Display All Product Info'
-        });
-
-
-        $(".toolTop").click(function () {
-            //document.documentElement.style.cursor = 'wait';
-            var pacienteId = $("#paciente_id").val();
-            layer.open({
-                type: 2,
-                shade: [0.4, '#a0d06c'],
-                shadeClose: true,
-                id: 1,
-                skin: 'layui-layer-lan',
-                anim: 1,
-                title: "Alterando Paciente",
-                content: '/admin/atendimento/editpaciente?paciente_id='+pacienteId,
-                //btn: ['<i class="layui-icon layui-icon-ok" lay-submit="" lay-filter="sub"> Gravar</i>', '<i class="layui-icon layui-icon-close"/> Fechar'],
-                area: ['850px','480px'],
-
-            });
-    
         });
 
         //Excluir
