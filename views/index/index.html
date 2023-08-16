@@ -16,9 +16,10 @@
     <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
-                <span class="info-box-icon bg-aqua">
+                <a class="info-box-icon bg-aqua" href="/admin/paciente/index">
+                    
                     <i class="fa fa-user"></i>
-                </span>
+                </a>
                 <div class="info-box-content">
                     <span class="info-box-text">Pacientes</span>
                     <span class="info-box-number">{{.paciente_count}}</span>
@@ -28,9 +29,9 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
-                <span class="info-box-icon bg-red">
+                <a class="info-box-icon bg-red" href="/admin/atendimento/index">
                     <i class="fa fa-handshake-o"></i>
-                </span>
+                </a>
                 <div class="info-box-content">
                     <span class="info-box-text">Atendimentos</span>
                     <span class="info-box-number">{{.atendimento_count}}</span>
