@@ -171,8 +171,8 @@
                 <div class="box-footer">
                     {{ str2html .paginate.BootStrapRenderLink}}
                     <label class="control-label pull-right" style="margin-right: 10px; font-weight: 100;">
-                        <small>共{{.paginate.Total}}条记录</small>&nbsp;
-                        <small>每页显示</small>
+                        <small>comum {{.paginate.Total}} Regs</small>&nbsp;
+                        <small>Cada pag mostra</small>
                         &nbsp;
                         <select class="input-sm" onchange="changePerPage(this)">
                             {{range $index, $val := $.admin.per_page_config}}
@@ -180,7 +180,7 @@
                             {{end}}
                         </select>
                         &nbsp;
-                        <small>条记录</small>
+                        <small>Registros</small>
                     </label>
                 </div>
                 {{end}}

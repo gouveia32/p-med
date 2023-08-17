@@ -53,7 +53,7 @@ $(function () {
         if (typeof (Storage) !== 'undefined') {
             return localStorage.getItem(name)
         } else {
-            window.alert('请使用现代浏览器(谷歌浏览器或360,QQ,搜狗等极速模式)访问本后台!')
+            window.alert('Por favor, use um navegador moderno (Google Chrome, Edge, etc.) para visitar este plano de fundo!')
         }
     }
 
