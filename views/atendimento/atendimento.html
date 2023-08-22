@@ -4,28 +4,32 @@
 
 <nav class="navbar navbar-static-top callout callout-info" style="height: auto;">
     <ul class="nav navbar-nav navbar-left">
-        <a class="btn flat btn-sm btn-default BackButton" style="background-color:rgb(255, 255, 255); color: black;">
+        <a class="btn flat btn-sm btn-default BackButton" 
+            title="Retornar"
+            style="background-color:rgb(255, 255, 255); color: black;">
             <i class="fa fa-arrow-left"></i>
-            Retornar
         </a>
-        <a class="btn flat btn-sm btn-info" onClick='javascript:editP(this.value);' style="background-color:rgb(255, 255, 255); color: black;">
+        <a class="btn flat btn-sm btn-info" 
+            title="Alterar Paciente"
+            onClick='javascript:editP(this.value);' 
+            style="background-color:rgb(255, 255, 255); color: black;">
             <i class="fa fa-pencil"></i>
-            Alterar Paciente
         </a>
 
+        <a id="bt_mostrar" 
+            class="btn flat btn-sm btn-info" 
+            title="Painel de histórico"
+            onClick='javascript:show_hide_column(this.value);' 
+            style="background-color:rgb(255, 255, 255); color: black;">
+        <i class="fa fa-bars"></i>
+    </a> 
+<!--     </ul>
+    <ul class="nav navbar-nav navbar-right"> -->
         PACIENTE: Nome: <strong>{{.paciente.Nome}}</strong>
             {{if .paciente.Telefone}}Telefone: <strong>{{.paciente.Telefone}}</strong>{{end}}
             Sexo: <strong>{{.paciente.Sexo}}</strong>
             {{if .paciente.Peso}}Peso: <strong>{{.paciente.Peso}}</strong>{{end}}
             {{if .paciente.Altura}}Altura: <strong>{{.paciente.Altura}}</strong>{{end}}
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-        <a id="bt_mostrar" 
-            class="btn flat btn-sm btn-info" 
-            onClick='javascript:show_hide_column(this.value);' 
-            style="background-color:rgb(255, 255, 255); color: black;">
-            <i class="fa fa-bars"></i>
-        </a> 
     </ul>
 </nav>
 
@@ -37,14 +41,14 @@
                     <form id="form" name="form" class="form-horizontal dataForm" action="/admin/campo/update" method="post"
                         enctype="multipart/form-data">
                         <div style="border-bottom: 1px dashed #d2e3e9; height: 25px;" >
-                            <button class="btn btn-xs btn-primary" lay-submit="" lay-filter="add"><i class="fa fa-file-o"></i> Novo</button>
-                            <button id="btnGravar" class="btn btn-xs btn-success" lay-submit="" lay-filter="edit" disabled><i class="fa fa-floppy-o"></i> Gravar</button>
+                            <button class="btn btn-xs btn-primary" lay-submit="" lay-filter="add"><i class="fa fa-file-o" title="Novo"></i> </button>
+                            <button id="btnGravar" class="btn btn-xs btn-success" lay-submit="" lay-filter="edit" disabled><i class="fa fa-floppy-o" title="Gravar"></i> </button>
                             <!-- <button id="btnDesfazer" class="btn btn-sm btn-warning" lay-submit="" lay-filter="desfazer"><i class="fa fa-rotate-left"></i> Desfazer</button> -->
-                            <a class="btn btn-warning btn-xs" href="javascript:;" id="desfazer" lay-submit=""><i class="fa fa-rotate-left"></i> Desfazer</a>
-                            <a class="btn btn-danger btn-xs" href="javascript:;" id="del" lay-submit=""><i class="fa fa-trash"></i> Excluir</a>
-                            <button class="btn btn-xs btn-primary" lay-submit="" lay-filter="duplicar" ><i class="fa fa-copy"></i> Duplicar</button>
-                            <button class="btn btn-xs btn-warning" lay-submit="" lay-filter="modelo" ><i class="fa fa-file-text-o"></i> Modelo</button>
-                            <button class="btn btn-xs btn-info" lay-submit="" lay-filter="print" ><i class="fa fa-print"></i> Imprimir</button>
+                            <a class="btn btn-warning btn-xs" href="javascript:;" id="desfazer" lay-submit=""><i class="fa fa-rotate-left" title="Desfazer"></i> </a>
+                            <a class="btn btn-danger btn-xs" href="javascript:;" id="del" lay-submit=""><i class="fa fa-trash" title="Excluir"></i> </a>
+                            <button class="btn btn-xs btn-primary" lay-submit="" lay-filter="duplicar" ><i class="fa fa-copy" title="Duplicar"></i> </button>
+                            <button class="btn btn-xs btn-warning" lay-submit="" lay-filter="modelo" ><i class="fa fa-file-text-o" title="Modelo"></i> </button>
+                            <button class="btn btn-xs btn-info" lay-submit="" lay-filter="print" ><i class="fa fa-print" title="Imprimir"></i> </button>
                         </div>  
                         <table>
                             <td style="width: 45%;">

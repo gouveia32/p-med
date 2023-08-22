@@ -103,12 +103,12 @@
                         <tbody>
                         {{range $key,$item := .data}}
                         <tr>
-                            <td>
+                            <td  width="25px">
                                 <input type="checkbox" onclick="checkThis(this)" name="data-checkbox"
                                        data-id="{{$item.Id}}" class="checkbox data-list-check" value="{{$item.Id}}"
                                        placeholder="escolher/Cancelar">
                             </td>
-                            <td class="td-do">
+                            <td class="td-do" width="70px">
                                 <a href="/admin/atendimento/atendimento?id={{$item.Id}}"
                                    class="btn btn-success btn-xs" title="Atender" data-toggle="tooltip">
                                     <i class="fa fa-handshake-o"></i>
